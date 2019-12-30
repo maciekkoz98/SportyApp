@@ -1,4 +1,4 @@
-package pl.edu.pw.sportyapp.shared;
+package pl.edu.pw.sportyapp.shared.sequence;
 
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
