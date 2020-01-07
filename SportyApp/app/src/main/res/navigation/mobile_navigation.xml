@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.sportyapp.ui.home.HomeFragment"
+        android:label="@string/menu_map"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_my_games"
+        android:name="com.example.sportyapp.ui.myGames.MyGamesFragment"
+        android:label="@string/menu_my_games"
+        tools:layout="@layout/fragment_my_games" />
+
+    <fragment
+        android:id="@+id/nav_person"
+        android:name="com.example.sportyapp.ui.personInfo.PersonInfoFragment"
+        tools:layout="@layout/fragment_person_info" />
+
+    <fragment
+        android:id="@+id/nav_fields"
+        android:name="com.example.sportyapp.ui.fieldsInArea.FieldsFragment"
+        android:label="@string/menu_fields"
+        tools:layout="@layout/fragment_fields" />
+
+    <fragment
+        android:id="@+id/nav_add_game"
+        android:name="com.example.sportyapp.ui.addGame.AddGameFragment"
+        android:label="@string/menu_add_game"
+        tools:layout="@layout/fragment_add_game" />
+</navigation>

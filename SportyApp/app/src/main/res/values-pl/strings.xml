@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_map">Mapa</string>
+    <string name="action_settings" translatable="false">Ustawienia</string>
+    <string name="hello_blank_fragment">asd</string>
+    <string name="menu_add_game">Dodaj grę</string>
+    <string name="menu_fields">Boiska w pobliżu</string>
+    <string name="navigation_drawer_close">Zamknij szufladę</string>
+    <string name="navigation_drawer_open">Otwórz szufladę</string>
+    <string name="nav_header_desc">Nagłówek szuflady</string>
+    <string name="menu_my_games">Moje gry</string>
+</resources>
