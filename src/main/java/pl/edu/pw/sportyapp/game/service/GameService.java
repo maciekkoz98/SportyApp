@@ -4,17 +4,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.edu.pw.sportyapp.game.dao.Game;
 import pl.edu.pw.sportyapp.game.repository.GameRepository;
-import pl.edu.pw.sportyapp.shared.SequenceGeneratorService;
 import pl.edu.pw.sportyapp.shared.exception.EntityNotFoundException;
+import pl.edu.pw.sportyapp.shared.sequence.SequenceGeneratorService;
 
 @Service
 public class GameService {
 
-    @Autowired
-    SequenceGeneratorService sequenceGenerator;
+    private SequenceGeneratorService sequenceGenerator;
+    private GameRepository gameRepository;
 
     @Autowired
-    GameRepository gameRepository;
+    public GameService(GameRepository gr, SequenceGeneratorService sgs) {
+        this.gameRepository = gr;
+        this.sequenceGenerator = sgs;
+    }
 
     public Long addGame(Game newGame) {
         newGame.setId(sequenceGenerator.generateSequence(Game.DBSEQUENCE_NAME));

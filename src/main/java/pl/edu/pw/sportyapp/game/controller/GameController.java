@@ -3,6 +3,7 @@ package pl.edu.pw.sportyapp.game.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pw.sportyapp.game.dao.Game;
 import pl.edu.pw.sportyapp.game.repository.GameRepository;
@@ -15,11 +16,14 @@ import java.util.List;
 @RestController
 public class GameController {
 
-    @Autowired
     private GameRepository gameRepository;
+    private GameService gameService;
 
     @Autowired
-    private GameService gameService;
+    public GameController(GameRepository gr, GameService gs) {
+        this.gameRepository = gr;
+        this.gameService = gs;
+    }
 
     @GetMapping("/game")
     public ResponseEntity<List<Game>> getAll() {
@@ -56,5 +60,10 @@ public class GameController {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> illegalArgumentExceptionHandler() {
         return new ResponseEntity<>("General illegal argument error", HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<String> validationExceptionHandler() {
+        return new ResponseEntity<>("Validation exception", HttpStatus.BAD_REQUEST);
     }
 }
