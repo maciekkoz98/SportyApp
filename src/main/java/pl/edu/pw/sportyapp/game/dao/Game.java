@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @Document
 @Getter
@@ -25,6 +26,8 @@ public class Game {
     public long date;
     public long[] players;
 
+    @NonNull
     @NotNull
+    @Positive
     public long facility;
 }
