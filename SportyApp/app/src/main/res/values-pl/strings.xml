@@ -9,4 +9,13 @@
     <string name="navigation_drawer_open">Otwórz szufladę</string>
     <string name="nav_header_desc">Nagłówek szuflady</string>
     <string name="menu_my_games">Moje gry</string>
+    <string name="opinions_title">Opinie</string>
+    <string name="last_games_title">Ostatnie gry</string>
+    <string name="opinion_text_test">Bardzo fajnie się grało. Mateusz dotarł na czas bez problemów. Miał piłkę jak obiecał.</string>
+    <string name="opinion_date_test">12.12.2019r. 16:48</string>
+    <string name="organiser_title">Organizator</string>
+    <string name="event_name_title">Nazwa wydarzenia</string>
+    <string name="event_place_name_title">Miejsce wydarzenia</string>
+    <string name="event_date_test">wt. 12.12.2019r. 16:30</string>
+    <string name="user_app_bar_title">Użytkownik</string>
 </resources>
