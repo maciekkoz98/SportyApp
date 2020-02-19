@@ -1,5 +1,6 @@
 package com.example.sportyapp.ui.myGames.utils
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +28,9 @@ class MyGamesListAdapter : RecyclerView.Adapter<MyGamesListViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MyGamesListViewHolder, position: Int) {
-
+        holder.itemView.setOnClickListener {
+            Log.d("Position", position.toString())
+        }
     }
 
 }

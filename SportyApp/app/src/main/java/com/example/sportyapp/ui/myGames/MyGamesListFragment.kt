@@ -19,11 +19,11 @@ class MyGamesListFragment : Fragment() {
 
         val rootView = inflater.inflate(R.layout.fragment_my_games_list, container, false)
 
-        val lastGamesRecyclerView = rootView.findViewById(R.id.my_games_list_recycler_view) as RecyclerView
+        val myGamesRecyclerView = rootView.findViewById(R.id.my_games_list_recycler_view) as RecyclerView
 
-        lastGamesRecyclerView.layoutManager = LinearLayoutManager(activity)
+        myGamesRecyclerView.layoutManager = LinearLayoutManager(activity)
 
-        lastGamesRecyclerView.adapter = MyGamesListAdapter()
+        myGamesRecyclerView.adapter = MyGamesListAdapter()
 
         return rootView
     }
