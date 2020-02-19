@@ -23,5 +23,7 @@
     <string name="event_place_name_title">Event place</string>
     <string name="event_date_test">tue. 12.12.2019r. 16:30</string>
     <string name="user_app_bar_title">User</string>
+    <string name="basketball">Basketball</string>
+    <string name="football">Football</string>
 
 </resources>
