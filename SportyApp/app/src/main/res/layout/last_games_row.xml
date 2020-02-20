@@ -15,7 +15,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingLeft="50px"
+            android:paddingStart="30dp"
             android:text="@string/organiser_title"/>
 
         <TextView

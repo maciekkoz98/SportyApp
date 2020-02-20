@@ -16,8 +16,9 @@ class MyGamesListAdapter : RecyclerView.Adapter<MyGamesListViewHolder>() {
             }
         }*/
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyGamesListViewHolder {
+    var onGameClicked: ((pos: Int) -> Unit)? = null
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyGamesListViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val myGamesListRow = layoutInflater.inflate(R.layout.last_games_row, parent, false)
         return MyGamesListViewHolder(myGamesListRow)
@@ -29,7 +30,7 @@ class MyGamesListAdapter : RecyclerView.Adapter<MyGamesListViewHolder>() {
 
     override fun onBindViewHolder(holder: MyGamesListViewHolder, position: Int) {
         holder.itemView.setOnClickListener {
-            Log.d("Position", position.toString())
+            onGameClicked?.invoke(position)
         }
     }
 
