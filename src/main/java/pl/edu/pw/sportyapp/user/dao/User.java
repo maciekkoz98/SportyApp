@@ -1,0 +1,38 @@
+package pl.edu.pw.sportyapp.user.dao;
+
+import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.validation.constraints.NotNull;
+
+@Document
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class User {
+
+    @Id
+    public long id;
+
+    @Transient
+    public static final String DBSEQUENCE_NAME = "userSequenceID";
+
+    @NotNull
+    public String nickname;
+
+    @NotNull
+    private String name;
+
+    @NotNull
+    private String surname;
+
+    @NotNull
+    private String email;
+
+    @NotNull
+    private String password;
+}
