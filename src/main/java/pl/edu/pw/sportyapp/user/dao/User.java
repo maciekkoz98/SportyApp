@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Document
 @Getter
@@ -35,4 +36,13 @@ public class User {
 
     @NotNull
     private String password;
+
+    @NotNull
+    private Long averageGrade;
+
+    @NotNull
+    private List<Long> gamesParticipatedIds;
+
+    @NotNull
+    private List<Long> friendsIds;
 }
