@@ -18,5 +18,14 @@
     <string name="event_place_name_title">Miejsce wydarzenia</string>
     <string name="event_date_test">wt. 12.12.2019r. 16:30</string>
     <string name="user_app_bar_title">Użytkownik</string>
+    <string name="basketball">Koszykówka</string>
+    <string name="football">Piłka nożna</string>
+    <string name="city">Miasto</string>
+    <string name="address">Adres</string>
+    <string name="players_number_test">Gracze: x</string>
+    <string name="min_players_number_test">Minimalna liczba graczy: y</string>
+    <string name="list_of_players">Lista graczy</string>
+    <string name="username">Nazwa użytkownika</string>
+    <string name="game_app_bar_title">Gra</string>
     <string name="no_local_permission">Bez uprawnień aplikacja nie może Cię zlokalizować</string>
 </resources>
