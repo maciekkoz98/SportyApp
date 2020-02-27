@@ -43,10 +43,10 @@ public class UserControllerTest {
 
     @Test
     void getAll() {
-        User user1 = User.builder().nickname("testowy1").name("Jan1").surname("Kowalski1").email("jkowal1@mail.com")
-                .password("testowe1").averageGrade(5L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
-        User user2 = User.builder().nickname("testowy2").name("Jan2").surname("Kowalski2").email("jkowal2@mail.com")
-                .password("testowe2").averageGrade(4L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
+        User user1 = User.builder().username("testowy1").name("Jan1").surname("Kowalski1").email("jkowal1@mail.com")
+                .averageGrade(5L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
+        User user2 = User.builder().username("testowy2").name("Jan2").surname("Kowalski2").email("jkowal2@mail.com")
+                .averageGrade(4L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
 
         when(userRepository.findAll()).thenReturn(Lists.newArrayList(user1, user2));
 
@@ -55,8 +55,8 @@ public class UserControllerTest {
 
     @Test
     void getOneEntityExists() {
-        User user = User.builder().id(1L).nickname("testowy1").name("Jan1").surname("Kowalski1").email("jkowal1@mail.com")
-                .password("testowe1").averageGrade(5L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
+        User user = User.builder().id(1L).username("testowy1").name("Jan1").surname("Kowalski1").email("jkowal1@mail.com")
+                .averageGrade(5L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
 
         when(userRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(user));
 
@@ -73,8 +73,8 @@ public class UserControllerTest {
 
     @Test
     void createWithValidInput() {
-        User user = User.builder().nickname("testowy1").name("Jan1").surname("Kowalski1").email("jkowal1@mail.com")
-                .password("testowe1").averageGrade(5L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
+        User user = User.builder().username("testowy1").name("Jan1").surname("Kowalski1").email("jkowal1@mail.com")
+                .averageGrade(5L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
 
         when(userService.addUser(Mockito.any(User.class))).thenReturn(3L);
 
@@ -83,8 +83,8 @@ public class UserControllerTest {
 
     @Test
     void updateWithValidInput() {
-        User user = User.builder().id(1L).nickname("testowyNowy").name("Jan1").surname("Kowalski1").email("jkowal1@mail.com")
-                .password("testowe1").averageGrade(5L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
+        User user = User.builder().id(1L).username("testowyNowy").name("Jan1").surname("Kowalski1").email("jkowal1@mail.com")
+                .averageGrade(5L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
 
         doNothing().when(userService).updateUser(1L, user);
 
@@ -93,8 +93,8 @@ public class UserControllerTest {
 
     @Test
     void updateWithInvalidInput() {
-        User user = User.builder().id(1L).nickname("testowyNowy").name("Jan1").surname("Kowalski1").email("jkowal1@mail.com")
-                .password("testowe1").averageGrade(5L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
+        User user = User.builder().id(1L).username("testowyNowy").name("Jan1").surname("Kowalski1").email("jkowal1@mail.com")
+                .averageGrade(5L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
 
         doThrow(IllegalArgumentException.class).when(userService).updateUser(2L, user);
 
@@ -104,8 +104,8 @@ public class UserControllerTest {
 
     @Test
     void updateNotExistingEntity() {
-        User user = User.builder().id(1L).nickname("testowyNowy").name("Jan1").surname("Kowalski1").email("jkowal1@mail.com")
-                .password("testowe1").averageGrade(5L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
+        User user = User.builder().id(1L).username("testowyNowy").name("Jan1").surname("Kowalski1").email("jkowal1@mail.com")
+                .averageGrade(5L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
 
         doThrow(EntityNotFoundException.class).when(userService).updateUser(1L, user);
 

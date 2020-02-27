@@ -23,7 +23,7 @@ public class User {
     public static final String DBSEQUENCE_NAME = "userSequenceID";
 
     @NotNull
-    public String nickname;
+    public String username;
 
     @NotNull
     private String name;
@@ -33,9 +33,6 @@ public class User {
 
     @NotNull
     private String email;
-
-    @NotNull
-    private String password;
 
     @NotNull
     private Long averageGrade;

@@ -71,10 +71,10 @@ public class UserControllerIntegrationTest {
 
     @Test
     void getAllUsersExists() throws Exception {
-        User user1 = User.builder().id(1L).nickname("testowy1").name("Jan1").surname("Kowalski1").email("jkowal1@mail.com")
-                .password("testowe1").averageGrade(5L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
-        User user2 = User.builder().id(2L).nickname("testowy2").name("Jan2").surname("Kowalski2").email("jkowal2@mail.com")
-                .password("testowe2").averageGrade(4L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
+        User user1 = User.builder().id(1L).username("testowy1").name("Jan1").surname("Kowalski1").email("jkowal1@mail.com")
+                .averageGrade(5L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
+        User user2 = User.builder().id(2L).username("testowy2").name("Jan2").surname("Kowalski2").email("jkowal2@mail.com")
+                .averageGrade(4L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
 
         mongoOperations.insert(user1, "user");
         mongoOperations.insert(user2, "user");
@@ -89,8 +89,8 @@ public class UserControllerIntegrationTest {
 
     @Test
     void getOneUserExists() throws Exception {
-        User user1 = User.builder().id(1L).nickname("testowy1").name("Jan1").surname("Kowalski1").email("jkowal1@mail.com")
-                .password("testowe1").averageGrade(5L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
+        User user1 = User.builder().id(1L).username("testowy1").name("Jan1").surname("Kowalski1").email("jkowal1@mail.com")
+                .averageGrade(5L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
 
         mongoOperations.insert(user1, "user");
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/user/1").accept(MediaType.APPLICATION_JSON))
@@ -104,15 +104,15 @@ public class UserControllerIntegrationTest {
     }
 
     @Test
-    void getOneGameDoesNotExist() throws Exception {
+    void getOneUserDoesNotExist() throws Exception {
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/user/1").accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isNotFound()).andReturn();
     }
 
     @Test
     void createValidInput() throws Exception {
-        User user1 = User.builder().id(1L).nickname("testowy1").name("Jan1").surname("Kowalski1").email("jkowal1@mail.com")
-                .password("testowe1").averageGrade(5L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
+        User user1 = User.builder().id(1L).username("testowy1").name("Jan1").surname("Kowalski1").email("jkowal1@mail.com")
+                .averageGrade(5L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
         String json = null;
 
         try {
@@ -138,11 +138,11 @@ public class UserControllerIntegrationTest {
 
     @Test
     void updateValidInput() throws Exception {
-        User user = User.builder().id(1L).nickname("testowy1").name("Jan1").surname("Kowalski1").email("jkowal1@mail.com")
-                .password("testowe1").averageGrade(5L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
+        User user = User.builder().id(1L).username("testowy1").name("Jan1").surname("Kowalski1").email("jkowal1@mail.com")
+                .averageGrade(5L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
 
         mongoOperations.insert(user, "user");
-        user.setNickname("testowyNowy");
+        user.setUsername("testowyNowy");
 
         String json = null;
 
@@ -155,13 +155,13 @@ public class UserControllerIntegrationTest {
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.put("/user/1").content(json).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
 
-        assertThat(mongoOperations.findById(1, User.class, "user").getNickname()).isEqualTo("testowyNowy");
+        assertThat(mongoOperations.findById(1, User.class, "user").getUsername()).isEqualTo("testowyNowy");
     }
 
     @Test
     void updateInvalidInput() throws Exception {
-        User user = User.builder().id(1L).nickname("testowy1").name("Jan1").surname("Kowalski1").email("jkowal1@mail.com")
-                .password("testowe1").averageGrade(5L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
+        User user = User.builder().id(1L).username("testowy1").name("Jan1").surname("Kowalski1").email("jkowal1@mail.com")
+                .averageGrade(5L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
 
         mongoOperations.insert(user, "user");
 
@@ -182,8 +182,8 @@ public class UserControllerIntegrationTest {
 
     @Test
     void updateNotExistingUser() throws Exception {
-        User user = User.builder().id(1L).nickname("testowy1").name("Jan1").surname("Kowalski1").email("jkowal1@mail.com")
-                .password("testowe1").averageGrade(5L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
+        User user = User.builder().id(1L).username("testowy1").name("Jan1").surname("Kowalski1").email("jkowal1@mail.com")
+                .averageGrade(5L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
 
         String json = null;
 
@@ -199,8 +199,8 @@ public class UserControllerIntegrationTest {
 
     @Test
     void deleteExistingUser() throws Exception {
-        User user = User.builder().id(1L).nickname("testowy1").name("Jan1").surname("Kowalski1").email("jkowal1@mail.com")
-                .password("testowe1").averageGrade(5L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
+        User user = User.builder().id(1L).username("testowy1").name("Jan1").surname("Kowalski1").email("jkowal1@mail.com")
+                .averageGrade(5L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
 
         mongoOperations.insert(user, "user");
 
@@ -208,7 +208,7 @@ public class UserControllerIntegrationTest {
     }
 
     @Test
-    void deleteNotExistingGame() throws Exception {
+    void deleteNotExistingUser() throws Exception {
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.delete("/user/1")).andExpect(MockMvcResultMatchers.status().isNotFound()).andReturn();
     }
 
