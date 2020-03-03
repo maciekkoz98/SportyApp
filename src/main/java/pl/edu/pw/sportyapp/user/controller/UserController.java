@@ -13,6 +13,7 @@ import pl.edu.pw.sportyapp.user.service.UserService;
 import javax.validation.Valid;
 import java.util.List;
 
+@RestController
 public class UserController {
     private UserRepository userRepository;
     private UserService userService;
@@ -44,7 +45,7 @@ public class UserController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/user/{id}", consumes = "application/json")
+    @DeleteMapping(value = "/user/{id}")
     public ResponseEntity delete(@PathVariable("id") Long id) {
         userService.deleteUser(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
