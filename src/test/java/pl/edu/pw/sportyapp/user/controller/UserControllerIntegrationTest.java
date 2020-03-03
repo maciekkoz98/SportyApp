@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 @DirtiesContext
 @ExtendWith(SpringExtension.class)
@@ -177,7 +177,7 @@ public class UserControllerIntegrationTest {
         }
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.put("/user/1").content(json).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest()).andReturn();
+                .andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
     }
 
     @Test
@@ -194,7 +194,7 @@ public class UserControllerIntegrationTest {
             fail("JSON parsing error");
         }
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.put("/user/1").content(json).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isNotFound()).andReturn();
+                .andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
     }
 
     @Test
