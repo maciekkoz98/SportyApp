@@ -23,9 +23,9 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import com.google.maps.android.clustering.ClusterManager
 
 class HomeFragment : Fragment(), OnMapReadyCallback {
 
@@ -33,6 +33,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var localFAB: FloatingActionButton
+    private lateinit var clusterManager: ClusterManager<MapMarker>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,8 +66,24 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         mMap = googleMap
         //TODO set markers in the fields locations!
         val warsaw = LatLng(52.2297, 21.0122)
-        mMap.addMarker(MarkerOptions().position(warsaw).title("Marker in Warsaw"))
+//        mMap.addMarker(MarkerOptions().position(warsaw).title("Marker in Warsaw"))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(warsaw, 13F))
+        clusterManager = ClusterManager<MapMarker>(activity, mMap)
+        mMap.setOnCameraIdleListener(clusterManager)
+        mMap.setOnMarkerClickListener(clusterManager)
+        addMarkers_TEMP()
+    }
+
+    fun addMarkers_TEMP() {
+        var latitude = 52.2297
+        var longitude = 21.0122
+        for (i in 0 until 60) {
+            val offset = 1 / 60
+            latitude += offset
+            longitude += offset
+            val marker = MapMarker(latitude, longitude, i.toString(), "Jestem $i")
+            clusterManager.addItem(marker)
+        }
     }
 
     override fun onRequestPermissionsResult(
