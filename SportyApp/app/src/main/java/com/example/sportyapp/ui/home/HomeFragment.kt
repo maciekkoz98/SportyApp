@@ -77,8 +77,8 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     fun addMarkers_TEMP() {
         var latitude = 52.2297
         var longitude = 21.0122
-        for (i in 0 until 60) {
-            val offset = 1 / 60
+        for (i in 0 until 250) {
+            val offset = 0.0005f
             latitude += offset
             longitude += offset
             val marker = MapMarker(latitude, longitude, i.toString(), "Jestem $i")
@@ -151,7 +151,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
                     localFAB.setImageDrawable(img)
                 }
             mMap.isMyLocationEnabled = true
-            mMap.uiSettings.isMyLocationButtonEnabled = false;
+            mMap.uiSettings.isMyLocationButtonEnabled = false
         }
     }
 }

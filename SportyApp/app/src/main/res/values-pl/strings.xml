@@ -28,4 +28,6 @@
     <string name="username">Nazwa użytkownika</string>
     <string name="game_app_bar_title">Gra</string>
     <string name="no_local_permission">Bez uprawnień aplikacja nie może Cię zlokalizować</string>
+    <string name="search_prompt">W co gramy?</string>
+    <string name="magnifying_glass">Szkło powiększające</string>
 </resources>

@@ -34,4 +34,7 @@
     <string name="list_of_players">List of players</string>
     <string name="username">Username</string>
     <string name="game_app_bar_title">Game</string>
+
+    <string name="search_prompt">Search for games</string>
+    <string name="magnifying_glass">Magnifying glass</string>
 </resources>
