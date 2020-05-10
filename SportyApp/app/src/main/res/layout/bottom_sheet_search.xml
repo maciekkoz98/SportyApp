@@ -1,33 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottom_sheet_search"
-    style="@style/CustomBottomSheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#ffffff"
-    android:orientation="horizontal"
-    android:padding="16dp"
+    style="@style/CustomBottomSheet"
+    android:background="#FFFFFF"
     app:behavior_hideable="false"
-    app:behavior_peekHeight="360dp"
+    app:behavior_peekHeight="72dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-
-    <ImageView
-        android:id="@+id/imageView10"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:contentDescription="@string/magnifying_glass"
-        app:srcCompat="@drawable/ic_search_grey_24dp" />
+        android:orientation="vertical">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="5"
-        android:hint="@string/search_prompt"
-        android:importantForAutofill="no"
-        android:inputType="textAutoCorrect" />
+        <LinearLayout
+            android:id="@+id/linear_layout_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="69dp"
+            android:orientation="horizontal"
+            android:padding="16dp">
 
+            <ImageView
+                android:id="@+id/imageView10"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="@string/magnifying_glass"
+                app:srcCompat="@drawable/ic_search_grey_24dp" />
 
-</LinearLayout>
+            <EditText
+                android:id="@+id/search_edit_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:clickable="true"
+                android:duplicateParentState="true"
+                android:enabled="true"
+                android:hint="@string/search_prompt"
+                android:importantForAutofill="no"
+                android:inputType="textAutoCorrect"
+                android:focusable="true" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="halo"
+            android:layout_marginTop="700dp" />
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

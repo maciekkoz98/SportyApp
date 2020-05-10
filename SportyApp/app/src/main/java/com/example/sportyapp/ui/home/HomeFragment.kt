@@ -1,13 +1,20 @@
 package com.example.sportyapp.ui.home
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.location.Location
 import android.os.Bundle
+import android.text.method.KeyListener
+import android.text.method.MovementMethod
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -23,6 +30,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.maps.android.clustering.ClusterManager
@@ -34,6 +42,8 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var localFAB: FloatingActionButton
     private lateinit var clusterManager: ClusterManager<MapMarker>
+    private lateinit var editTextKeyListener: KeyListener
+    private lateinit var editTextMovementMethod: MovementMethod
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,7 +68,51 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
             Snackbar.make(view, "Replace with ADD action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
+
+        val editText: TextView = root.findViewById(R.id.search_edit_text)
+        editTextKeyListener = editText.keyListener
+        editText.keyListener = null
+        editTextMovementMethod = editText.movementMethod
+        editText.movementMethod = null
+
+        val bottomSheet: View = root.findViewById(R.id.bottom_sheet_search)
+        val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
+        val searchBottomSheetLayout: LinearLayout = root.findViewById(R.id.linear_layout_search)
+        searchBottomSheetLayout.setOnClickListener {
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        }
+        val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
+
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                    editText.movementMethod = editTextMovementMethod
+                    editText.keyListener = editTextKeyListener
+                    editText.requestFocus()
+                    val imm: InputMethodManager =
+                        activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
+                } else {
+                    editText.movementMethod = null
+                    editText.keyListener = null
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                // Do something for slide offset
+            }
+        }
+        bottomSheetBehavior.addBottomSheetCallback(bottomSheetCallback)
+        bottomSheet.setOnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_DOWN) {
+                val imm =
+                    activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(editText.windowToken, 0)
+            }
+            true
+
+        }
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
+
         return root
     }
 
@@ -66,7 +120,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         mMap = googleMap
         //TODO set markers in the fields locations!
         val warsaw = LatLng(52.2297, 21.0122)
-//        mMap.addMarker(MarkerOptions().position(warsaw).title("Marker in Warsaw"))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(warsaw, 13F))
         clusterManager = ClusterManager<MapMarker>(activity, mMap)
         mMap.setOnCameraIdleListener(clusterManager)
