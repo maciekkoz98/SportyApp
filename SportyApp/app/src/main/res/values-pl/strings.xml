@@ -21,7 +21,7 @@
     <string name="basketball">Koszykówka</string>
     <string name="football">Piłka nożna</string>
     <string name="city">Miasto</string>
-    <string name="address">Adres</string>
+    <string name="address">Adres:</string>
     <string name="players_number_test">Gracze: x</string>
     <string name="min_players_number_test">Minimalna liczba graczy: y</string>
     <string name="list_of_players">Lista graczy</string>
@@ -30,4 +30,6 @@
     <string name="no_local_permission">Bez uprawnień aplikacja nie może Cię zlokalizować</string>
     <string name="search_prompt">W co gramy?</string>
     <string name="magnifying_glass">Szkło powiększające</string>
+    <string name="basketball_ball">Piłka do koszykówki</string>
+    <string name="field">Boisko</string>
 </resources>

@@ -8,6 +8,7 @@ import android.location.Location
 import android.os.Bundle
 import android.text.method.KeyListener
 import android.text.method.MovementMethod
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -30,18 +31,25 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterManager
+import com.google.maps.android.clustering.ClusterManager.OnClusterItemClickListener
 
-class HomeFragment : Fragment(), OnMapReadyCallback {
+class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener,
+    ClusterManager.OnClusterClickListener<MapMarker>, OnClusterItemClickListener<MapMarker> {
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var localFAB: FloatingActionButton
     private lateinit var clusterManager: ClusterManager<MapMarker>
+    private lateinit var bottomSheetSearch: View
+    private lateinit var bottomSheetSearchBehavior: BottomSheetBehavior<View>
+    private lateinit var bottomSheetFieldBehavior: BottomSheetBehavior<View>
     private lateinit var editTextKeyListener: KeyListener
     private lateinit var editTextMovementMethod: MovementMethod
 
@@ -75,14 +83,13 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         editTextMovementMethod = editText.movementMethod
         editText.movementMethod = null
 
-        val bottomSheet: View = root.findViewById(R.id.bottom_sheet_search)
-        val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
+        bottomSheetSearch = root.findViewById(R.id.bottom_sheet_search)
+        bottomSheetSearchBehavior = BottomSheetBehavior.from(bottomSheetSearch)
         val searchBottomSheetLayout: LinearLayout = root.findViewById(R.id.linear_layout_search)
         searchBottomSheetLayout.setOnClickListener {
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            bottomSheetSearchBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         }
-        val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
-
+        val bottomSheetSearchCallback = object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 if (newState == BottomSheetBehavior.STATE_EXPANDED) {
                     editText.movementMethod = editTextMovementMethod
@@ -97,20 +104,31 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
                 }
             }
 
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                // Do something for slide offset
-            }
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {}
         }
-        bottomSheetBehavior.addBottomSheetCallback(bottomSheetCallback)
-        bottomSheet.setOnTouchListener { v, event ->
+        bottomSheetSearchBehavior.addBottomSheetCallback(bottomSheetSearchCallback)
+        bottomSheetSearch.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
                 val imm =
                     activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(editText.windowToken, 0)
             }
             true
-
         }
+
+        val bottomSheetField: View = root.findViewById(R.id.bottom_sheet_field)
+        bottomSheetFieldBehavior = BottomSheetBehavior.from(bottomSheetField)
+        bottomSheetFieldBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+        val bottomSheetFieldCallback = object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_HIDDEN) {
+                    hideFieldSheetShowSearchSheet()
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {}
+        }
+        bottomSheetFieldBehavior.addBottomSheetCallback(bottomSheetFieldCallback)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
 
         return root
@@ -122,8 +140,11 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         val warsaw = LatLng(52.2297, 21.0122)
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(warsaw, 13F))
         clusterManager = ClusterManager<MapMarker>(activity, mMap)
+        clusterManager.setOnClusterItemClickListener(this)
+        clusterManager.setOnClusterClickListener(this)
         mMap.setOnCameraIdleListener(clusterManager)
         mMap.setOnMarkerClickListener(clusterManager)
+        mMap.setOnMapClickListener(this)
         addMarkers_TEMP()
     }
 
@@ -134,7 +155,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
             val offset = 0.0005f
             latitude += offset
             longitude += offset
-            val marker = MapMarker(latitude, longitude, i.toString(), "Jestem $i")
+            val marker = MapMarker(latitude, longitude, i.toString())
             clusterManager.addItem(marker)
         }
     }
@@ -206,5 +227,43 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
             mMap.isMyLocationEnabled = true
             mMap.uiSettings.isMyLocationButtonEnabled = false
         }
+    }
+
+    override fun onClusterItemClick(marker: MapMarker): Boolean {
+        Log.d("clusteritem", marker.toString())
+        val cameraPosition =
+            CameraPosition.builder()
+                .target(marker.position)
+                .zoom(mMap.cameraPosition.zoom)
+                .build()
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+        bottomSheetSearchBehavior.isHideable = true
+        bottomSheetSearchBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+        bottomSheetFieldBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        return true
+    }
+
+    override fun onClusterClick(cluster: Cluster<MapMarker>): Boolean {
+        val builder = LatLngBounds.builder()
+        for (item in cluster.items) {
+            builder.include(item.position)
+        }
+        val bounds = builder.build()
+        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100))
+        return true
+    }
+
+    override fun onMapClick(point: LatLng?) {
+        Log.d("halko", "halko")
+        if (bottomSheetFieldBehavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
+            Log.d("halko2", "in IF")
+            bottomSheetFieldBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            hideFieldSheetShowSearchSheet()
+        }
+    }
+
+    private fun hideFieldSheetShowSearchSheet() {
+        bottomSheetSearchBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        bottomSheetSearchBehavior.isHideable = false
     }
 }

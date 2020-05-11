@@ -3,12 +3,20 @@ package com.example.sportyapp.ui.home
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.clustering.ClusterItem
 
-class MapMarker(latitude: Double, longitude: Double, title: String, snippet: String) : ClusterItem {
+class MapMarker(latitude: Double, longitude: Double, title: String, snippet: String?) :
+    ClusterItem {
     private var mPosition: LatLng = LatLng(latitude, longitude)
     private var mTitle: String = title
-    private var mSnippet: String = snippet
+    private var mSnippet: String? = snippet
 
-    override fun getSnippet(): String {
+    constructor(latitude: Double, longitude: Double, title: String) : this(
+        latitude,
+        longitude,
+        title,
+        null
+    )
+
+    override fun getSnippet(): String? {
         return mSnippet
     }
 
@@ -18,5 +26,9 @@ class MapMarker(latitude: Double, longitude: Double, title: String, snippet: Str
 
     override fun getPosition(): LatLng {
         return mPosition
+    }
+
+    override fun toString(): String {
+        return "$mTitle $mPosition"
     }
 }
