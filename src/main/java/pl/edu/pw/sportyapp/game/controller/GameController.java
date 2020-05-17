@@ -3,6 +3,8 @@ package pl.edu.pw.sportyapp.game.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pw.sportyapp.game.dao.Game;
@@ -27,6 +29,8 @@ public class GameController {
 
     @GetMapping("/game")
     public ResponseEntity<List<Game>> getAll() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println(authentication.getName());
         return new ResponseEntity<>(gameRepository.findAll(), HttpStatus.OK);
     }
 
