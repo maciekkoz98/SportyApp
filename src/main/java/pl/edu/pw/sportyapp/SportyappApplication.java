@@ -8,37 +8,36 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import pl.edu.pw.sportyapp.shared.sequence.SequenceGeneratorService;
 import pl.edu.pw.sportyapp.user.dao.User;
 import pl.edu.pw.sportyapp.user.repository.UserRepository;
-import pl.edu.pw.sportyapp.user.security.Role;
+import pl.edu.pw.sportyapp.user.security.AppUserRole;
 
 @SpringBootApplication
 public class SportyappApplication implements CommandLineRunner {
 
-	@Autowired
-	private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-	@Autowired
-	private SequenceGeneratorService sequenceGeneratorService;
+    @Autowired
+    private SequenceGeneratorService sequenceGeneratorService;
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-	public static void main(String[] args) {
-		SpringApplication.run(SportyappApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(SportyappApplication.class, args);
+    }
 
 
-	@Override
-	public void run(String... args) throws Exception {
-		if(!userRepository.existsById(1L)) {
-			User admin = User.builder()
-					.id(sequenceGeneratorService.generateSequence(User.DBSEQUENCE_NAME))
-					.username("admin")
-					.passwordHash(passwordEncoder.encode("admin"))
-					.role(Role.ROLE_ADMIN).username("admin")
-					.build();
+    @Override
+    public void run(String... args) throws Exception {
+        if (!userRepository.existsById(1L)) {
+            User admin = User.builder()
+                    .id(sequenceGeneratorService.generateSequence(User.DBSEQUENCE_NAME))
+                    .username("admin")
+                    .passwordHash(passwordEncoder.encode("admin"))
+                    .role(AppUserRole.ADMIN)
+                    .build();
+            userRepository.insert(admin);
+        }
 
-			userRepository.insert(admin);
-		}
-
-	}
+    }
 }
