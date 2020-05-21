@@ -8,7 +8,7 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import pl.edu.pw.sportyapp.user.security.Role;
+import pl.edu.pw.sportyapp.user.security.AppUserRole;;
 
 import java.util.Collection;
 
@@ -26,12 +26,11 @@ public class User implements UserDetails {
 
     private String username;
     private String passwordHash;
-
-    private Role role;
+    private AppUserRole role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return role.getGrantedAuthorities();
     }
 
     @Override
@@ -41,21 +40,21 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }
