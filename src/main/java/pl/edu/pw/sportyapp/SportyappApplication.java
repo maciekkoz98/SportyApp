@@ -35,6 +35,10 @@ public class SportyappApplication implements CommandLineRunner {
                     .username("admin")
                     .passwordHash(passwordEncoder.encode("admin"))
                     .role(AppUserRole.ADMIN)
+                    .isAccountNonExpired(true)
+                    .isAccountNonLocked(true)
+                    .isCredentialsNonExpired(true)
+                    .isEnabled(true)
                     .build();
             userRepository.insert(admin);
         }
