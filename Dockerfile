@@ -4,6 +4,7 @@ COPY mvnw .
 COPY .mvn .mvn
 COPY pom.xml .
 RUN chmod +x mvnw
+RUN dos2unix mvnw
 RUN ./mvnw dependency:go-offline -B
 COPY src src
 RUN ./mvnw package -DskipTests
