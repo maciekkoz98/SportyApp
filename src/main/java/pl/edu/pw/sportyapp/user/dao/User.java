@@ -1,15 +1,20 @@
 package pl.edu.pw.sportyapp.user.dao;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import pl.edu.pw.sportyapp.user.security.AppUserRole;;
+import pl.edu.pw.sportyapp.user.security.AppUserRole;
+
 import javax.validation.constraints.NotNull;
-import java.util.List;
 import java.util.Collection;
+import java.util.List;
+
 @Document
 @Getter
 @Setter
@@ -27,7 +32,6 @@ public class User implements UserDetails {
     @NotNull
     private String username;
 
-    @NotNull
     private String fullname;
 
     private String passwordHash;
@@ -38,13 +42,10 @@ public class User implements UserDetails {
     private final boolean isCredentialsNonExpired;
     private final boolean isEnabled;
 
-    @NotNull
     private String email;
 
-    @NotNull
     private List<Long> gamesParticipatedIds;
 
-    @NotNull
     private List<Long> friendsIds;
 
     @Override

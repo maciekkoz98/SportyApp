@@ -1,9 +1,9 @@
 package pl.edu.pw.sportyapp.game.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.PermissionDeniedDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -11,8 +11,10 @@ import pl.edu.pw.sportyapp.game.dao.Game;
 import pl.edu.pw.sportyapp.game.repository.GameRepository;
 import pl.edu.pw.sportyapp.game.service.GameService;
 import pl.edu.pw.sportyapp.shared.exception.EntityNotFoundException;
+import pl.edu.pw.sportyapp.user.dao.User;
 
 import javax.validation.Valid;
+import java.security.acl.NotOwnerException;
 import java.util.List;
 
 @RestController
@@ -29,14 +31,18 @@ public class GameController {
 
     @GetMapping("/game")
     public ResponseEntity<List<Game>> getAll() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(authentication.getName());
-        return new ResponseEntity<>(gameRepository.findAll(), HttpStatus.OK);
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println(currentUser.getUsername());
+        if(currentUser.getRole().name().equals("ADMIN")) {
+            return new ResponseEntity<>(gameRepository.findAll(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(gameService.findAll(currentUser.getUsername()), HttpStatus.OK);
+        }
     }
 
     @GetMapping("/game/{id}")
     public ResponseEntity<Game> getOne(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(gameRepository.findById(id).orElseThrow(EntityNotFoundException::new), HttpStatus.OK);
+        return new ResponseEntity<>(gameService.findById(id), HttpStatus.OK);
     }
 
     @PostMapping(value = "/game", consumes = "application/json")
@@ -45,7 +51,7 @@ public class GameController {
     }
 
     @PutMapping(value = "/game/{id}", consumes = "application/json")
-    public ResponseEntity update(@PathVariable("id") Long id, @Valid @RequestBody Game game) {
+    public ResponseEntity update(@PathVariable("id") Long id, @Valid @RequestBody Game game) throws NotOwnerException {
         gameService.updateGame(id, game);
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -69,5 +75,15 @@ public class GameController {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<String> validationExceptionHandler() {
         return new ResponseEntity<>("Validation exception", HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NotOwnerException.class)
+    public ResponseEntity<String> notOwnerExceptionHandler() {
+        return new ResponseEntity<>("Only owner can edit this game", HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(PermissionDeniedDataAccessException.class)
+    public ResponseEntity<String> permissionDeniedExceptionHandler() {
+        return new ResponseEntity<>("User not permitted to access this game", HttpStatus.BAD_REQUEST);
     }
 }

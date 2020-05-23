@@ -22,9 +22,11 @@ public class Game {
     @Transient
     public static final String DBSEQUENCE_NAME = "gameSequenceID";
 
-    public String name;
     public long date;
+    public long owner;
     public long[] players;
+
+    public boolean isPublic;
 
     @NonNull
     @NotNull

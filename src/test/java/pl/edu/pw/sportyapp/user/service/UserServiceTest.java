@@ -34,8 +34,8 @@ public class UserServiceTest {
 
     @Test
     void addUserValidInput() {
-        User user = User.builder().username("testowy").name("Jan").surname("Kowalski").email("jkowal@mail.com")
-                .averageGrade(5L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
+        User user = User.builder().username("testowy").email("jkowal@mail.com")
+                .gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
         when(sequenceGeneratorService.generateSequence(anyString())).thenReturn(10L);
         when(userRepository.insert(any(User.class))).thenReturn(user);
 
@@ -59,8 +59,8 @@ public class UserServiceTest {
 
     @Test
     void updateUserValidInput() {
-        User user = User.builder().id(10L).username("testowyNowy").name("Jan").surname("Kowalski").email("jkowal@mail.com")
-                .averageGrade(5L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
+        User user = User.builder().id(10L).username("testowyNowy").email("jkowal@mail.com")
+                .gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
         when(userRepository.existsById(10L)).thenReturn(true);
 
         userService.updateUser(10L, user);
@@ -68,8 +68,8 @@ public class UserServiceTest {
 
     @Test
     void updateUserInvalidInput() {
-        User user = User.builder().id(11L).username("testowyNowy").name("Jan").surname("Kowalski").email("jkowal@mail.com")
-                .averageGrade(5L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
+        User user = User.builder().id(11L).username("testowyNowy").email("jkowal@mail.com")
+                .gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
         when(userRepository.existsById(anyLong())).thenReturn(true);
 
         assertThatExceptionOfType(IllegalArgumentException.class)
@@ -78,8 +78,8 @@ public class UserServiceTest {
 
     @Test
     void updateUserNotExistingId() {
-        User user = User.builder().id(10L).username("testowyNowy").name("Jan").surname("Kowalski").email("jkowal@mail.com")
-                .averageGrade(5L).gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
+        User user = User.builder().id(10L).username("testowyNowy").email("jkowal@mail.com")
+                .gamesParticipatedIds(new ArrayList<>()).friendsIds(new ArrayList<>()).build();
         when(userRepository.existsById(anyLong())).thenReturn(false);
 
         assertThatExceptionOfType(EntityNotFoundException.class)
