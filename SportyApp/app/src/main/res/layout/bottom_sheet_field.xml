@@ -7,13 +7,14 @@
     android:layout_height="wrap_content"
     android:background="#FFFFFF"
     app:behavior_hideable="true"
-    app:behavior_peekHeight="444dp"
+    app:behavior_peekHeight="675dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:paddingBottom="10dp"
         android:padding="16dp">
 
         <LinearLayout
@@ -67,6 +68,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Ostrobramska 10" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                style="@style/bottomSheetButtonLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="13.5dp"
+                android:text="@string/menu_add_game" />
+
+            <Button
+                style="@style/bottomSheetButtonLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="@string/check_calendar" />
         </LinearLayout>
     </LinearLayout>
 

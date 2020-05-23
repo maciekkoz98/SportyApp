@@ -50,4 +50,10 @@
         <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 
+    <style name="bottomSheetButtonLayout">
+        <item name="android:padding">10dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:layout_marginTop">15dp</item>
+    </style>
+
 </resources>

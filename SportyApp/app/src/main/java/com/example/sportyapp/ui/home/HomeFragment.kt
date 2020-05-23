@@ -19,6 +19,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.marginBottom
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.sportyapp.R
@@ -71,6 +72,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
         localFAB.setOnClickListener {
             localize()
         }
+        Log.d("na poczatku", localFAB.marginBottom.toString())
         val addFAB: FloatingActionButton = root.findViewById(R.id.addFAB)
         addFAB.setOnClickListener { view ->
             Snackbar.make(view, "Replace with ADD action", Snackbar.LENGTH_LONG)
@@ -104,10 +106,11 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
                 }
             }
 
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {}
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            }
         }
         bottomSheetSearchBehavior.addBottomSheetCallback(bottomSheetSearchCallback)
-        bottomSheetSearch.setOnTouchListener { v, event ->
+        bottomSheetSearch.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
                 val imm =
                     activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -122,11 +125,23 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
         val bottomSheetFieldCallback = object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-                    hideFieldSheetShowSearchSheet()
+                    bottomSheetSearchBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                    bottomSheetSearchBehavior.isHideable = false
                 }
             }
 
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {}
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                val params = localFAB.layoutParams as ViewGroup.MarginLayoutParams
+                val screenDensity: Float = localFAB.context.resources.displayMetrics.density
+                if (slideOffset.isNaN()) {
+                    val margin = 206 * screenDensity
+                    params.bottomMargin = margin.toInt()
+                } else {
+                    val margin = (45.428 * slideOffset + 206) * screenDensity
+                    params.bottomMargin = margin.toInt()
+                }
+                localFAB.layoutParams = params
+            }
         }
         bottomSheetFieldBehavior.addBottomSheetCallback(bottomSheetFieldCallback)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
@@ -230,7 +245,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
     }
 
     override fun onClusterItemClick(marker: MapMarker): Boolean {
-        Log.d("clusteritem", marker.toString())
         val cameraPosition =
             CameraPosition.builder()
                 .target(marker.position)
@@ -254,16 +268,8 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
     }
 
     override fun onMapClick(point: LatLng?) {
-        Log.d("halko", "halko")
         if (bottomSheetFieldBehavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
-            Log.d("halko2", "in IF")
             bottomSheetFieldBehavior.state = BottomSheetBehavior.STATE_HIDDEN
-            hideFieldSheetShowSearchSheet()
         }
-    }
-
-    private fun hideFieldSheetShowSearchSheet() {
-        bottomSheetSearchBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-        bottomSheetSearchBehavior.isHideable = false
     }
 }
