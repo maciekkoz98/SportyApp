@@ -24,10 +24,10 @@ class PersonInfoFragment : Fragment() {
         personInfoViewModel =
             ViewModelProviders.of(this).get(PersonInfoViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_person_info, container, false)
-        val textView: TextView = root.findViewById(R.id.text_tools)
+        /*val textView: TextView = root.findViewById(R.id.text_tools)
         personInfoViewModel.text.observe(this, Observer {
             textView.text = it
-        })
+        })*/
 
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.user_app_bar_title)
 
