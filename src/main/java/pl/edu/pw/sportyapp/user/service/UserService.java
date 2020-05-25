@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.edu.pw.sportyapp.shared.exception.EntityNotFoundException;
+import pl.edu.pw.sportyapp.shared.exception.UserNotFoundException;
 import pl.edu.pw.sportyapp.shared.sequence.SequenceGeneratorService;
 import pl.edu.pw.sportyapp.user.dao.User;
 import pl.edu.pw.sportyapp.user.repository.UserRepository;
@@ -29,8 +30,19 @@ public class UserService {
 
     public Long addUser(User submittedUser) {
         Long newId = sequenceGeneratorService.generateSequence(User.DBSEQUENCE_NAME);
-        User newUser = new User(newId, submittedUser.getUsername(), Optional.ofNullable(submittedUser.getFullname()).orElse(null), passwordEncoder.encode(submittedUser.getPasswordHash()), AppUserRole.USER, true, true, true, true, submittedUser.getEmail(), Lists.newArrayList(), Lists.newArrayList());
+        User newUser = new User(newId, submittedUser.getUsername(),
+                Optional.ofNullable(submittedUser.getFullname()).orElse(null),
+                passwordEncoder.encode(submittedUser.getPasswordHash()), AppUserRole.USER, true,
+                true, true, true, submittedUser.getEmail(),
+                Lists.newArrayList(5.0f, 5.0f, 5.0f), Lists.newArrayList(0, 0, 0), Lists.newArrayList(), Lists.newArrayList());
         return userRepository.insert(newUser).getId();
+    }
+
+    public Optional<User> getUserById(Long id) {
+        if (!userRepository.existsById(id)) {
+            throw new UserNotFoundException();
+        }
+        return userRepository.findById(id);
     }
 
     public void updateUser(long id, User user) {
@@ -41,7 +53,6 @@ public class UserService {
         if (user.getId() != id) {
             throw new IllegalArgumentException();
         }
-
         userRepository.save(user);
     }
 
@@ -49,7 +60,6 @@ public class UserService {
         if (!userRepository.existsById(id)) {
             throw new EntityNotFoundException();
         }
-
         userRepository.deleteById(id);
     }
 }

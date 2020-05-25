@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import pl.edu.pw.sportyapp.game.dao.Game;
 import pl.edu.pw.sportyapp.game.repository.GameRepository;
 import pl.edu.pw.sportyapp.game.service.GameService;
+import pl.edu.pw.sportyapp.shared.exception.DataDuplicationException;
 import pl.edu.pw.sportyapp.shared.exception.EntityNotFoundException;
+import pl.edu.pw.sportyapp.shared.exception.NotAllowedActionException;
+import pl.edu.pw.sportyapp.shared.exception.UserNotFoundException;
 import pl.edu.pw.sportyapp.user.dao.User;
 
 import javax.validation.Valid;
@@ -33,11 +36,16 @@ public class GameController {
     public ResponseEntity<List<Game>> getAll() {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         System.out.println(currentUser.getUsername());
-        if(currentUser.getRole().name().equals("ADMIN")) {
+        if (currentUser.getRole().name().equals("ADMIN")) {
             return new ResponseEntity<>(gameRepository.findAll(), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(gameService.findAll(currentUser.getUsername()), HttpStatus.OK);
+            return new ResponseEntity<>(gameService.findAllAvailableForUser(currentUser.getId()), HttpStatus.OK);
         }
+    }
+
+    @GetMapping("/game/history")
+    public ResponseEntity<List<Game>> getAllOldGames() {
+        return new ResponseEntity<>(gameService.findAllOldGames(), HttpStatus.OK);
     }
 
     @GetMapping("/game/{id}")
@@ -50,6 +58,18 @@ public class GameController {
         return new ResponseEntity<>(gameService.addGame(newGame), HttpStatus.CREATED);
     }
 
+    @PostMapping(value = "/game/{gameId}/user/{userId}")
+    public ResponseEntity<Long> addUser(@PathVariable("gameId") Long gameId, @PathVariable("userId") Long userId) {
+        gameService.addUserToGame(gameId, userId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/game/{gameId}/user/{userId}")
+    public ResponseEntity<Long> removeUser(@PathVariable("gameId") Long gameId, @PathVariable("userId") Long userId) {
+        gameService.removeUserFromGame(gameId, userId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @PutMapping(value = "/game/{id}", consumes = "application/json")
     public ResponseEntity update(@PathVariable("id") Long id, @Valid @RequestBody Game game) throws NotOwnerException {
         gameService.updateGame(id, game);
@@ -57,7 +77,7 @@ public class GameController {
     }
 
     @DeleteMapping("/game/{id}")
-    public ResponseEntity delete(@PathVariable("id") Long id) {
+    public ResponseEntity delete(@PathVariable("id") Long id) throws NotOwnerException {
         gameService.deleteGame(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
@@ -85,5 +105,20 @@ public class GameController {
     @ExceptionHandler(PermissionDeniedDataAccessException.class)
     public ResponseEntity<String> permissionDeniedExceptionHandler() {
         return new ResponseEntity<>("User not permitted to access this game", HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DataDuplicationException.class)
+    public ResponseEntity<String> dataDuplicationExceptionHandler() {
+        return new ResponseEntity<>("Already inserted", HttpStatus.valueOf("409"));
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<String> userNotFoundExceptionHandler() {
+        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(NotAllowedActionException.class)
+    public ResponseEntity<String> notAllowedActionExceptionHandler() {
+        return new ResponseEntity<>("Not authorized to perform operation", HttpStatus.BAD_REQUEST);
     }
 }

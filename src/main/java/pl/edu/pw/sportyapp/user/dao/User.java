@@ -44,6 +44,9 @@ public class User implements UserDetails {
 
     private String email;
 
+    private List<Float> ratings;
+    private List<Integer> ratingsNumber;
+
     private List<Long> gamesParticipatedIds;
 
     private List<Long> friendsIds;

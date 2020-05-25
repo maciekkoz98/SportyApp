@@ -1,17 +1,21 @@
 package pl.edu.pw.sportyapp.user.controller;
 
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pw.sportyapp.shared.exception.EntityNotFoundException;
 import pl.edu.pw.sportyapp.user.dao.User;
 import pl.edu.pw.sportyapp.user.repository.UserRepository;
+import pl.edu.pw.sportyapp.user.security.AppUserRole;
 import pl.edu.pw.sportyapp.user.service.UserService;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -26,7 +30,21 @@ public class UserController {
 
     @GetMapping("/user")
     public ResponseEntity<List<User>> getAll() {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (!currentUser.getRole().name().equals("ADMIN")) {
+
+        }
         return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping("/user/me")
+    public ResponseEntity<User> getMyself() {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findById(currentUser.getId()).orElseThrow(EntityNotFoundException::new);
+        User userToReturn = new User(user.getId(), user.getUsername(), user.getFullname(), null,
+                user.getRole(), true, true, true, true,
+                user.getEmail(), user.getRatings(), user.getRatingsNumber(), user.getGamesParticipatedIds(), user.getFriendsIds());
+        return new ResponseEntity<>(userToReturn, HttpStatus.OK);
     }
 
     @GetMapping("/user/{id}")

@@ -5,8 +5,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
+import java.util.List;
 
 @Document
 @Getter
@@ -22,14 +23,18 @@ public class Game {
     @Transient
     public static final String DBSEQUENCE_NAME = "gameSequenceID";
 
+    @NotBlank
+    public String name;
+    @Positive
     public long date;
+    @Positive
+    public long duration;
+
     public long owner;
-    public long[] players;
+    public List<Long> players;
 
     public boolean isPublic;
 
-    @NonNull
-    @NotNull
     @Positive
     public long facility;
 }
