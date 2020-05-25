@@ -10,7 +10,8 @@ import static pl.edu.pw.sportyapp.user.security.AppUserPermission.*;
 
 public enum AppUserRole {
     USER(Sets.newHashSet()),
-    ADMIN(Sets.newHashSet(USER_READ, USER_WRITE, GAME_READ, GAME_WRITE));
+    ADMIN(Sets.newHashSet(USER_READ, USER_WRITE, GAME_READ, GAME_WRITE)),
+    EMPTY(Sets.newHashSet());
 
     private final Set<AppUserPermission> permissions;
 

@@ -33,6 +33,8 @@ public class SportyappApplication implements CommandLineRunner {
             User admin = User.builder()
                     .id(sequenceGeneratorService.generateSequence(User.DBSEQUENCE_NAME))
                     .username("admin")
+                    .fullname("admin")
+                    .email("admin@mail.com")
                     .passwordHash(passwordEncoder.encode("admin"))
                     .role(AppUserRole.ADMIN)
                     .isAccountNonExpired(true).isCredentialsNonExpired(true).isAccountNonLocked(true).isEnabled(true)

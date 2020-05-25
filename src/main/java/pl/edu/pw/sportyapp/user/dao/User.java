@@ -11,7 +11,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import pl.edu.pw.sportyapp.user.security.AppUserRole;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.List;
 
@@ -20,7 +23,7 @@ import java.util.List;
 @Setter
 @Builder
 @AllArgsConstructor
-
+@Valid
 public class User implements UserDetails {
 
     @Id
@@ -29,9 +32,10 @@ public class User implements UserDetails {
     @Transient
     public static final String DBSEQUENCE_NAME = "userSequenceID";
 
-    @NotNull
+    @Size(min = 3, max = 200)
     private String username;
 
+    @Size(min = 3, max = 200)
     private String fullname;
 
     private String passwordHash;
@@ -42,6 +46,7 @@ public class User implements UserDetails {
     private final boolean isCredentialsNonExpired;
     private final boolean isEnabled;
 
+    @Email
     private String email;
 
     private List<Float> ratings;
