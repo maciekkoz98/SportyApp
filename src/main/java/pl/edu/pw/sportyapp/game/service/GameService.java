@@ -123,7 +123,7 @@ public class GameService {
         if (currentUser.getRole().name().equals("ADMIN")) {
             games = gameRepository.findAll();
         } else {
-            games = gameRepository.findByIsPublicOrOwnerOrPlayersContains(true, currentUser.getId(), currentUser.getId());
+            games = gameRepository.findByOwnerOrPlayersContains(currentUser.getId(), currentUser.getId());
         }
         Timestamp time = new Timestamp(System.currentTimeMillis());
         games.removeIf(game -> (game.getDate() + game.getDuration()) > time.getTime());
