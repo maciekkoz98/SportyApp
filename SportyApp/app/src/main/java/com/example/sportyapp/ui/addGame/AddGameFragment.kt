@@ -22,10 +22,10 @@ class AddGameFragment : Fragment() {
         addGameViewModel =
             ViewModelProviders.of(this).get(AddGameViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_add_game, container, false)
-        val textView: TextView = root.findViewById(R.id.text_send)
+        /*val textView: TextView = root.findViewById(R.id.text_send)
         addGameViewModel.text.observe(this, Observer {
             textView.text = it
-        })
+        })*/
         return root
     }
 }
