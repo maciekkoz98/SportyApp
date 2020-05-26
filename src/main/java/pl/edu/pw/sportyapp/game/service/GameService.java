@@ -39,7 +39,7 @@ public class GameService {
         newGame.setId(sequenceGenerator.generateSequence(Game.DBSEQUENCE_NAME));
         newGame.setOwner(currentUser.getId());
         newGame.setPlayers(new ArrayList<>(Arrays.asList(currentUser.getId())));
-        User user = userService.getUserById(currentUser.getId()).orElseThrow(UserNotFoundException::new);
+        User user = userService.getUserById(currentUser.getId());
         user.getGamesParticipatedIds().add(newGame.getId());
         userService.updateUser(user.getId(), user);
         return gameRepository.insert(newGame).getId();
@@ -75,7 +75,7 @@ public class GameService {
 
     public void addUserToGame(Long gameId, Long userId) throws DataDuplicationException, UserNotFoundException {
         Game game = gameRepository.findById(gameId).orElseThrow(EntityNotFoundException::new);
-        User user = userService.getUserById(userId).orElseThrow(UserNotFoundException::new);
+        User user = userService.getUserById(userId);
         if (game.getPlayers().contains(userId)) {
             throw new DataDuplicationException();
         }
@@ -88,7 +88,7 @@ public class GameService {
     public void removeUserFromGame(Long gameId, Long userId) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Game game = gameRepository.findById(gameId).orElseThrow(EntityNotFoundException::new);
-        User user = userService.getUserById(userId).orElseThrow(UserNotFoundException::new);
+        User user = userService.getUserById(userId);
         if (currentUser.getId() != userId && currentUser.getId() != game.getOwner() && !currentUser.getRole().name().equals("ADMIN")) {
             throw new NotAllowedActionException();
         }
@@ -123,7 +123,7 @@ public class GameService {
         if (currentUser.getRole().name().equals("ADMIN")) {
             games = gameRepository.findAll();
         } else {
-            games = gameRepository.findByIsPublicOrOwnerOrPlayersContains(true, currentUser.getId(), currentUser.getId());
+            games = gameRepository.findByOwnerOrPlayersContains(currentUser.getId(), currentUser.getId());
         }
         Timestamp time = new Timestamp(System.currentTimeMillis());
         games.removeIf(game -> (game.getDate() + game.getDuration()) > time.getTime());

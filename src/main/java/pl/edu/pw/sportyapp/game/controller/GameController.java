@@ -59,7 +59,7 @@ public class GameController {
     }
 
     @PostMapping(value = "/game/{gameId}/user/{userId}")
-    public ResponseEntity<Long> addUser(@PathVariable("gameId") Long gameId, @PathVariable("userId") Long userId) {
+    public ResponseEntity<Long> addUser(@PathVariable("gameId") Long gameId, @PathVariable("userId") Long userId) throws DataDuplicationException {
         gameService.addUserToGame(gameId, userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -104,12 +104,12 @@ public class GameController {
 
     @ExceptionHandler(PermissionDeniedDataAccessException.class)
     public ResponseEntity<String> permissionDeniedExceptionHandler() {
-        return new ResponseEntity<>("User not permitted to access this game", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("User not permitted to access this game", HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(DataDuplicationException.class)
     public ResponseEntity<String> dataDuplicationExceptionHandler() {
-        return new ResponseEntity<>("Already inserted", HttpStatus.valueOf("409"));
+        return new ResponseEntity<>("Already inserted", HttpStatus.valueOf(409));
     }
 
     @ExceptionHandler(UserNotFoundException.class)
@@ -119,6 +119,6 @@ public class GameController {
 
     @ExceptionHandler(NotAllowedActionException.class)
     public ResponseEntity<String> notAllowedActionExceptionHandler() {
-        return new ResponseEntity<>("Not authorized to perform operation", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("Not authorized to perform operation", HttpStatus.FORBIDDEN);
     }
 }
