@@ -11,6 +11,7 @@ import pl.edu.pw.sportyapp.shared.exception.EntityNotFoundException;
 import pl.edu.pw.sportyapp.shared.exception.NotAllowedActionException;
 import pl.edu.pw.sportyapp.shared.exception.UserNotFoundException;
 import pl.edu.pw.sportyapp.shared.sequence.SequenceGeneratorService;
+import pl.edu.pw.sportyapp.sport.service.SportService;
 import pl.edu.pw.sportyapp.user.dao.User;
 import pl.edu.pw.sportyapp.user.service.UserService;
 
@@ -26,12 +27,14 @@ public class GameService {
     private SequenceGeneratorService sequenceGenerator;
     private GameRepository gameRepository;
     private UserService userService;
+    private SportService sportService;
 
     @Autowired
-    public GameService(GameRepository gr, SequenceGeneratorService sgs, UserService us) {
+    public GameService(GameRepository gr, SequenceGeneratorService sgs, UserService us, SportService ss) {
         this.gameRepository = gr;
         this.sequenceGenerator = sgs;
         this.userService = us;
+        this.sportService = ss;
     }
 
     public Long addGame(Game newGame) {
@@ -39,6 +42,9 @@ public class GameService {
         newGame.setId(sequenceGenerator.generateSequence(Game.DBSEQUENCE_NAME));
         newGame.setOwner(currentUser.getId());
         newGame.setPlayers(new ArrayList<>(Arrays.asList(currentUser.getId())));
+        if (!sportService.checkIfSportExists(newGame.id)) {
+            newGame.setSport(0);
+        }
         User user = userService.getUserById(currentUser.getId());
         user.getGamesParticipatedIds().add(newGame.getId());
         userService.updateUser(user.getId(), user);
@@ -68,6 +74,9 @@ public class GameService {
 
         if (((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId() != game.getOwner()) {
             throw new NotOwnerException();
+        }
+        if (!sportService.checkIfSportExists(game.id)) {
+            game.setSport(0);
         }
 
         gameRepository.save(game);

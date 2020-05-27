@@ -39,4 +39,7 @@ public class Game {
 
     @Positive
     public long facility;
+
+    @Positive
+    public long sport;
 }

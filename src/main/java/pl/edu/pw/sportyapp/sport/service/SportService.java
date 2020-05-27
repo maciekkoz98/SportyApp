@@ -70,4 +70,8 @@ public class SportService {
         }
         sportRepository.deleteById(id);
     }
+
+    public boolean checkIfSportExists(long id) {
+        return sportRepository.existsById(id);
+    }
 }

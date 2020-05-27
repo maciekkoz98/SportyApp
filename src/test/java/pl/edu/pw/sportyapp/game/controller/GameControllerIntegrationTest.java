@@ -123,7 +123,7 @@ class GameControllerIntegrationTest {
 
     @Test
     void createValidInput() throws Exception {
-        Game g1 = Game.builder().facility(2L).owner(6L).name("gra").date(System.currentTimeMillis()*2).duration(3600L).build();
+        Game g1 = Game.builder().facility(2L).sport(1L).owner(6L).name("gra").date(System.currentTimeMillis()*2).duration(3600L).build();
         String json = null;
 
         try {
@@ -149,7 +149,7 @@ class GameControllerIntegrationTest {
 
     @Test
     void updateValidInput() throws Exception {
-        Game g1 = Game.builder().id(1L).facility(2L).owner(6L).name("gra").isPublic(true).date(System.currentTimeMillis()*2).duration(2600).build();
+        Game g1 = Game.builder().id(1L).facility(2L).sport(1L).owner(6L).name("gra").isPublic(true).date(System.currentTimeMillis()*2).duration(2600).build();
         mongoOperations.insert(g1, "game");
         mongoOperations.insert(user, "user");
 
@@ -171,7 +171,7 @@ class GameControllerIntegrationTest {
 
     @Test
     void updateNotExistingGame() throws Exception {
-        Game g1 = Game.builder().id(1L).facility(2L).owner(6L).name("gra").isPublic(true).date(System.currentTimeMillis()*2).duration(2600).build();
+        Game g1 = Game.builder().id(1L).facility(2L).sport(1L).owner(6L).name("gra").isPublic(true).date(System.currentTimeMillis()*2).duration(2600).build();
 
         String json = null;
 
