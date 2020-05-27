@@ -40,4 +40,8 @@
     <string name="players">Gracze:</string>
     <string name="is_public">Gra publiczna?</string>
     <string name="editText_game_name">Nazwa gry</string>
+    <string name="hint_name">Nazwa gry</string>
+    <string name="hint_duration">Czas trwania</string>
+    <string name="hint_time">Data</string>
+    <string name="createGame_addPlayer">Zaproś graczy</string>
 </resources>

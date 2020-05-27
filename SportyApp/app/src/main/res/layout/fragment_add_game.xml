@@ -2,14 +2,14 @@
 <android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="620dp"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
 
     <TextView
         android:id="@+id/add_game_title"
         android:layout_width="match_parent"
-        android:layout_height="84dp"
+        android:layout_height="70dp"
         android:layout_gravity="center|center_horizontal|center_vertical"
         android:foregroundGravity="center_vertical|center|center_horizontal"
         android:gravity="center"
@@ -22,52 +22,43 @@
         android:layout_height="90dp"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/textView16"
-            android:layout_width="95dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="15dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/game_name"
-            android:textAlignment="viewStart"
-            android:textSize="18sp" />
-
         <EditText
             android:id="@+id/editText_game_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginEnd="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="@string/editText_game_name"
-            android:inputType="textPersonName" />
+            android:hint="@string/hint_name"
+            android:inputType="textPersonName"
+            android:selectAllOnFocus="false"
+            android:singleLine="true"
+            android:autofillHints="" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/textView17"
-            android:layout_width="93dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="15dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/date_of_game"
-            android:textAlignment="viewStart"
-            android:textSize="18sp" />
 
         <EditText
             android:id="@+id/editText_date_of_game"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="date" />
+            android:hint="@string/hint_time"
+            android:inputType="date"
+            android:selectAllOnFocus="false"
+            android:singleLine="true"
+            android:autofillHints="" />
     </LinearLayout>
 
     <LinearLayout
@@ -75,66 +66,87 @@
         android:layout_height="90dp"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/textView18"
-            android:layout_width="96dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="15dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/duration_of_game"
-            android:textAlignment="viewStart"
-            android:textSize="18sp" />
-
         <EditText
             android:id="@+id/editText_game_duration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="time" />
+            android:hint="@string/hint_duration"
+            android:inputType="time"
+            android:paddingLeft="5dp"
+            android:paddingTop="5dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="5dp"
+            android:autofillHints="" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="70dp"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/textView19"
-            android:layout_width="118dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginStart="15dp"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/players"
+            android:padding="10dp"
+            android:text="@string/createGame_addPlayer"
             android:textAlignment="viewStart"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            app:autoSizeMaxTextSize="20dp"
+            app:autoSizeMinTextSize="1dp"
+            app:autoSizeTextType="uniform" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/editText_players"
             android:layout_width="202dp"
             android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:autofillHints="" />
 
         <ImageButton
             android:id="@+id/imageButton"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_gravity="center|center_horizontal|center_vertical"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:background="#FFFFFF"
             android:foregroundGravity="center_vertical|center|center_horizontal"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_add_circle_outline_gray_24dp" />
+            app:srcCompat="@drawable/ic_add_circle_outline_gray_24dp"
+            android:contentDescription="TODO" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="70dp"
         android:orientation="horizontal">
 
         <TextView
@@ -155,13 +167,30 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="358dp"
-        android:layout_height="105dp"
-        android:layout_gravity="center_horizontal|center_vertical"
-        android:layout_weight="1"
-        android:foregroundGravity="center_vertical|center|center_horizontal"
-        android:gravity="center|center_horizontal|center_vertical"
-        android:text="@string/add_game_title" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="1"
+            android:foregroundGravity="center_vertical|center|center_horizontal"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:maxWidth="300dp"
+            android:maxHeight="90dp"
+            android:minWidth="100dp"
+            android:minHeight="60dp"
+            android:padding="5dp"
+            android:text="@string/add_game_title" />
+
+    </LinearLayout>
+
 </android.widget.LinearLayout>
