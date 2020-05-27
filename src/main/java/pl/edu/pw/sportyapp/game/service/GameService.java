@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.PermissionDeniedDataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import pl.edu.pw.sportyapp.facility.dao.Facility;
+import pl.edu.pw.sportyapp.facility.service.FacilityService;
 import pl.edu.pw.sportyapp.game.dao.Game;
 import pl.edu.pw.sportyapp.game.repository.GameRepository;
 import pl.edu.pw.sportyapp.shared.exception.DataDuplicationException;
@@ -28,13 +30,16 @@ public class GameService {
     private GameRepository gameRepository;
     private UserService userService;
     private SportService sportService;
+    private FacilityService facilityService;
 
     @Autowired
-    public GameService(GameRepository gr, SequenceGeneratorService sgs, UserService us, SportService ss) {
+    public GameService(GameRepository gr, SequenceGeneratorService sgs, UserService us, SportService ss, FacilityService fs) {
         this.gameRepository = gr;
         this.sequenceGenerator = sgs;
         this.userService = us;
         this.sportService = ss;
+        this.facilityService = fs;
+        facilityService.setGameService(this);
     }
 
     public Long addGame(Game newGame) {
@@ -47,6 +52,7 @@ public class GameService {
         }
         User user = userService.getUserById(currentUser.getId());
         user.getGamesParticipatedIds().add(newGame.getId());
+        facilityService.addGameToFacility(newGame.getFacility(), newGame.getId());
         userService.updateUser(user.getId(), user);
         return gameRepository.insert(newGame).getId();
     }
@@ -60,6 +66,7 @@ public class GameService {
         if (!currentUser.getRole().name().equals("ADMIN") && currentUser.getId() != game.getOwner()) {
             throw new NotOwnerException();
         }
+        facilityService.deleteGameFromFacility(game.getFacility(), game.getId());
         gameRepository.deleteById(id);
     }
 
