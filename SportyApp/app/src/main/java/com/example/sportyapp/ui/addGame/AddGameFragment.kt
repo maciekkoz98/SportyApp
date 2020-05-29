@@ -1,5 +1,6 @@
 package com.example.sportyapp.ui.addGame
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.os.Build
 import android.os.Bundle
@@ -22,7 +23,7 @@ class AddGameFragment : Fragment() {
 
     private lateinit var addGameViewModel: AddGameViewModel
     private lateinit var gameName: EditText
-    private lateinit var gameDate: EditText
+    private lateinit var gameDate: TextView
     private lateinit var gameDuration: EditText
     private lateinit var isGamePublic: CheckBox
 
@@ -56,13 +57,11 @@ class AddGameFragment : Fragment() {
             val m = c.get(Calendar.MONTH)
             val d = c.get(Calendar.DAY_OF_MONTH)
             //Niedoskonły wybór daty - trzeba kliknąć na pole 2 razy. Pytanie brzmi czy wyrzuacmy wogóle, zostawiamy czy próba poprawy.
-            context?.let { it1 ->
-                DatePickerDialog(it1, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                    // Display Selected date in Toast
+            val dpd = DatePickerDialog(this.activity!!,android.R.style.Theme_Material_Light_Dialog, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                     gameDate.setText(dayOfMonth.toString()+"."+monthOfYear.toString()+"."+year.toString())
 
                 }, y, m, d)
-            }?.show()
+            dpd.show()
         }
         val addGameBtn = view.findViewById<Button>(R.id.addGameButton)
         addGameBtn.setOnClickListener(addGameListener)
