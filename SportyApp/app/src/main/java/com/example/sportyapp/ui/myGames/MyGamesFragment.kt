@@ -33,8 +33,8 @@ class MyGamesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         spinner = view.findViewById(R.id.myGames_spinner)
-        val items = arrayOf("Basketball", "Football", "Volleyball")
-        val adapter = ArrayAdapter<String>(this.activity!!, android.R.layout.simple_spinner_item, items)
+        val items = arrayOf("No filter","Basketball", "Football", "Volleyball")
+        val adapter = ArrayAdapter<String>(this.activity!!, android.R.layout.simple_spinner_dropdown_item, items)
         spinner.adapter=adapter
     }
 }

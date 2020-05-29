@@ -69,6 +69,7 @@ class AddGameFragment : Fragment() {
     private val addGameListener = View.OnClickListener { view ->
         if(validate()) {
             addGame()
+            activity?.onBackPressed()
         }
     }
     //walidacja pól: name, date, duration - można pokusić się o więcej regexów.
