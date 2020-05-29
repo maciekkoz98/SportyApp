@@ -13,7 +13,7 @@
     <string name="menu_add_game">Add a game</string>
 
     <string name="hint_name">name</string>
-    <string name="hint_duration">duration</string>
+    <string name="hint_duration">duration in minutes</string>
     <string name="hint_time">date</string>
     <string name="createGame_addPlayer">Add players</string>
 

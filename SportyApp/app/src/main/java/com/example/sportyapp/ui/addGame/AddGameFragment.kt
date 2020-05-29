@@ -1,26 +1,21 @@
 package com.example.sportyapp.ui.addGame
 
-import android.net.Credentials
+import android.app.DatePickerDialog
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.sportyapp.R
 import com.example.sportyapp.utils.AuthenticationInterceptor
-import kotlinx.android.synthetic.main.fragment_add_game.*
 import okhttp3.*
 import org.json.JSONObject
-import retrofit2.Retrofit
 import java.io.IOException
-import java.time.LocalDateTime
 import java.util.*
 
 class AddGameFragment : Fragment() {
@@ -47,6 +42,7 @@ class AddGameFragment : Fragment() {
         return root
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -54,15 +50,52 @@ class AddGameFragment : Fragment() {
         gameDate = view.findViewById(R.id.editText_date_of_game)
         gameDuration = view.findViewById(R.id.editText_game_duration)
         isGamePublic = view.findViewById(R.id.checkBox_is_public)
+        gameDate.setOnClickListener{
+            val c = Calendar.getInstance()
+            val y = c.get(Calendar.YEAR)
+            val m = c.get(Calendar.MONTH)
+            val d = c.get(Calendar.DAY_OF_MONTH)
+            //Niedoskonły wybór daty - trzeba kliknąć na pole 2 razy. Pytanie brzmi czy wyrzuacmy wogóle, zostawiamy czy próba poprawy.
+            context?.let { it1 ->
+                DatePickerDialog(it1, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    // Display Selected date in Toast
+                    gameDate.setText(dayOfMonth.toString()+"."+monthOfYear.toString()+"."+year.toString())
 
+                }, y, m, d)
+            }?.show()
+        }
         val addGameBtn = view.findViewById<Button>(R.id.addGameButton)
         addGameBtn.setOnClickListener(addGameListener)
     }
-
     private val addGameListener = View.OnClickListener { view ->
-        addGame()
+        if(validate()) {
+            addGame()
+        }
     }
+    //walidacja pól: name, date, duration - można pokusić się o więcej regexów.
+    private fun validate(): Boolean{
+        var check = true
+        val namePattern = Regex("[a-zA-Z0-9]+")
+        if(gameName.length()==0){
+            gameName.error = "Name is required!"
+            check = false
+        }else if(gameName.length()>30){
+            gameName.error = "Name max length is 30!"
+            check = false
+        }else if(!namePattern.matches(gameName.text.toString())){
+            gameName.error = "Name can contain only letters and numbers!"
+            check = false
+        }
+        if(gameDate.length()==0){
+            gameDate.error = "Provide date in dd.mm.yyyy formant."
+        }
+        if(gameDuration.length()==0){
+            gameDuration.error = "Duration is required"
+            check = false
+        }
 
+        return check
+    }
     private fun addGame() {
         val url = "http://10.0.2.2:8080/game"
         val httpClient = OkHttpClient().newBuilder()
