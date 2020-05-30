@@ -1,6 +1,5 @@
 package com.example.sportyapp.ui.addGame
 
-import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.os.Build
 import android.os.Bundle
@@ -15,8 +14,12 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.sportyapp.R
 import com.example.sportyapp.utils.AuthenticationInterceptor
 import okhttp3.*
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
+import java.time.LocalTime
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class AddGameFragment : Fragment() {
@@ -26,6 +29,7 @@ class AddGameFragment : Fragment() {
     private lateinit var gameDate: TextView
     private lateinit var gameDuration: EditText
     private lateinit var isGamePublic: CheckBox
+    private lateinit var calendar: GregorianCalendar
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,7 +47,7 @@ class AddGameFragment : Fragment() {
         return root
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -56,9 +60,10 @@ class AddGameFragment : Fragment() {
             val y = c.get(Calendar.YEAR)
             val m = c.get(Calendar.MONTH)
             val d = c.get(Calendar.DAY_OF_MONTH)
-            //Niedoskonły wybór daty - trzeba kliknąć na pole 2 razy. Pytanie brzmi czy wyrzuacmy wogóle, zostawiamy czy próba poprawy.
+
             val dpd = DatePickerDialog(this.activity!!,android.R.style.Theme_Material_Light_Dialog, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                    gameDate.setText(dayOfMonth.toString()+"."+monthOfYear.toString()+"."+year.toString())
+                calendar = GregorianCalendar(year, monthOfYear, dayOfMonth)
+                gameDate.text = "$dayOfMonth.$monthOfYear.$year"
 
                 }, y, m, d)
             dpd.show()
@@ -66,12 +71,15 @@ class AddGameFragment : Fragment() {
         val addGameBtn = view.findViewById<Button>(R.id.addGameButton)
         addGameBtn.setOnClickListener(addGameListener)
     }
+
+    @RequiresApi(Build.VERSION_CODES.O)
     private val addGameListener = View.OnClickListener { view ->
         if(validate()) {
             addGame()
             activity?.onBackPressed()
         }
     }
+
     //walidacja pól: name, date, duration - można pokusić się o więcej regexów.
     private fun validate(): Boolean{
         var check = true
@@ -87,7 +95,7 @@ class AddGameFragment : Fragment() {
             check = false
         }
         if(gameDate.length()==0){
-            gameDate.error = "Provide date in dd.mm.yyyy formant."
+            gameDate.error = "Provide date in dd.mm.yyyy format."
         }
         if(gameDuration.length()==0){
             gameDuration.error = "Duration is required"
@@ -96,6 +104,9 @@ class AddGameFragment : Fragment() {
 
         return check
     }
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun addGame() {
         val url = "http://10.0.2.2:8080/game"
         val httpClient = OkHttpClient().newBuilder()
@@ -104,13 +115,16 @@ class AddGameFragment : Fragment() {
 
         val payload = JSONObject()
         payload.put("name", gameName.text.toString())
-        payload.put("date", System.currentTimeMillis())
-        payload.put("duration", 90.toLong())
-        payload.put("facility", 1.toLong())
-        //payload.put("sport", 1.toLong())
-        payload.put("isPublic", "")
-        payload.put("owner", "")
-        payload.put("players", emptyList<Int>())
+        payload.put("date", calendar.timeInMillis)
+        payload.put("duration", getDuration()) // na razie zastosowałam format H:mm
+        payload.put("facility", 1.toLong()) // na sztywno wpisane wartości
+        payload.put("sport", 1.toLong())
+        payload.put("owner", 1.toLong())
+        payload.put("isPublic", isGamePublic.isChecked)
+        //payload.put("players", arrayOf(0, 1))
+        //payload.put("id", 1)
+
+
 
         val body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), payload.toString())
         val request = Request.Builder().method("POST", body).url(url).build()
@@ -126,5 +140,12 @@ class AddGameFragment : Fragment() {
                 print(response.message())
             }
         })
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun getDuration() : Long {
+        val duration = gameDuration.text
+        val time = LocalTime.parse(duration, DateTimeFormatter.ofPattern("H:mm"))
+        return time.toNanoOfDay()
     }
 }
