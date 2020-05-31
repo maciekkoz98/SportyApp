@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity" />
+
+    <View
+        android:id="@+id/shadow_search"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:background="@drawable/shadow_shape"
+        app:layout_anchor="@id/bottom_sheet_search" />
+
+    <View
+        android:id="@+id/shadow_field"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:background="@drawable/shadow_shape"
+        app:layout_anchor="@id/bottom_sheet_field" />
+
+    <include layout="@layout/bottom_sheet_search" />
+
+    <include layout="@layout/bottom_sheet_field" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addFAB"
+        app:srcCompat="@android:drawable/ic_dialog_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="88dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/localFAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="160dp"
+        app:fabSize="mini"
+        app:maxImageSize="24dp"
+        app:srcCompat="@drawable/ic_location_searching_white_24dp" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
