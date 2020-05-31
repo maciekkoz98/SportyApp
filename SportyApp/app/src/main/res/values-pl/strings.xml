@@ -44,4 +44,8 @@
     <string name="hint_duration">Czas trwania</string>
     <string name="hint_time">Data</string>
     <string name="createGame_addPlayer">Zaproś graczy</string>
+    <string name="hint_add_start">00:00</string>
+    <string name="hint_add_end">00:00</string>
+    <string name="hint_add_start_label">Początek gry</string>
+    <string name="hint_add_end_label">Czas trwania</string>
 </resources>

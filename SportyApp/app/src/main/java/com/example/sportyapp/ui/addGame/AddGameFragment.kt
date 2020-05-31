@@ -1,7 +1,8 @@
 package com.example.sportyapp.ui.addGame
 
-import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -24,7 +25,8 @@ class AddGameFragment : Fragment() {
     private lateinit var addGameViewModel: AddGameViewModel
     private lateinit var gameName: EditText
     private lateinit var gameDate: TextView
-    private lateinit var gameDuration: EditText
+    private lateinit var gameStart: TextView
+    private lateinit var gameDuration: TextView
     private lateinit var isGamePublic: CheckBox
 
     override fun onCreateView(
@@ -49,20 +51,42 @@ class AddGameFragment : Fragment() {
 
         gameName = view.findViewById(R.id.editText_game_name)
         gameDate = view.findViewById(R.id.editText_date_of_game)
-        gameDuration = view.findViewById(R.id.editText_game_duration)
+        gameStart = view.findViewById(R.id.add_start)
+        gameDuration = view.findViewById(R.id.add_duration)
         isGamePublic = view.findViewById(R.id.checkBox_is_public)
+        //Wybór daty
         gameDate.setOnClickListener{
             val c = Calendar.getInstance()
             val y = c.get(Calendar.YEAR)
             val m = c.get(Calendar.MONTH)
             val d = c.get(Calendar.DAY_OF_MONTH)
             //Niedoskonły wybór daty - trzeba kliknąć na pole 2 razy. Pytanie brzmi czy wyrzuacmy wogóle, zostawiamy czy próba poprawy.
-            val dpd = DatePickerDialog(this.activity!!,android.R.style.Theme_Material_Light_Dialog, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+            val dpd = DatePickerDialog(this.activity!!, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                     gameDate.setText(dayOfMonth.toString()+"."+monthOfYear.toString()+"."+year.toString())
 
                 }, y, m, d)
             dpd.show()
         }
+        //wybór godzin
+        gameStart.setOnClickListener{
+            val cal = Calendar.getInstance()
+            val timeSetListener = TimePickerDialog.OnTimeSetListener { view, hour, minute ->
+                cal.set(Calendar.HOUR_OF_DAY, hour)
+                cal.set(Calendar.MINUTE, minute)
+               gameStart.text = SimpleDateFormat("HH:mm").format(cal.time)
+            }
+            TimePickerDialog(this.activity!!, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
+        }
+        gameDuration.setOnClickListener{
+            val cal = Calendar.getInstance()
+            val timeSetListener = TimePickerDialog.OnTimeSetListener { view, hour, minute ->
+                cal.set(Calendar.HOUR_OF_DAY, hour)
+                cal.set(Calendar.MINUTE, minute)
+                gameDuration.text = SimpleDateFormat("HH:mm").format(cal.time)
+            }
+            TimePickerDialog(this.activity!!, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
+        }
+        //obsługa guzika
         val addGameBtn = view.findViewById<Button>(R.id.addGameButton)
         addGameBtn.setOnClickListener(addGameListener)
     }
@@ -88,10 +112,6 @@ class AddGameFragment : Fragment() {
         }
         if(gameDate.length()==0){
             gameDate.error = "Provide date in dd.mm.yyyy formant."
-        }
-        if(gameDuration.length()==0){
-            gameDuration.error = "Duration is required"
-            check = false
         }
 
         return check
