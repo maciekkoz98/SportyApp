@@ -33,4 +33,15 @@
     <string name="basketball_ball">Piłka do koszykówki</string>
     <string name="field">Boisko</string>
     <string name="check_calendar">Sprawdź kalendarz</string>
+    <string name="add_game_title">Dodaj grę</string>
+    <string name="game_name">Nazwa gry:</string>
+    <string name="date_of_game">Data gry:</string>
+    <string name="duration_of_game">Czas trwania:</string>
+    <string name="players">Gracze:</string>
+    <string name="is_public">Gra publiczna?</string>
+    <string name="editText_game_name">Nazwa gry</string>
+    <string name="hint_name">Nazwa gry</string>
+    <string name="hint_duration">Czas trwania</string>
+    <string name="hint_time">Data</string>
+    <string name="createGame_addPlayer">Zaproś graczy</string>
 </resources>

@@ -12,6 +12,11 @@
     <string name="menu_fields">Playfield around</string>
     <string name="menu_add_game">Add a game</string>
 
+    <string name="hint_name">name</string>
+    <string name="hint_duration">duration in minutes</string>
+    <string name="hint_time">date</string>
+    <string name="createGame_addPlayer">Add players</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="opinions_title">Opinions</string>
@@ -40,4 +45,11 @@
     <string name="basketball_ball">Basketball</string>
     <string name="field">Field</string>
     <string name="check_calendar">Check calendar</string>
+    <string name="add_game_title">Add game</string>
+    <string name="game_name">Name of game:</string>
+    <string name="date_of_game">Date:</string>
+    <string name="duration_of_game">Duration:</string>
+    <string name="players">Players:</string>
+    <string name="is_public">Is public?</string>
+    <string name="editText_game_name">Name</string>
 </resources>
