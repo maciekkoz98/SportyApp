@@ -85,20 +85,20 @@ class AddGameFragment : Fragment() {
         var check = true
         val namePattern = Regex("[a-zA-Z0-9]+")
         if(gameName.length()==0){
-            gameName.error = "Name is required!"
+            gameName.error = getString(R.string.name_required_error)
             check = false
         }else if(gameName.length()>30){
-            gameName.error = "Name max length is 30!"
+            gameName.error = getString(R.string.name_max_length_error)
             check = false
         }else if(!namePattern.matches(gameName.text.toString())){
-            gameName.error = "Name can contain only letters and numbers!"
+            gameName.error = getString(R.string.name_content_error)
             check = false
         }
         if(gameDate.length()==0){
-            gameDate.error = "Provide date in dd.mm.yyyy format."
+            gameDate.error = getString(R.string.date_format_error)
         }
         if(gameDuration.length()==0){
-            gameDuration.error = "Duration is required"
+            gameDuration.error = getString(R.string.duration_error)
             check = false
         }
 

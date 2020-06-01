@@ -44,4 +44,9 @@
     <string name="hint_duration">Czas trwania</string>
     <string name="hint_time">Data</string>
     <string name="createGame_addPlayer">Zaproś graczy</string>
+    <string name="name_required_error">Wymagana jest nazwa gry.</string>
+    <string name="name_max_length_error">Maksymalna długość nazwy gry wynosi 30.</string>
+    <string name="name_content_error">Nazwa gry może zawierać tylko litery i cyfry.</string>
+    <string name="date_format_error">Data musi być w formacie dd.mm.yyyy.</string>
+    <string name="duration_error">Wymagana jest długość gry.</string>
 </resources>
