@@ -54,8 +54,8 @@ public class DbFiller {
         if (!sportRepository.existsById(1L)) {
             Sport sport = Sport.builder()
                     .id(sequenceGeneratorService.generateSequence(Sport.DBSEQUENCE_NAME))
-                    .namePL("Piłka nożna")
-                    .nameEN("Football")
+                    .namePL("Koszykówka")
+                    .nameEN("Basketball")
                     .synonyms(Lists.newArrayList())
                     .build();
             sportRepository.insert(sport);
@@ -63,8 +63,8 @@ public class DbFiller {
         if (!sportRepository.existsById(2L)) {
             Sport sport = Sport.builder()
                     .id(sequenceGeneratorService.generateSequence(Sport.DBSEQUENCE_NAME))
-                    .namePL("Koszykówka")
-                    .nameEN("Basketball")
+                    .namePL("Piłka nożna")
+                    .nameEN("Football")
                     .synonyms(Lists.newArrayList())
                     .build();
             sportRepository.insert(sport);
@@ -83,6 +83,33 @@ public class DbFiller {
                     .id(sequenceGeneratorService.generateSequence(Sport.DBSEQUENCE_NAME))
                     .namePL("Piłka ręczna")
                     .nameEN("Handball")
+                    .synonyms(Lists.newArrayList())
+                    .build();
+            sportRepository.insert(sport);
+        }
+        if (!sportRepository.existsById(5L)) {
+            Sport sport = Sport.builder()
+                    .id(sequenceGeneratorService.generateSequence(Sport.DBSEQUENCE_NAME))
+                    .namePL("Badminton")
+                    .nameEN("Badminton")
+                    .synonyms(Lists.newArrayList())
+                    .build();
+            sportRepository.insert(sport);
+        }
+        if (!sportRepository.existsById(6L)) {
+            Sport sport = Sport.builder()
+                    .id(sequenceGeneratorService.generateSequence(Sport.DBSEQUENCE_NAME))
+                    .namePL("Tenis ziemny")
+                    .nameEN("Tennis")
+                    .synonyms(Lists.newArrayList())
+                    .build();
+            sportRepository.insert(sport);
+        }
+        if (!sportRepository.existsById(7L)) {
+            Sport sport = Sport.builder()
+                    .id(sequenceGeneratorService.generateSequence(Sport.DBSEQUENCE_NAME))
+                    .namePL("Tenis stołowy")
+                    .nameEN("Table tennis")
                     .synonyms(Lists.newArrayList())
                     .build();
             sportRepository.insert(sport);

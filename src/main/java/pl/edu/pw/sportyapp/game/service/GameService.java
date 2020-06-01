@@ -30,16 +30,13 @@ public class GameService {
     private GameRepository gameRepository;
     private UserService userService;
     private SportService sportService;
-    private FacilityService facilityService;
 
     @Autowired
-    public GameService(GameRepository gr, SequenceGeneratorService sgs, UserService us, SportService ss, FacilityService fs) {
+    public GameService(GameRepository gr, SequenceGeneratorService sgs, UserService us, SportService ss) {
         this.gameRepository = gr;
         this.sequenceGenerator = sgs;
         this.userService = us;
         this.sportService = ss;
-        this.facilityService = fs;
-        facilityService.setGameService(this);
     }
 
     public Long addGame(Game newGame) {
@@ -52,7 +49,6 @@ public class GameService {
         }
         User user = userService.getUserById(currentUser.getId());
         user.getGamesParticipatedIds().add(newGame.getId());
-        facilityService.addGameToFacility(newGame.getFacility(), newGame.getId());
         userService.updateUser(user.getId(), user);
         return gameRepository.insert(newGame).getId();
     }
@@ -66,7 +62,6 @@ public class GameService {
         if (!currentUser.getRole().name().equals("ADMIN") && currentUser.getId() != game.getOwner()) {
             throw new NotOwnerException();
         }
-        facilityService.deleteGameFromFacility(game.getFacility(), game.getId());
         gameRepository.deleteById(id);
     }
 
@@ -143,6 +138,13 @@ public class GameService {
         }
         Timestamp time = new Timestamp(System.currentTimeMillis());
         games.removeIf(game -> (game.getDate() + game.getDuration()) > time.getTime());
+        return games;
+    }
+
+    public List<Game> findAllByFacility(long facilityId) {
+        List<Game> games = gameRepository.findByIsPublicAndFacility(true, facilityId);
+        Timestamp time = new Timestamp(System.currentTimeMillis());
+        games.removeIf(game -> (game.getDate() + game.getDuration()) < time.getTime());
         return games;
     }
 

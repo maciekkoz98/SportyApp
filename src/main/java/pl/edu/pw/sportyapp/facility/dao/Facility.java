@@ -34,7 +34,4 @@ public class Facility {
     public double longitude;
 
     public List<Long> disciplines;
-
-    public List<Long> events;
-
 }
