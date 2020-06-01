@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="100dp"
         android:orientation="horizontal">
 
         <EditText
@@ -24,6 +24,7 @@
             android:ems="10"
             android:hint="@string/hint_name"
             android:inputType="textPersonName"
+            android:padding="10dp"
             android:selectAllOnFocus="false"
             android:singleLine="true"
             android:textColor="@color/colorPrimaryDark"
@@ -35,32 +36,13 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="5dp"
-            android:layout_weight="1"
-            android:autofillHints=""
-            android:ems="10"
-            android:gravity="start|center_vertical"
-            android:text="@string/pick_date"
-            android:textColor="@color/black"
-            android:textColorHighlight="@color/colorPrimary"
-            android:textColorHint="@color/black"
-            android:textColorLink="@color/colorPrimaryDark"
-            android:textSize="18sp" />
+        android:layout_height="100dp"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/editText_date_of_game"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
@@ -71,49 +53,115 @@
             android:gravity="start|center_vertical"
             android:hint="@string/hint_time"
             android:inputType="date"
+            android:padding="10dp"
             android:selectAllOnFocus="false"
             android:singleLine="true"
             android:textAlignment="textStart"
             android:textColor="@color/colorPrimaryDark"
             android:textColorHighlight="@color/colorPrimary"
             android:textColorHint="@android:color/tab_indicator_text"
-            android:textColorLink="@color/black"
+            android:textColorLink="@color/colorPrimaryDark"
             android:textCursorDrawable="@color/colorPrimaryDark"
             android:textSize="18sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="60dp"
         android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/editText_game_duration"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/add_start_label"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
             android:layout_weight="1"
-            android:autofillHints=""
-            android:ems="10"
-            android:hint="@string/hint_duration"
-            android:inputType="time"
-            android:paddingLeft="5dp"
-            android:paddingTop="5dp"
-            android:paddingRight="5dp"
-            android:paddingBottom="5dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:padding="5dp"
+            android:text="@string/hint_add_start_label"
             android:textColor="@color/colorPrimaryDark"
             android:textColorHighlight="@color/colorPrimary"
-            android:textColorHint="@android:color/tab_indicator_text"
+            android:textColorHint="@color/colorPrimary"
             android:textColorLink="@color/colorPrimaryDark"
-            android:textCursorDrawable="@color/colorPrimaryDark" />
+            android:textCursorDrawable="@color/colorPrimaryDark"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/add_end_label"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal|center_vertical"
+            android:padding="5dp"
+            android:text="@string/hint_add_end_label"
+            android:textColor="@color/colorPrimaryDark"
+            android:textColorHighlight="@color/colorPrimary"
+            android:textColorHint="@color/colorPrimary"
+            android:textColorLink="@color/colorPrimaryDark"
+            android:textCursorDrawable="@color/colorPrimaryDark"
+            android:textSize="18sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="100dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/add_start"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal|center_vertical"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/hint_add_start"
+            android:textColor="@color/colorPrimaryDark"
+            android:textColorHighlight="@color/colorPrimary"
+            android:textColorHint="@android:color/tab_indicator_text"
+            android:textColorLink="@color/white"
+            android:textCursorDrawable="@color/white"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/add_duration"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal|center_vertical"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/hint_add_end"
+            android:textColor="@color/colorPrimaryDark"
+            android:textColorHighlight="@color/colorPrimary"
+            android:textColorHint="@color/colorPrimary"
+            android:textColorLink="@color/white"
+            android:textCursorDrawable="@color/white"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
         android:orientation="horizontal">
 
         <TextView
@@ -124,9 +172,9 @@
             android:gravity="center"
             android:text="@string/is_public"
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:textColor="@color/colorPrimaryDark"
             android:textColorHighlight="@color/colorPrimary"
-            android:textColorHint="@color/black"
+            android:textColorHint="@color/colorPrimaryDark"
             android:textColorLink="@color/colorPrimaryDark"
             android:textSize="18sp" />
 
@@ -145,7 +193,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         android:orientation="horizontal">
 
         <Button
@@ -153,9 +201,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal|center_vertical"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="40dp"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="40dp"
             android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:foregroundGravity="center_vertical|center|center_horizontal"
