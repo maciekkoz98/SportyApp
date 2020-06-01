@@ -62,7 +62,6 @@ class GameControllerIntegrationTest {
         mongoOperations = new MongoTemplate(MongoClients.create(), "test");
         mongoOperations.dropCollection("game");
         mongoOperations.dropCollection("user");
-        mongoOperations.dropCollection("facility");
         objectMapper = new ObjectMapper();
 
         mockMvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
@@ -71,19 +70,12 @@ class GameControllerIntegrationTest {
                 .isEnabled(true).isAccountNonExpired(true).isAccountNonLocked(true).isCredentialsNonExpired(true)
                 .gamesParticipatedIds(Lists.newArrayList()).friendsIds(Lists.newArrayList())
                 .build();
-
-        Facility facility = Facility.builder().id(2L).address("ADRES 1").latitude(50.0).longitude(50.0)
-                .disciplines(Lists.newArrayList()).events(Lists.newArrayList(1L, 2L)).build();
-
-        mongoOperations.insert(facility, "facility");
-
     }
 
     @AfterEach
     void tearDown() {
         mongoOperations.dropCollection("game");
         mongoOperations.dropCollection("user");
-        mongoOperations.dropCollection("facility");
         mongoOperations = null;
         objectMapper = null;
     }
