@@ -7,7 +7,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import pl.edu.pw.sportyapp.facility.dao.Facility;
 import pl.edu.pw.sportyapp.facility.repository.FacilityRepository;
-import pl.edu.pw.sportyapp.game.service.GameService;
 import pl.edu.pw.sportyapp.shared.exception.DataDuplicationException;
 import pl.edu.pw.sportyapp.shared.exception.EntityNotFoundException;
 import pl.edu.pw.sportyapp.shared.sequence.SequenceGeneratorService;

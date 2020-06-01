@@ -33,5 +33,8 @@ public class Facility {
     @NotNull
     public double longitude;
 
+    @NotNull
+    public boolean isSportsHall;
+
     public List<Long> disciplines;
 }
