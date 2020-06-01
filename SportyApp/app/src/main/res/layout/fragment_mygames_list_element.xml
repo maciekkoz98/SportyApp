@@ -1,5 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="120dp">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/list_elem_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:text="16"
+            android:textSize="36sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.29000002" />
+
+        <TextView
+            android:id="@+id/list_elem_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:text="listopad"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/list_elem_date" />
+
+        <TextView
+            android:id="@+id/list_elem_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="10dp"
+            android:text="name"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/list_elem_date"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/list_elem_sport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="15dp"
+            android:text="basketball"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/list_elem_icon"
+            app:layout_constraintTop_toBottomOf="@+id/list_elem_name" />
+
+        <TextView
+            android:id="@+id/list_elem_hour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="15dp"
+            android:text="16:00"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/list_elem_date"
+            app:layout_constraintTop_toBottomOf="@+id/list_elem_sport" />
+
+        <TextView
+            android:id="@+id/list_elem_players"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="15dp"
+            android:text="6/20"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/imageView12"
+            app:layout_constraintTop_toBottomOf="@+id/list_elem_sport" />
+
+        <ImageView
+            android:id="@+id/list_elem_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="15dp"
+            app:layout_constraintStart_toEndOf="@+id/list_elem_date"
+            app:layout_constraintTop_toBottomOf="@+id/list_elem_name"
+            app:srcCompat="@drawable/ic_basketball_svg" />
+
+        <ImageView
+            android:id="@+id/imageView12"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="15dp"
+            app:layout_constraintStart_toEndOf="@+id/list_elem_hour"
+            app:layout_constraintTop_toBottomOf="@+id/list_elem_sport"
+            app:srcCompat="@drawable/ic_user_foreground" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

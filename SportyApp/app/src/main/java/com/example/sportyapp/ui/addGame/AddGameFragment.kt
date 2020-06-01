@@ -14,6 +14,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.sportyapp.R
+import com.example.sportyapp.ui.myGames.MyGamesFragment
 import com.example.sportyapp.utils.AuthenticationInterceptor
 import okhttp3.*
 import org.json.JSONObject
@@ -93,7 +94,7 @@ class AddGameFragment : Fragment() {
     private val addGameListener = View.OnClickListener { view ->
         if(validate()) {
             addGame()
-            activity?.onBackPressed()
+            activity!!.onBackPressed()
         }
     }
     //walidacja pól: name, date, duration - można pokusić się o więcej regexów.

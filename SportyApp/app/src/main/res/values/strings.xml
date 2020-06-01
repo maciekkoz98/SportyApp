@@ -35,7 +35,7 @@
     <string name="city">City</string>
     <string name="address">Address:</string>
     <string name="players_number_test">Players: x</string>
-    <string name="min_players_number_test">Minimum number of players: y</string>
+    <string name="min_players_number_test">Minimum: y</string>
     <string name="list_of_players">List of players</string>
     <string name="username">Username</string>
     <string name="game_app_bar_title">Game</string>
