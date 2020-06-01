@@ -44,4 +44,7 @@
     <string name="hint_duration">Czas trwania</string>
     <string name="hint_time">Data</string>
     <string name="createGame_addPlayer">Zaproś graczy</string>
+    <string name="sport_discipline_icon">Ikona dyscypliny sportu</string>
+    <string name="players_taking_part_icon">Ikona graczy biorących udział</string>
+    <string name="time_icon">Ikona zegaru</string>
 </resources>

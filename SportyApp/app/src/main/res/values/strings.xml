@@ -52,4 +52,7 @@
     <string name="players">Players:</string>
     <string name="is_public">Is public?</string>
     <string name="editText_game_name">Name</string>
+    <string name="sport_discipline_icon">Sport discipline icon</string>
+    <string name="players_taking_part_icon">Players taking part icon</string>
+    <string name="time_icon">Time icon</string>
 </resources>

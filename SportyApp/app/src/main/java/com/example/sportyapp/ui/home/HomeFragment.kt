@@ -19,11 +19,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.view.marginBottom
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.sportyapp.R
 import com.example.sportyapp.REQUEST_LOCATION
+import com.example.sportyapp.data.field.Field
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -45,14 +46,17 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var mMap: GoogleMap
+    private var mapReady: Boolean = false
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var localFAB: FloatingActionButton
     private lateinit var clusterManager: ClusterManager<MapMarker>
     private lateinit var bottomSheetSearch: View
     private lateinit var bottomSheetSearchBehavior: BottomSheetBehavior<View>
+    private lateinit var bottomSheetField: View
     private lateinit var bottomSheetFieldBehavior: BottomSheetBehavior<View>
     private lateinit var editTextKeyListener: KeyListener
     private lateinit var editTextMovementMethod: MovementMethod
+    private lateinit var fieldsList: HashMap<Long, Field>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,7 +67,11 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
             ViewModelProviders.of(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-//        val textView: TextView = root.findViewById(R.id.text_home)
+        homeViewModel.fields.observe(this, Observer {
+            fieldsList = it
+            addMarkers()
+        })
+        //        val textView: TextView = root.findViewById(R.id.text_home)
 //        homeViewModel.text.observe(this, Observer {
 //            textView.text = it
 //        })
@@ -72,7 +80,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
         localFAB.setOnClickListener {
             localize()
         }
-        Log.d("na poczatku", localFAB.marginBottom.toString())
         val addFAB: FloatingActionButton = root.findViewById(R.id.addFAB)
         addFAB.setOnClickListener { view ->
             Snackbar.make(view, "Replace with ADD action", Snackbar.LENGTH_LONG)
@@ -119,7 +126,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
             true
         }
 
-        val bottomSheetField: View = root.findViewById(R.id.bottom_sheet_field)
+        bottomSheetField = root.findViewById(R.id.bottom_sheet_field)
         bottomSheetFieldBehavior = BottomSheetBehavior.from(bottomSheetField)
         bottomSheetFieldBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         val bottomSheetFieldCallback = object : BottomSheetBehavior.BottomSheetCallback() {
@@ -151,6 +158,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        mapReady = true
         //TODO set markers in the fields locations!
         val warsaw = LatLng(52.2297, 21.0122)
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(warsaw, 13F))
@@ -160,19 +168,32 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
         mMap.setOnCameraIdleListener(clusterManager)
         mMap.setOnMarkerClickListener(clusterManager)
         mMap.setOnMapClickListener(this)
-        addMarkers_TEMP()
+        addMarkers()
     }
 
-    fun addMarkers_TEMP() {
-        var latitude = 52.2297
-        var longitude = 21.0122
-        for (i in 0 until 250) {
-            val offset = 0.0005f
-            latitude += offset
-            longitude += offset
-            val marker = MapMarker(latitude, longitude, i.toString())
-            clusterManager.addItem(marker)
+    private fun addMarkers() {
+        if (mapReady && this::fieldsList.isInitialized) {
+//            var latitude = 52.2297
+//            var longitude = 21.0122
+//            for (i in 0 until 250) {
+//                val offset = 0.0005f
+//                latitude += offset
+//                longitude += offset
+//                val marker = MapMarker(latitude, longitude, i.toString())
+//                clusterManager.addItem(marker)
+//            }
+//            fieldsList.forEach { key ->
+//                val marker = MapMarker(fieldsList[key].latitude, fieldsList[key].longitude, field.address, field.id)
+//                clusterManager.addItem(marker)
+//            }
+            for ((key, field) in fieldsList) {
+                val mapMarker = MapMarker(field.latitude, field.longitude, field.address, key)
+                clusterManager.addItem(mapMarker)
+            }
+        } else {
+            Log.d("halo", "gówno")
         }
+
     }
 
     override fun onRequestPermissionsResult(
@@ -251,6 +272,9 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
                 .zoom(mMap.cameraPosition.zoom)
                 .build()
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+        val field = fieldsList[marker.fieldID]
+        val addressTextView = bottomSheetField.findViewById<TextView>(R.id.address_text_view)
+        addressTextView.text = field!!.address
         bottomSheetSearchBehavior.isHideable = true
         bottomSheetSearchBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         bottomSheetFieldBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
