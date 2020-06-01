@@ -1,6 +1,5 @@
 package com.example.sportyapp.ui.addGame
 
-import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.icu.text.SimpleDateFormat
@@ -17,12 +16,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.sportyapp.R
 import com.example.sportyapp.utils.AuthenticationInterceptor
 import okhttp3.*
-import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
-import java.time.LocalTime
-import java.time.OffsetDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 class AddGameFragment : Fragment() {
@@ -69,7 +64,7 @@ class AddGameFragment : Fragment() {
 
             val dpd = DatePickerDialog(this.activity!!,android.R.style.Theme_Material_Light_Dialog, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                 calendar = GregorianCalendar(year, monthOfYear, dayOfMonth)
-                gameDate.text = "$dayOfMonth.$monthOfYear.$year"
+                gameDate.text = dayOfMonth.toString()+"."+(monthOfYear+1).toString()+"."+year.toString()
 
                 }, y, m, d)
             dpd.show()
@@ -107,6 +102,7 @@ class AddGameFragment : Fragment() {
     }
 
     //walidacja pól: name, date, duration - można pokusić się o więcej regexów.
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun validate(): Boolean{
         var check = true
         val namePattern = Regex("[a-zA-Z0-9]+")
@@ -123,7 +119,7 @@ class AddGameFragment : Fragment() {
         if(gameDate.length()==0){
             gameDate.error = getString(R.string.date_format_error)
         }
-        if(gameDuration.length()==0){
+        if(getDuration() <= 0){
             gameDuration.error = getString(R.string.duration_error)
             check = false
         }
@@ -170,8 +166,10 @@ class AddGameFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun getDuration() : Long {
-        val duration = gameDuration.text
-        val time = LocalTime.parse(duration, DateTimeFormatter.ofPattern("H:mm"))
-        return time.toNanoOfDay()
+        val dateFormatter = SimpleDateFormat("HH:mm")
+        val end = dateFormatter.parse(gameDuration.text.toString())
+        val start = dateFormatter.parse(gameStart.text.toString())
+
+        return end.time - start.time
     }
 }
