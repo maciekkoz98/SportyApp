@@ -57,4 +57,5 @@
     <string name="name_content_error">Name can contain only letters and numbers!</string>
     <string name="date_format_error">Provide date in dd.mm.yyyy format.</string>
     <string name="duration_error">Duration is required.</string>
+    <string name="pick_date">Pick a date:</string>
 </resources>
