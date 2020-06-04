@@ -23,7 +23,7 @@
     <string name="city">Miasto</string>
     <string name="address">Adres:</string>
     <string name="players_number_test">Gracze: x</string>
-    <string name="min_players_number_test">Minimalna liczba graczy: y</string>
+    <string name="min_players_number_test">Minimalna liczba: y</string>
     <string name="list_of_players">Lista graczy</string>
     <string name="username">Nazwa użytkownika</string>
     <string name="game_app_bar_title">Gra</string>
