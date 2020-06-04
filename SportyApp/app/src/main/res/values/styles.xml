@@ -43,7 +43,7 @@
 
     <style name="InsideGame">
         <item name="android:textSize">16sp</item>
-        <item name="android:letterSpacing">0.25</item>
+        <item name="android:letterSpacing">0.025</item>
         <item name="android:fontFamily">"sans-serif-light"</item>
     </style>
 

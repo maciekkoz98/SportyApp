@@ -27,7 +27,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.sportyapp.R
 import com.example.sportyapp.REQUEST_LOCATION
 import com.example.sportyapp.data.field.Field
+import com.example.sportyapp.data.game.Game
 import com.example.sportyapp.ui.home.utils.EventsInChosenFieldAdapter
+import com.example.sportyapp.utils.AuthenticationInterceptor
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -43,6 +45,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterManager
 import com.google.maps.android.clustering.ClusterManager.OnClusterItemClickListener
+import okhttp3.*
+import org.json.JSONArray
+import java.io.IOException
 
 class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener,
     ClusterManager.OnClusterClickListener<MapMarker>, OnClusterItemClickListener<MapMarker> {
@@ -193,10 +198,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
                 val mapMarker = MapMarker(field.latitude, field.longitude, field.address, key)
                 clusterManager.addItem(mapMarker)
             }
-        } else {
-            Log.d("halo", "gówno")
         }
-
     }
 
     override fun onRequestPermissionsResult(
@@ -279,16 +281,70 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
         val addressTextView = bottomSheetField.findViewById<TextView>(R.id.address_text_view)
         addressTextView.text = field!!.address
         //TODO get games list
-        val gamesList = homeViewModel.getGamesList(marker.fieldID.toInt())
+        //val gamesList = homeViewModel.getGamesList(marker.fieldID.toInt())
+        //Log.d("gameslist rozmiar:", gamesList.size.toString())
+        val gamesList = ArrayList<Game>()
+        val eventsAdapter = EventsInChosenFieldAdapter(gamesList)
+        setRecyclerView(marker.fieldID, gamesList, eventsAdapter, bottomSheetField)
         bottomSheetField.findViewById<RecyclerView>(R.id.events_recycler).apply {
-            setHasFixedSize(true)
+            setHasFixedSize(false)
             layoutManager = LinearLayoutManager(bottomSheetField.context)
-            adapter = EventsInChosenFieldAdapter(gamesList)
+            adapter = eventsAdapter
         }
         bottomSheetSearchBehavior.isHideable = true
         bottomSheetSearchBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         bottomSheetFieldBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
         return true
+    }
+
+    fun setRecyclerView(
+        facilityID: Long,
+        gamesList: ArrayList<Game>,
+        adapter: EventsInChosenFieldAdapter,
+        bottomSheetField: View
+    ) {
+        Log.e("facility id", facilityID.toString())
+        val client = OkHttpClient().newBuilder()
+            .addInterceptor(AuthenticationInterceptor())
+            .build()
+        val request = Request.Builder()
+            .url("http://10.0.2.2:8080/game/facility/$facilityID")
+            .build()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.e("blad", "polaczenia z bazom")
+                Log.e("blad", e.message!!)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                //val gamesList = ArrayList<Game>()
+                Log.d("halo", "odebralem")
+                val jsonResponse = response.body()?.string()
+                val json = JSONArray(jsonResponse!!)
+                Log.d("rozmiar", json.length().toString())
+                for (i in 0 until json.length()) {
+                    val jsonGame = json.getJSONObject(i)
+                    val id = jsonGame.getString("id").toLong()
+                    val name = jsonGame.getString("name")
+                    val duration = jsonGame.getString("duration").toLong()
+                    val date = jsonGame.getString("date").toLong()
+                    val owner = jsonGame.getString("owner").toLong()
+                    val isGamePublic = jsonGame.getString("isPublic")!!.toBoolean()
+                    val fieldID = jsonGame.getString("facility").toLong()
+                    val sport = jsonGame.getString("sport").toLong()
+                    val jsonPlayers = jsonGame.getJSONArray("players")
+                    val players = ArrayList<Int>()
+                    for (j in 0 until jsonPlayers.length()) {
+                        players.add(jsonPlayers.get(j) as Int)
+                    }
+                    val game =
+                        Game(id, duration, date, owner, players, isGamePublic, fieldID, sport, name)
+                    gamesList.add(game)
+                    activity!!.runOnUiThread { adapter.notifyDataSetChanged() }
+                    Log.d("dodane", game.name)
+                }
+            }
+        })
     }
 
     override fun onClusterClick(cluster: Cluster<MapMarker>): Boolean {
