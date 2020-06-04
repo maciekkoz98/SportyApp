@@ -11,6 +11,7 @@
     <string name="menu_my_games">My games</string>
     <string name="menu_fields">Playfield around</string>
     <string name="menu_add_game">Add a game</string>
+    <string name="menu_history">Game history</string>
 
     <string name="hint_name">name</string>
     <string name="hint_duration">duration in minutes</string>

@@ -48,4 +48,5 @@
     <string name="hint_add_end">00:00</string>
     <string name="hint_add_start_label">Początek gry</string>
     <string name="hint_add_end_label">Czas trwania</string>
+    <string name="menu_history">Historia gier</string>
 </resources>
