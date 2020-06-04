@@ -47,6 +47,9 @@ public class GameService {
         if (!sportService.checkIfSportExists(newGame.id)) {
             newGame.setSport(0);
         }
+        if (newGame.getPlayers().size() > newGame.getMaxPlayers()) {
+            throw new IllegalArgumentException();
+        }
         User user = userService.getUserById(currentUser.getId());
         user.getGamesParticipatedIds().add(newGame.getId());
         userService.updateUser(user.getId(), user);
@@ -81,6 +84,10 @@ public class GameService {
             game.setSport(0);
         }
 
+        if (game.getPlayers().size() > game.getMaxPlayers()) {
+            throw new IllegalArgumentException();
+        }
+
         gameRepository.save(game);
     }
 
@@ -89,6 +96,9 @@ public class GameService {
         User user = userService.getUserById(userId);
         if (game.getPlayers().contains(userId)) {
             throw new DataDuplicationException();
+        }
+        if (game.getPlayers().size() + 1 > game.getMaxPlayers()) {
+            throw new IllegalArgumentException();
         }
         game.getPlayers().add(userId);
         gameRepository.save(game);
