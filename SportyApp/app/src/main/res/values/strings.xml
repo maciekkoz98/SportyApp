@@ -55,4 +55,5 @@
     <string name="sport_discipline_icon">Sport discipline icon</string>
     <string name="players_taking_part_icon">Players taking part icon</string>
     <string name="time_icon">Time icon</string>
+    <string name="event_view_participants" translatable="false">%1$s!/%2$s!</string>
 </resources>

@@ -22,9 +22,12 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.sportyapp.R
 import com.example.sportyapp.REQUEST_LOCATION
 import com.example.sportyapp.data.field.Field
+import com.example.sportyapp.ui.home.utils.EventsInChosenFieldAdapter
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -275,6 +278,13 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
         val field = fieldsList[marker.fieldID]
         val addressTextView = bottomSheetField.findViewById<TextView>(R.id.address_text_view)
         addressTextView.text = field!!.address
+        //TODO get games list
+        val gamesList = homeViewModel.getGamesList(marker.fieldID.toInt())
+        bottomSheetField.findViewById<RecyclerView>(R.id.events_recycler).apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(bottomSheetField.context)
+            adapter = EventsInChosenFieldAdapter(gamesList)
+        }
         bottomSheetSearchBehavior.isHideable = true
         bottomSheetSearchBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         bottomSheetFieldBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
