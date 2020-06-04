@@ -76,6 +76,8 @@ class AddGameFragment : Fragment() {
             val timeSetListener = TimePickerDialog.OnTimeSetListener { view, hour, minute ->
                 cal.set(Calendar.HOUR_OF_DAY, hour)
                 cal.set(Calendar.MINUTE, minute)
+                calendar.set(Calendar.HOUR_OF_DAY, hour)
+                calendar.set(Calendar.MINUTE, minute)
                gameStart.text = SimpleDateFormat("HH:mm").format(cal.time)
             }
             TimePickerDialog(this.activity!!, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
