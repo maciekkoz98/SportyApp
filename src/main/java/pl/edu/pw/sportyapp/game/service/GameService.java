@@ -1,12 +1,14 @@
 package pl.edu.pw.sportyapp.game.service;
 
+import com.google.common.collect.Lists;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.PermissionDeniedDataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import pl.edu.pw.sportyapp.facility.dao.Facility;
-import pl.edu.pw.sportyapp.facility.service.FacilityService;
 import pl.edu.pw.sportyapp.game.dao.Game;
+import pl.edu.pw.sportyapp.game.dao.QGame;
 import pl.edu.pw.sportyapp.game.repository.GameRepository;
 import pl.edu.pw.sportyapp.shared.exception.DataDuplicationException;
 import pl.edu.pw.sportyapp.shared.exception.EntityNotFoundException;
@@ -22,6 +24,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static java.util.Arrays.asList;
 
 @Service
 public class GameService {
@@ -43,7 +47,7 @@ public class GameService {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         newGame.setId(sequenceGenerator.generateSequence(Game.DBSEQUENCE_NAME));
         newGame.setOwner(currentUser.getId());
-        newGame.setPlayers(new ArrayList<>(Arrays.asList(currentUser.getId())));
+        newGame.setPlayers(new ArrayList<>(asList(currentUser.getId())));
         if (!sportService.checkIfSportExists(newGame.id)) {
             newGame.setSport(0);
         }
@@ -145,6 +149,45 @@ public class GameService {
         List<Game> games = gameRepository.findByIsPublicAndFacility(true, facilityId);
         Timestamp time = new Timestamp(System.currentTimeMillis());
         games.removeIf(game -> (game.getDate() + game.getDuration()) < time.getTime());
+        return games;
+    }
+
+    public List<Game> findByPredicate(BooleanExpression ... predicates) {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Game> games;
+
+        if (currentUser.getRole().name().equals("ADMIN")) {
+            games = Lists.newArrayList(gameRepository.findAll(Expressions.allOf(predicates)));
+        } else {
+            QGame game = new QGame("game");
+            List predicatesWithOwner = Arrays.asList(predicates);
+            predicatesWithOwner.add(game.owner.eq(currentUser.getId()).or(game.players.contains(currentUser.getId())));
+            games = Lists.newArrayList(gameRepository.findAll(Expressions.allOf((BooleanExpression[]) predicatesWithOwner.toArray())));
+        }
+
+        return games;
+    }
+
+    public List<Game> findByPredicate(boolean active, BooleanExpression ... predicates) {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Timestamp time = new Timestamp(System.currentTimeMillis());
+        List<Game> games;
+
+        if (currentUser.getRole().name().equals("ADMIN")) {
+            games = Lists.newArrayList(gameRepository.findAll(Expressions.allOf(predicates)));
+        } else {
+            QGame game = new QGame("game");
+            List predicatesWithOwner = Arrays.asList(predicates);
+            predicatesWithOwner.add(game.owner.eq(currentUser.getId()).or(game.players.contains(currentUser.getId())));
+            games = Lists.newArrayList(gameRepository.findAll(Expressions.allOf((BooleanExpression[]) predicatesWithOwner.toArray())));
+        }
+
+        if(active) {
+            games.removeIf(game -> (game.getDate() + game.getDuration()) < time.getTime());
+        } else {
+            games.removeIf(game -> (game.getDate() + game.getDuration()) > time.getTime());
+        }
+
         return games;
     }
 
