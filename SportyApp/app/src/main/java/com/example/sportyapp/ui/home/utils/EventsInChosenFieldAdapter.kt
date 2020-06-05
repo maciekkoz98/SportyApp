@@ -25,7 +25,7 @@ class EventsInChosenFieldAdapter(private val gamesList: ArrayList<Game>) :
         val game = gamesList[position]
         holder.linearLayout.event_view_event_name.text = game.name
         //TODO holder.linearLayout.event_view_sport_icon
-        holder.linearLayout.event_view_sport_name.text = getSportText(holder, game.sport)
+        holder.linearLayout.event_view_sport_name.text = getSportText(holder, game.sportID)
         //TODO time
         holder.linearLayout.event_view_participants.text =
             holder.itemView.context.resources.getString(

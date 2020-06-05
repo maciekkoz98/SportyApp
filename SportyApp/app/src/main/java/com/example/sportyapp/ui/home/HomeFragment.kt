@@ -28,6 +28,7 @@ import com.example.sportyapp.R
 import com.example.sportyapp.REQUEST_LOCATION
 import com.example.sportyapp.data.field.Field
 import com.example.sportyapp.data.game.Game
+import com.example.sportyapp.data.game.Sport
 import com.example.sportyapp.ui.home.utils.EventsInChosenFieldAdapter
 import com.example.sportyapp.utils.AuthenticationInterceptor
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -285,7 +286,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
         //Log.d("gameslist rozmiar:", gamesList.size.toString())
         val gamesList = ArrayList<Game>()
         val eventsAdapter = EventsInChosenFieldAdapter(gamesList)
-        setRecyclerView(marker.fieldID, gamesList, eventsAdapter, bottomSheetField)
+        setRecyclerView(marker.fieldID, gamesList, eventsAdapter)
         bottomSheetField.findViewById<RecyclerView>(R.id.events_recycler).apply {
             setHasFixedSize(false)
             layoutManager = LinearLayoutManager(bottomSheetField.context)
@@ -300,8 +301,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
     fun setRecyclerView(
         facilityID: Long,
         gamesList: ArrayList<Game>,
-        adapter: EventsInChosenFieldAdapter,
-        bottomSheetField: View
+        adapter: EventsInChosenFieldAdapter
     ) {
         Log.e("facility id", facilityID.toString())
         val client = OkHttpClient().newBuilder()
@@ -337,8 +337,21 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
                     for (j in 0 until jsonPlayers.length()) {
                         players.add(jsonPlayers.get(j) as Int)
                     }
+                    val maxPlayers = jsonGame.getString("maxPlayers").toInt()
                     val game =
-                        Game(id, duration, date, owner, players, isGamePublic, fieldID, sport, name)
+                        Game(
+                            id,
+                            name,
+                            duration,
+                            date,
+                            owner,
+                            players,
+                            isGamePublic,
+                            fieldID,
+                            Sport(1, "bas", "kosz", ArrayList<String>()),
+                            sport,
+                            maxPlayers
+                        )
                     gamesList.add(game)
                     activity!!.runOnUiThread { adapter.notifyDataSetChanged() }
                     Log.d("dodane", game.name)

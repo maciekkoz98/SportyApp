@@ -23,7 +23,7 @@
     <string name="city">Miasto</string>
     <string name="address">Adres:</string>
     <string name="players_number_test">Gracze: x</string>
-    <string name="min_players_number_test">Minimalna liczba graczy: y</string>
+    <string name="min_players_number_test">Minimalna liczba: y</string>
     <string name="list_of_players">Lista graczy</string>
     <string name="username">Nazwa użytkownika</string>
     <string name="game_app_bar_title">Gra</string>
@@ -47,4 +47,18 @@
     <string name="sport_discipline_icon">Ikona dyscypliny sportu</string>
     <string name="players_taking_part_icon">Ikona graczy biorących udział</string>
     <string name="time_icon">Ikona zegaru</string>
+    <string name="name_required_error">Wymagana jest nazwa gry.</string>
+    <string name="name_max_length_error">Maksymalna długość nazwy gry wynosi 30.</string>
+    <string name="name_content_error">Nazwa gry może zawierać tylko litery i cyfry.</string>
+    <string name="date_format_error">Data musi być w formacie dd.mm.yyyy.</string>
+    <string name="duration_error">Bład przy wyborze czasu trwania gry.</string>
+    <string name="pick_date">Wybierz datę:</string>
+    <string name="hint_add_start">00:00</string>
+    <string name="hint_add_end">00:00</string>
+    <string name="hint_add_start_label">Początek gry</string>
+    <string name="hint_add_end_label">Czas trwania</string>
+    <string name="max_number_of_players">Maksymalna liczba graczy:</string>
+    <string name="hint_max_players">20</string>
+    <string name="max_players_empty_error">Maksymalna liczba graczy jest wymagana.</string>
+    <string name="max_players_error">Maksymalna liczba graczy musi wynosić co najmniej 2.</string>
 </resources>
