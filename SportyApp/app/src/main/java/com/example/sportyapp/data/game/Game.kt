@@ -12,4 +12,12 @@ data class Game(
     val sport: Sport,
     val sportID: Long,
     val maxPlayers: Int
-)
+) : Comparable<Game> {
+    override fun compareTo(other: Game): Int {
+        return when {
+            this.date > other.date -> 1
+            this.date < other.date -> -1
+            else -> 0
+        }
+    }
+}

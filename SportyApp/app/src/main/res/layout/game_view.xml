@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="16dp">
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="16dp">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -16,15 +18,15 @@
             style="@style/TextAppearance.MaterialComponents.Headline3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="16" />
+            android:gravity="center"
+            android:minWidth="53.7dp" />
 
         <TextView
             android:id="@+id/event_view_date_month"
             style="@style/TextAppearance.MaterialComponents.Headline5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="lis" />
+            android:layout_gravity="center" />
     </LinearLayout>
 
     <LinearLayout
@@ -39,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:text="Nazwa wydarzenia" />
+            android:gravity="center_vertical" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -60,6 +62,7 @@
                 style="@style/InsideGame"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
                 android:layout_gravity="center_vertical"
                 android:text="@string/basketball" />
         </LinearLayout>
@@ -83,7 +86,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="16:30" />
+                android:layout_marginStart="2dp"
+                android:text="@string/event_view_start_time" />
 
             <ImageView
                 android:layout_width="18dp"
@@ -98,6 +102,7 @@
                 style="@style/InsideGame"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
                 android:layout_gravity="center"
                 android:text="@string/event_view_participants" />
 

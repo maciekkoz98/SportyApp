@@ -4,7 +4,7 @@
     android:id="@+id/bottom_sheet_field"
     style="@style/CustomBottomSheet"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="#FFFFFF"
     app:behavior_hideable="true"
     app:behavior_peekHeight="192dp"
@@ -13,7 +13,7 @@
     <LinearLayout
         android:id="@+id/bottom_sheet_field_linear"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <LinearLayout
@@ -68,14 +68,14 @@
                     android:layout_width="75dp"
                     android:layout_height="wrap_content"
                     android:paddingStart="13.5dp"
+                    android:paddingEnd="0dp"
                     android:text="@string/address" />
 
                 <TextView
                     android:id="@+id/address_text_view"
                     style="@style/TextAppearance.AppCompat.Body2"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ostrobramska 10" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <LinearLayout
@@ -91,6 +91,7 @@
                     android:text="@string/menu_add_game" />
 
                 <Button
+                    android:id="@+id/check_cal_button"
                     style="@style/bottomSheetButtonLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -109,12 +110,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:text="Nadchodzące wydarzenia" />
+            android:text="@string/planned_events" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/events_recycler"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:scrollbars="vertical" />
     </LinearLayout>
 

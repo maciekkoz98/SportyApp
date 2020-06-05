@@ -14,6 +14,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -29,7 +30,7 @@ import com.example.sportyapp.REQUEST_LOCATION
 import com.example.sportyapp.data.field.Field
 import com.example.sportyapp.data.game.Game
 import com.example.sportyapp.data.game.Sport
-import com.example.sportyapp.ui.home.utils.EventsInChosenFieldAdapter
+import com.example.sportyapp.ui.home.utils.GamesInChosenFieldAdapter
 import com.example.sportyapp.utils.AuthenticationInterceptor
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -80,10 +81,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
             fieldsList = it
             addMarkers()
         })
-        //        val textView: TextView = root.findViewById(R.id.text_home)
-//        homeViewModel.text.observe(this, Observer {
-//            textView.text = it
-//        })
         mapFragment.getMapAsync(this)
         localFAB = root.findViewById(R.id.localFAB)
         localFAB.setOnClickListener {
@@ -160,6 +157,10 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
             }
         }
         bottomSheetFieldBehavior.addBottomSheetCallback(bottomSheetFieldCallback)
+        val checkCalendarButton = root.findViewById(R.id.check_cal_button) as Button
+        checkCalendarButton.setOnClickListener {
+            bottomSheetFieldBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        }
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
 
         return root
@@ -168,7 +169,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mapReady = true
-        //TODO set markers in the fields locations!
         val warsaw = LatLng(52.2297, 21.0122)
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(warsaw, 13F))
         clusterManager = ClusterManager<MapMarker>(activity, mMap)
@@ -182,19 +182,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
 
     private fun addMarkers() {
         if (mapReady && this::fieldsList.isInitialized) {
-//            var latitude = 52.2297
-//            var longitude = 21.0122
-//            for (i in 0 until 250) {
-//                val offset = 0.0005f
-//                latitude += offset
-//                longitude += offset
-//                val marker = MapMarker(latitude, longitude, i.toString())
-//                clusterManager.addItem(marker)
-//            }
-//            fieldsList.forEach { key ->
-//                val marker = MapMarker(fieldsList[key].latitude, fieldsList[key].longitude, field.address, field.id)
-//                clusterManager.addItem(marker)
-//            }
             for ((key, field) in fieldsList) {
                 val mapMarker = MapMarker(field.latitude, field.longitude, field.address, key)
                 clusterManager.addItem(mapMarker)
@@ -279,13 +266,11 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
                 .build()
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
         val field = fieldsList[marker.fieldID]
+        //TODO set field sports
         val addressTextView = bottomSheetField.findViewById<TextView>(R.id.address_text_view)
         addressTextView.text = field!!.address
-        //TODO get games list
-        //val gamesList = homeViewModel.getGamesList(marker.fieldID.toInt())
-        //Log.d("gameslist rozmiar:", gamesList.size.toString())
         val gamesList = ArrayList<Game>()
-        val eventsAdapter = EventsInChosenFieldAdapter(gamesList)
+        val eventsAdapter = GamesInChosenFieldAdapter(gamesList)
         setRecyclerView(marker.fieldID, gamesList, eventsAdapter)
         bottomSheetField.findViewById<RecyclerView>(R.id.events_recycler).apply {
             setHasFixedSize(false)
@@ -298,12 +283,11 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
         return true
     }
 
-    fun setRecyclerView(
+    private fun setRecyclerView(
         facilityID: Long,
         gamesList: ArrayList<Game>,
-        adapter: EventsInChosenFieldAdapter
+        adapter: GamesInChosenFieldAdapter
     ) {
-        Log.e("facility id", facilityID.toString())
         val client = OkHttpClient().newBuilder()
             .addInterceptor(AuthenticationInterceptor())
             .build()
@@ -317,11 +301,8 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
             }
 
             override fun onResponse(call: Call, response: Response) {
-                //val gamesList = ArrayList<Game>()
-                Log.d("halo", "odebralem")
                 val jsonResponse = response.body()?.string()
                 val json = JSONArray(jsonResponse!!)
-                Log.d("rozmiar", json.length().toString())
                 for (i in 0 until json.length()) {
                     val jsonGame = json.getJSONObject(i)
                     val id = jsonGame.getString("id").toLong()
@@ -348,14 +329,14 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
                             players,
                             isGamePublic,
                             fieldID,
-                            Sport(1, "bas", "kosz", ArrayList<String>()),
+                            Sport(1, "bas", "kosz", ArrayList()),
                             sport,
                             maxPlayers
                         )
                     gamesList.add(game)
-                    activity!!.runOnUiThread { adapter.notifyDataSetChanged() }
-                    Log.d("dodane", game.name)
                 }
+                gamesList.sort()
+                activity!!.runOnUiThread { adapter.notifyDataSetChanged() }
             }
         })
     }
