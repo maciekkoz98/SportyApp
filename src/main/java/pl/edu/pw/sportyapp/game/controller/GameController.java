@@ -53,6 +53,11 @@ public class GameController {
         return new ResponseEntity<>(gameService.findById(id), HttpStatus.OK);
     }
 
+    @GetMapping("/game/facility/{id}")
+    public ResponseEntity<List<Game>> getAllByFacility(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(gameService.findAllByFacility(id), HttpStatus.OK);
+    }
+
     @PostMapping(value = "/game", consumes = "application/json")
     public ResponseEntity<Long> create(@Valid @RequestBody Game newGame) {
         return new ResponseEntity<>(gameService.addGame(newGame), HttpStatus.CREATED);

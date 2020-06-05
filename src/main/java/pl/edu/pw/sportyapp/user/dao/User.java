@@ -38,6 +38,7 @@ public class User implements UserDetails {
     @Size(min = 3, max = 200)
     private String fullname;
 
+    @NotNull
     private String passwordHash;
 
     private AppUserRole role;

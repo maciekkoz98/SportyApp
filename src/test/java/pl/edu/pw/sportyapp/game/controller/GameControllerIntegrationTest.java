@@ -62,7 +62,6 @@ class GameControllerIntegrationTest {
         mongoOperations = new MongoTemplate(MongoClients.create(), "test");
         mongoOperations.dropCollection("game");
         mongoOperations.dropCollection("user");
-        mongoOperations.dropCollection("facility");
         objectMapper = new ObjectMapper();
 
         mockMvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
@@ -71,19 +70,12 @@ class GameControllerIntegrationTest {
                 .isEnabled(true).isAccountNonExpired(true).isAccountNonLocked(true).isCredentialsNonExpired(true)
                 .gamesParticipatedIds(Lists.newArrayList()).friendsIds(Lists.newArrayList())
                 .build();
-
-        Facility facility = Facility.builder().id(2L).address("ADRES 1").latitude(50.0).longitude(50.0)
-                .disciplines(Lists.newArrayList()).events(Lists.newArrayList(1L, 2L)).build();
-
-        mongoOperations.insert(facility, "facility");
-
     }
 
     @AfterEach
     void tearDown() {
         mongoOperations.dropCollection("game");
         mongoOperations.dropCollection("user");
-        mongoOperations.dropCollection("facility");
         mongoOperations = null;
         objectMapper = null;
     }
@@ -132,7 +124,7 @@ class GameControllerIntegrationTest {
 
     @Test
     void createValidInput() throws Exception {
-        Game g1 = Game.builder().facility(2L).sport(1L).owner(6L).name("gra").date(System.currentTimeMillis() * 2).duration(3600L).build();
+        Game g1 = Game.builder().facility(2L).sport(1L).owner(6L).name("gra").date(System.currentTimeMillis() * 2).duration(3600L).maxPlayers(10).build();
         String json = null;
 
         try {
@@ -158,7 +150,7 @@ class GameControllerIntegrationTest {
 
     @Test
     void updateValidInput() throws Exception {
-        Game g1 = Game.builder().id(1L).facility(2L).sport(1L).owner(6L).name("gra").isPublic(true).date(System.currentTimeMillis() * 2).duration(2600).build();
+        Game g1 = Game.builder().id(1L).facility(2L).sport(1L).owner(6L).name("gra").isPublic(true).date(System.currentTimeMillis() * 2).duration(2600).maxPlayers(10).players(Lists.newArrayList()).build();
         mongoOperations.insert(g1, "game");
         mongoOperations.insert(user, "user");
 
@@ -180,7 +172,7 @@ class GameControllerIntegrationTest {
 
     @Test
     void updateNotExistingGame() throws Exception {
-        Game g1 = Game.builder().id(1L).facility(2L).sport(1L).owner(6L).name("gra").isPublic(true).date(System.currentTimeMillis() * 2).duration(2600).build();
+        Game g1 = Game.builder().id(1L).facility(2L).sport(1L).owner(6L).name("gra").isPublic(true).date(System.currentTimeMillis() * 2).duration(2600).maxPlayers(10).build();
 
         String json = null;
 
