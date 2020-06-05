@@ -9,5 +9,6 @@ data class Game (
     val players: List<Int>,
     val isPublic: Boolean,
     val fieldID: Long,
-    val sport: Sport
+    val sport: Sport,
+    val maxPlayers: Int
 )

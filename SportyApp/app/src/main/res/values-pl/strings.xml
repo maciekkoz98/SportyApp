@@ -54,4 +54,8 @@
     <string name="hint_add_end">00:00</string>
     <string name="hint_add_start_label">Początek gry</string>
     <string name="hint_add_end_label">Czas trwania</string>
+    <string name="max_number_of_players">Maksymalna liczba graczy:</string>
+    <string name="hint_max_players">20</string>
+    <string name="max_players_empty_error">Maksymalna liczba graczy jest wymagana.</string>
+    <string name="max_players_error">Maksymalna liczba graczy musi wynosić co najmniej 2.</string>
 </resources>

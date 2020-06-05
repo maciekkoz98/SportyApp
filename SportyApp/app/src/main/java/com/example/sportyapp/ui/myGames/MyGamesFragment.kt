@@ -80,8 +80,10 @@ class MyGamesFragment : Fragment() {
             val day = calendar.get(Calendar.DAY_OF_MONTH).toString()
             val month = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
             val hour = calendar.get(Calendar.HOUR_OF_DAY).toString() + ":" + calendar.get(Calendar.MINUTE).toString()
+            val people = game.players.size.toString() + "/" + game.maxPlayers.toString()
 
-            val item = MyGamesItem(day, month, game.name, game.sport.nameEN, hour, "20/24")
+
+            val item = MyGamesItem(day, month, game.name, game.sport.nameEN, hour, people)
             list.add(item)
         }
 

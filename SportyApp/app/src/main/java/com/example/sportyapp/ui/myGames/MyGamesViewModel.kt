@@ -50,6 +50,7 @@ class MyGamesViewModel : ViewModel() {
                     val isGamePublic = jsonField.getString("isPublic").toBoolean()
                     val fieldID = jsonField.getString("facility").toLong()
                     val sport = jsonField.getString("sport").toLong()
+                    val maxPlayers = jsonField.getString("maxPlayers").toInt()
                     val jsonPlayers = jsonField.getJSONArray("players")
                     val players = ArrayList<Int>()
 
@@ -67,7 +68,7 @@ class MyGamesViewModel : ViewModel() {
                     Log.d("name", name)*/
 
                     val game = Game(id, name, duration, date, owner, players, isGamePublic, fieldID,
-                        sports[sport]!!
+                        sports[sport]!!, maxPlayers
                     )
                     gottenFields[id] = game
                 }

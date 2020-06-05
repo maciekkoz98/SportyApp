@@ -36,12 +36,62 @@
     </LinearLayout>
 
     <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_weight="1"
+        android:autofillHints=""
+        android:ems="10"
+        android:gravity="start|center_vertical"
+        android:text="@string/pick_date"
+        android:textColor="@color/black"
+        android:textColorHighlight="@color/colorPrimary"
+        android:textColorHint="@color/black"
+        android:textColorLink="@color/colorPrimaryDark"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/editText_date_of_game"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_weight="1"
+        android:autofillHints=""
+        android:ems="10"
+        android:gravity="start|center_vertical"
+        android:hint="@string/hint_time"
+        android:inputType="date"
+        android:padding="10dp"
+        android:selectAllOnFocus="false"
+        android:singleLine="true"
+        android:textAlignment="textStart"
+        android:textColor="@color/colorPrimaryDark"
+        android:textColorHighlight="@color/colorPrimary"
+        android:textColorHint="@android:color/tab_indicator_text"
+        android:textColorLink="@color/colorPrimaryDark"
+        android:textCursorDrawable="@color/colorPrimaryDark"
+        android:textSize="18sp" />
+</LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/maxPlayersLabel"
             android:layout_width="match_parent"
             android:layout_height="37dp"
             android:layout_marginLeft="10dp"
@@ -52,17 +102,17 @@
             android:autofillHints=""
             android:ems="10"
             android:gravity="start|center_vertical"
-            android:text="@string/pick_date"
+            android:text="@string/max_number_of_players"
             android:textColor="@color/black"
             android:textColorHighlight="@color/colorPrimary"
             android:textColorHint="@color/black"
             android:textColorLink="@color/colorPrimaryDark"
             android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/editText_date_of_game"
+        <EditText
+            android:id="@+id/max_players"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="67dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
@@ -70,19 +120,10 @@
             android:layout_weight="1"
             android:autofillHints=""
             android:ems="10"
-            android:gravity="start|center_vertical"
-            android:hint="@string/hint_time"
-            android:inputType="date"
-            android:padding="10dp"
-            android:selectAllOnFocus="false"
-            android:singleLine="true"
-            android:textAlignment="textStart"
-            android:textColor="@color/colorPrimaryDark"
-            android:textColorHighlight="@color/colorPrimary"
-            android:textColorHint="@android:color/tab_indicator_text"
-            android:textColorLink="@color/colorPrimaryDark"
-            android:textCursorDrawable="@color/colorPrimaryDark"
-            android:textSize="18sp" />
+            android:hint="@string/hint_max_players"
+            android:inputType="number"
+            android:padding="10dp" />
+
     </LinearLayout>
 
     <LinearLayout

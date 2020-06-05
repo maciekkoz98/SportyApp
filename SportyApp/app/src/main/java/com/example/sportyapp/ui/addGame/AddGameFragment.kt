@@ -25,6 +25,7 @@ class AddGameFragment : Fragment() {
 
     private lateinit var addGameViewModel: AddGameViewModel
     private lateinit var gameName: EditText
+    private lateinit var maxPlayers: EditText
     private lateinit var gameDate: TextView
     private lateinit var gameStart: TextView
     private lateinit var gameDuration: TextView
@@ -52,6 +53,7 @@ class AddGameFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         gameName = view.findViewById(R.id.editText_game_name)
+        maxPlayers = view.findViewById(R.id.max_players)
         gameDate = view.findViewById(R.id.editText_date_of_game)
         gameStart = view.findViewById(R.id.add_start)
         gameDuration = view.findViewById(R.id.add_duration)
@@ -108,7 +110,7 @@ class AddGameFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun validate(): Boolean{
         var check = true
-        val namePattern = Regex("[a-zA-Z0-9]+")
+        val namePattern = Regex("[a-zA-Z0-9 ]+")
         if(gameName.length()==0){
             gameName.error = getString(R.string.name_required_error)
             check = false
@@ -119,8 +121,17 @@ class AddGameFragment : Fragment() {
             gameName.error = getString(R.string.name_content_error)
             check = false
         }
+
+        if (maxPlayers.length() == 0) {
+            maxPlayers.error = R.string.max_players_empty_error.toString()
+            check = false
+        } else if (maxPlayers.text.toString().toInt() < 2) {
+            maxPlayers.error = R.string.max_players_error.toString()
+            check = false
+        }
         if(gameDate.length()==0){
             gameDate.error = getString(R.string.date_format_error)
+            check = false
         }
         if(getDuration() <= 0){
             gameDuration.error = getString(R.string.duration_error)
@@ -145,6 +156,7 @@ class AddGameFragment : Fragment() {
         payload.put("facility", 1.toLong()) // na sztywno wpisane wartości
         payload.put("sport", 1.toLong())
         payload.put("owner", 1.toLong())
+        payload.put("maxPlayers", maxPlayers.text.toString().toInt())
         payload.put("isPublic", isGamePublic.isChecked)
         //payload.put("players", arrayOf(0, 1))
         //payload.put("id", 1)
