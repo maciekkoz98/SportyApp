@@ -44,6 +44,9 @@
     <string name="hint_duration">Czas trwania</string>
     <string name="hint_time">Data</string>
     <string name="createGame_addPlayer">Zaproś graczy</string>
+    <string name="sport_discipline_icon">Ikona dyscypliny sportu</string>
+    <string name="players_taking_part_icon">Ikona graczy biorących udział</string>
+    <string name="time_icon">Ikona zegaru</string>
     <string name="name_required_error">Wymagana jest nazwa gry.</string>
     <string name="name_max_length_error">Maksymalna długość nazwy gry wynosi 30.</string>
     <string name="name_content_error">Nazwa gry może zawierać tylko litery i cyfry.</string>
@@ -58,4 +61,6 @@
     <string name="hint_max_players">20</string>
     <string name="max_players_empty_error">Maksymalna liczba graczy jest wymagana.</string>
     <string name="max_players_error">Maksymalna liczba graczy musi wynosić co najmniej 2.</string>
+    <string name="planned_events">Nadchodzące gry</string>
+    <string name="menu_history">Historia gier</string>
 </resources>

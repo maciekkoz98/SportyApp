@@ -9,12 +9,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.EditText
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.sportyapp.R
-import com.example.sportyapp.ui.myGames.MyGamesFragment
 import com.example.sportyapp.utils.AuthenticationInterceptor
 import okhttp3.*
 import org.json.JSONObject
@@ -65,33 +67,49 @@ class AddGameFragment : Fragment() {
             val m = c.get(Calendar.MONTH)
             val d = c.get(Calendar.DAY_OF_MONTH)
 
-            val dpd = DatePickerDialog(this.activity!!,android.R.style.Theme_Material_Light_Dialog, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+            val dpd = DatePickerDialog(
+                this.activity!!,
+                android.R.style.Theme_Material_Light_Dialog,
+                DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
                 calendar = GregorianCalendar(year, monthOfYear, dayOfMonth)
-                gameDate.text = dayOfMonth.toString()+"."+(monthOfYear+1).toString()+"."+year.toString()
+                    gameDate.text =
+                        dayOfMonth.toString() + "." + (monthOfYear + 1).toString() + "." + year.toString()
 
                 }, y, m, d)
             dpd.show()
         }
         //wybór godzin
-        gameStart.setOnClickListener{
+        gameStart.setOnClickListener {
             val cal = Calendar.getInstance()
-            val timeSetListener = TimePickerDialog.OnTimeSetListener { view, hour, minute ->
+            val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
                 cal.set(Calendar.HOUR_OF_DAY, hour)
                 cal.set(Calendar.MINUTE, minute)
                 calendar.set(Calendar.HOUR_OF_DAY, hour)
                 calendar.set(Calendar.MINUTE, minute)
-               gameStart.text = SimpleDateFormat("HH:mm").format(cal.time)
+                gameStart.text = SimpleDateFormat("HH:mm").format(cal.time)
             }
-            TimePickerDialog(this.activity!!, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
+            TimePickerDialog(
+                this.activity!!,
+                timeSetListener,
+                cal.get(Calendar.HOUR_OF_DAY),
+                cal.get(Calendar.MINUTE),
+                true
+            ).show()
         }
-        gameDuration.setOnClickListener{
+        gameDuration.setOnClickListener {
             val cal = Calendar.getInstance()
-            val timeSetListener = TimePickerDialog.OnTimeSetListener { view, hour, minute ->
+            val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
                 cal.set(Calendar.HOUR_OF_DAY, hour)
                 cal.set(Calendar.MINUTE, minute)
                 gameDuration.text = SimpleDateFormat("HH:mm").format(cal.time)
             }
-            TimePickerDialog(this.activity!!, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
+            TimePickerDialog(
+                this.activity!!,
+                timeSetListener,
+                cal.get(Calendar.HOUR_OF_DAY),
+                cal.get(Calendar.MINUTE),
+                true
+            ).show()
         }
         //obsługa guzika
         val addGameBtn = view.findViewById<Button>(R.id.addGameButton)
@@ -99,7 +117,7 @@ class AddGameFragment : Fragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private val addGameListener = View.OnClickListener { view ->
+    private val addGameListener = View.OnClickListener {
         if(validate()) {
             addGame()
             activity!!.onBackPressed()
@@ -133,7 +151,7 @@ class AddGameFragment : Fragment() {
             gameDate.error = getString(R.string.date_format_error)
             check = false
         }
-        if(getDuration() <= 0){
+        if (getDuration() <= 0) {
             gameDuration.error = getString(R.string.duration_error)
             check = false
         }

@@ -14,9 +14,9 @@
             android:icon="@drawable/ic_add_circle_outline_gray_24dp"
             android:title="@string/menu_add_game" />
         <item
-            android:id="@+id/nav_fields"
-            android:icon="@drawable/ic_place_gray_24dp"
-            android:title="@string/menu_fields" />
+            android:id="@+id/nav_history"
+            android:icon="@drawable/ic_add_circle_outline_gray_24dp"
+            android:title="@string/menu_history" />
     </group>
 
     <group

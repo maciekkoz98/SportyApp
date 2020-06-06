@@ -11,6 +11,7 @@
     <string name="menu_my_games">My games</string>
     <string name="menu_fields">Playfield around</string>
     <string name="menu_add_game">Add a game</string>
+    <string name="menu_history">Game history</string>
 
     <string name="hint_name">name</string>
     <string name="hint_duration">duration in minutes</string>
@@ -52,6 +53,10 @@
     <string name="players">Players:</string>
     <string name="is_public">Is public?</string>
     <string name="editText_game_name">Name</string>
+    <string name="sport_discipline_icon">Sport discipline icon</string>
+    <string name="players_taking_part_icon">Players taking part icon</string>
+    <string name="time_icon">Time icon</string>
+    <string name="event_view_participants" translatable="false">%1$s/%2$s</string>
     <string name="hint_add_start">00:00</string>
     <string name="hint_add_end">00:00</string>
     <string name="hint_add_start_label">Game start</string>
@@ -66,4 +71,6 @@
     <string name="hint_max_players">20</string>
     <string name="max_players_empty_error">Maximum number of players is required.</string>
     <string name="max_players_error">Maximum number of players must be at least 2.</string>
+    <string name="event_view_start_time" translatable="false">%1$s:%2$s</string>
+    <string name="planned_events">Planned games</string>
 </resources>

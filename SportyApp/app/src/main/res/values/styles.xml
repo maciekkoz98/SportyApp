@@ -41,6 +41,12 @@
         </item>
     </style>
 
+    <style name="InsideGame">
+        <item name="android:textSize">16sp</item>
+        <item name="android:letterSpacing">0.025</item>
+        <item name="android:fontFamily">"sans-serif-light"</item>
+    </style>
+
     <style name="CustomShapeAppearanceOverlay.MaterialComponents.BottomSheet" parent="">
         <item name="cornerSizeTopRight">16dp</item>
         <item name="cornerSizeTopLeft">16dp</item>

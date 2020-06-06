@@ -33,4 +33,9 @@
         android:name="com.example.sportyapp.ui.addGame.AddGameFragment"
         android:label="@string/menu_add_game"
         tools:layout="@layout/fragment_add_game" />
+    <fragment
+        android:id="@+id/nav_history"
+        android:name="com.example.sportyapp.ui.gameHistory.GameHistoryFragment"
+        android:label="@string/menu_history"
+        tools:layout="@layout/fragment_last_games" />
 </navigation>

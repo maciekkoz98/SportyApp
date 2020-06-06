@@ -58,8 +58,8 @@ class MyGamesViewModel : ViewModel() {
                     val sportData = SportPrefs.getSportFromMemory(sport)
 
                     val game = Game(id, name, duration, date, owner, players, isGamePublic, fieldID,
-                        sportData, maxPlayers
-                    )
+                        sportData, maxPlayers)
+
                     gottenFields[id] = game
                 }
                 games.postValue(gottenFields)

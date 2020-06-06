@@ -14,16 +14,24 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.view.marginBottom
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.sportyapp.R
 import com.example.sportyapp.REQUEST_LOCATION
+import com.example.sportyapp.data.field.Field
+import com.example.sportyapp.data.game.Game
+import com.example.sportyapp.data.game.Sport
+import com.example.sportyapp.ui.home.utils.GamesInChosenFieldAdapter
+import com.example.sportyapp.utils.AuthenticationInterceptor
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -39,20 +47,26 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterManager
 import com.google.maps.android.clustering.ClusterManager.OnClusterItemClickListener
+import okhttp3.*
+import org.json.JSONArray
+import java.io.IOException
 
 class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener,
     ClusterManager.OnClusterClickListener<MapMarker>, OnClusterItemClickListener<MapMarker> {
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var mMap: GoogleMap
+    private var mapReady: Boolean = false
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var localFAB: FloatingActionButton
     private lateinit var clusterManager: ClusterManager<MapMarker>
     private lateinit var bottomSheetSearch: View
     private lateinit var bottomSheetSearchBehavior: BottomSheetBehavior<View>
+    private lateinit var bottomSheetField: View
     private lateinit var bottomSheetFieldBehavior: BottomSheetBehavior<View>
     private lateinit var editTextKeyListener: KeyListener
     private lateinit var editTextMovementMethod: MovementMethod
+    private lateinit var fieldsList: HashMap<Long, Field>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,16 +77,15 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
             ViewModelProviders.of(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-//        val textView: TextView = root.findViewById(R.id.text_home)
-//        homeViewModel.text.observe(this, Observer {
-//            textView.text = it
-//        })
+        homeViewModel.fields.observe(this, Observer {
+            fieldsList = it
+            addMarkers()
+        })
         mapFragment.getMapAsync(this)
         localFAB = root.findViewById(R.id.localFAB)
         localFAB.setOnClickListener {
             localize()
         }
-        Log.d("na poczatku", localFAB.marginBottom.toString())
         val addFAB: FloatingActionButton = root.findViewById(R.id.addFAB)
         addFAB.setOnClickListener { view ->
             Snackbar.make(view, "Replace with ADD action", Snackbar.LENGTH_LONG)
@@ -119,7 +132,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
             true
         }
 
-        val bottomSheetField: View = root.findViewById(R.id.bottom_sheet_field)
+        bottomSheetField = root.findViewById(R.id.bottom_sheet_field)
         bottomSheetFieldBehavior = BottomSheetBehavior.from(bottomSheetField)
         bottomSheetFieldBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         val bottomSheetFieldCallback = object : BottomSheetBehavior.BottomSheetCallback() {
@@ -144,6 +157,10 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
             }
         }
         bottomSheetFieldBehavior.addBottomSheetCallback(bottomSheetFieldCallback)
+        val checkCalendarButton = root.findViewById(R.id.check_cal_button) as Button
+        checkCalendarButton.setOnClickListener {
+            bottomSheetFieldBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        }
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
 
         return root
@@ -151,7 +168,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        //TODO set markers in the fields locations!
+        mapReady = true
         val warsaw = LatLng(52.2297, 21.0122)
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(warsaw, 13F))
         clusterManager = ClusterManager<MapMarker>(activity, mMap)
@@ -160,18 +177,15 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
         mMap.setOnCameraIdleListener(clusterManager)
         mMap.setOnMarkerClickListener(clusterManager)
         mMap.setOnMapClickListener(this)
-        addMarkers_TEMP()
+        addMarkers()
     }
 
-    fun addMarkers_TEMP() {
-        var latitude = 52.2297
-        var longitude = 21.0122
-        for (i in 0 until 250) {
-            val offset = 0.0005f
-            latitude += offset
-            longitude += offset
-            val marker = MapMarker(latitude, longitude, i.toString())
-            clusterManager.addItem(marker)
+    private fun addMarkers() {
+        if (mapReady && this::fieldsList.isInitialized) {
+            for ((key, field) in fieldsList) {
+                val mapMarker = MapMarker(field.latitude, field.longitude, field.address, key)
+                clusterManager.addItem(mapMarker)
+            }
         }
     }
 
@@ -251,10 +265,80 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
                 .zoom(mMap.cameraPosition.zoom)
                 .build()
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+        val field = fieldsList[marker.fieldID]
+        //TODO set field sports
+        val addressTextView = bottomSheetField.findViewById<TextView>(R.id.address_text_view)
+        addressTextView.text = field!!.address
+        val gamesList = ArrayList<Game>()
+        val eventsAdapter = GamesInChosenFieldAdapter(gamesList)
+        setRecyclerView(marker.fieldID, gamesList, eventsAdapter)
+        bottomSheetField.findViewById<RecyclerView>(R.id.events_recycler).apply {
+            setHasFixedSize(false)
+            layoutManager = LinearLayoutManager(bottomSheetField.context)
+            adapter = eventsAdapter
+        }
         bottomSheetSearchBehavior.isHideable = true
         bottomSheetSearchBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         bottomSheetFieldBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
         return true
+    }
+
+    private fun setRecyclerView(
+        facilityID: Long,
+        gamesList: ArrayList<Game>,
+        adapter: GamesInChosenFieldAdapter
+    ) {
+        val client = OkHttpClient().newBuilder()
+            .addInterceptor(AuthenticationInterceptor())
+            .build()
+        val request = Request.Builder()
+            .url("http://10.0.2.2:8080/game/facility/$facilityID")
+            .build()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.e("blad", "polaczenia z bazom")
+                Log.e("blad", e.message!!)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val jsonResponse = response.body()?.string()
+                val json = JSONArray(jsonResponse!!)
+                for (i in 0 until json.length()) {
+                    val jsonGame = json.getJSONObject(i)
+                    val id = jsonGame.getString("id").toLong()
+                    val name = jsonGame.getString("name")
+                    val duration = jsonGame.getString("duration").toLong()
+                    val date = jsonGame.getString("date").toLong()
+                    val owner = jsonGame.getString("owner").toLong()
+                    val isGamePublic = jsonGame.getString("isPublic")!!.toBoolean()
+                    val fieldID = jsonGame.getString("facility").toLong()
+                    val sport = jsonGame.getString("sport").toLong()
+                    val jsonPlayers = jsonGame.getJSONArray("players")
+                    val players = ArrayList<Int>()
+                    for (j in 0 until jsonPlayers.length()) {
+                        players.add(jsonPlayers.get(j) as Int)
+                    }
+                    val maxPlayers = jsonGame.getString("maxPlayers").toInt()
+                    val game =
+                        Game(
+                            id,
+                            name,
+                            duration,
+                            date,
+                            owner,
+                            players,
+                            isGamePublic,
+                            fieldID,
+                            Sport(1, "bas", "kosz", ArrayList()),
+                            sport,
+                            maxPlayers
+                        )
+                    gamesList.add(game)
+                }
+                gamesList.sort()
+                activity!!.runOnUiThread { adapter.notifyDataSetChanged() }
+            }
+        })
     }
 
     override fun onClusterClick(cluster: Cluster<MapMarker>): Boolean {
