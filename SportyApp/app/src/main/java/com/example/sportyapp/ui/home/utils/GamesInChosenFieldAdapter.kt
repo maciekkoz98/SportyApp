@@ -28,7 +28,7 @@ class GamesInChosenFieldAdapter(private val gamesList: ArrayList<Game>) :
         val game = gamesList[position]
         holder.linearLayout.event_view_event_name.text = game.name
         //TODO holder.linearLayout.event_view_sport_icon
-        holder.linearLayout.event_view_sport_name.text = getSportText(holder, game.sportID)
+        holder.linearLayout.event_view_sport_name.text = getSportText(holder, game.sport.nameEN)
         val stamp = Timestamp(game.date)
         val date = Date(stamp.time)
         val cal = Calendar.getInstance()
@@ -50,10 +50,10 @@ class GamesInChosenFieldAdapter(private val gamesList: ArrayList<Game>) :
             )
     }
 
-    private fun getSportText(holder: GamesInChosenFieldHolder, sportID: Long): String {
-        return when (sportID) {
-            1L -> holder.itemView.context.resources.getString(R.string.basketball)
-            2L -> holder.itemView.context.resources.getString(R.string.football)
+    private fun getSportText(holder: GamesInChosenFieldHolder, sportName: String): String {
+        return when (sportName) {
+            "Basketball" -> holder.itemView.context.resources.getString(R.string.basketball)
+            "Football" -> holder.itemView.context.resources.getString(R.string.football)
             else -> "Unknown"
         }
     }
