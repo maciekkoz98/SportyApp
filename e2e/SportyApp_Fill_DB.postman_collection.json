@@ -1,0 +1,219 @@
+{
+	"info": {
+		"_postman_id": "987684a8-e2f7-47cf-9552-3ca81d59779b",
+		"name": "SportyApp_Fill_DB",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Adding users",
+			"item": [
+				{
+					"name": "Create user Bob",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9be2b5bc-e3b6-4e45-a049-96e0cb3a84f3",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\" : \"bob\",\n\t\"fullname\" : \"Banana Bob\",\n\t\"passwordHash\" : \"bob\",\n\t\"email\" : \"bob@bob.pl\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user Rob",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3b7d9675-d50c-4599-8706-2e68fbd46b65",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\" : \"rob\",\n\t\"fullname\" : \"Rabarbar Robert\",\n\t\"passwordHash\" : \"rob\",\n\t\"email\" : \"rob@bob.pl\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user Tom",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "87755c9e-20e3-456d-9d6c-dcc67a2b95d2",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\" : \"tom\",\n\t\"fullname\" : \"Tomato Tom\",\n\t\"passwordHash\" : \"tom\",\n\t\"email\" : \"tom@bob.pl\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Adding games",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Adding facilities",
+			"item": [
+				{
+					"name": "Create SWFiS PW",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "08acb923-2e6a-4fd1-b2d2-2e85aeeae604",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"address\" : \"Ludwika Waryńskiego 12A, 00-631 Warszawa\",\n\t\"latitude\" : 52.216706,\n\t\"longitude\" : 21.016168,\n\t\"isSportsHall\" : true,\n\t\"disciplines\" : [\n\t\t1\t\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/facility",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"facility"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
