@@ -31,7 +31,8 @@ public class SearchController {
             @RequestParam(name = "name", required = false) String name,
             @RequestParam(name = "laterThan", required = false) Long laterThan,
             @RequestParam(name = "earlierThan", required = false) Long earlierThan,
-            @RequestParam(name = "player", required = false) Long player
+            @RequestParam(name = "player", required = false) Long player,
+            @RequestParam(name = "startsWith", required = false) String startsWith
             ) {
         QGame game = new QGame("game");
 
@@ -40,7 +41,8 @@ public class SearchController {
                 name != null ? game.name.eq(name) : null,
                 laterThan != null ? game.date.gt(laterThan) : null,
                 earlierThan != null ? game.date.lt(earlierThan) : null,
-                player != null ? game.players.contains(player) : null), HttpStatus.OK);
+                player != null ? game.players.contains(player) : null,
+                startsWith != null ? game.name.startsWith(startsWith) : null), HttpStatus.OK);
 
     }
 
