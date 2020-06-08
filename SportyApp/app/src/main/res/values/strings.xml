@@ -74,4 +74,10 @@
     <string name="event_view_start_time" translatable="false">%1$s:%2$s</string>
     <string name="planned_events">Planned games</string>
     <string name="field_type_icon">Field type icon</string>
+    <string name="tennis">Tennis</string>
+    <string name="volleyball">Volleyball</string>
+    <string name="badminton">Badminton</string>
+    <string name="table_tennis">Table tennis</string>
+    <string name="handball">Handball</string>
+    <string name="gym">Gym</string>
 </resources>

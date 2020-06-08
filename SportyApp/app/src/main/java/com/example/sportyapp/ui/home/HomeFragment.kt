@@ -178,15 +178,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
         addMarkers()
     }
 
-    private fun addMarkers() {
-        if (mapReady && this::fieldsList.isInitialized) {
-            for ((key, field) in fieldsList) {
-                val mapMarker = MapMarker(field.latitude, field.longitude, field.address, key)
-                clusterManager.addItem(mapMarker)
-            }
-        }
-    }
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -208,6 +199,67 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
             }
             else -> {
 
+            }
+        }
+    }
+
+    override fun onClusterItemClick(marker: MapMarker): Boolean {
+        val cameraPosition =
+            CameraPosition.builder()
+                .target(marker.position)
+                .zoom(mMap.cameraPosition.zoom)
+                .build()
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+        val field = fieldsList[marker.fieldID]
+        if (field!!.sportsHall) {
+            bottomSheetField.findViewById<ImageView>(R.id.field_icon)
+                .setImageResource(R.drawable.ic_gym)
+            bottomSheetField.findViewById<TextView>(R.id.field_title).text =
+                bottomSheetField.context.resources.getString(R.string.gym)
+        } else {
+            bottomSheetField.findViewById<ImageView>(R.id.field_icon)
+                .setImageResource(R.drawable.ic_football_field_green)
+            bottomSheetField.findViewById<TextView>(R.id.field_title).text =
+                bottomSheetField.context.resources.getString(R.string.field)
+        }
+        setSportsInField(field)
+        val addressTextView = bottomSheetField.findViewById<TextView>(R.id.address_text_view)
+        addressTextView.text = field.address
+        val gamesList = ArrayList<Game>()
+        val eventsAdapter = GamesInChosenFieldAdapter(gamesList)
+        setFieldGamesRecyclerView(marker.fieldID, gamesList, eventsAdapter)
+        bottomSheetField.findViewById<RecyclerView>(R.id.events_recycler).apply {
+            setHasFixedSize(false)
+            layoutManager = LinearLayoutManager(bottomSheetField.context)
+            adapter = eventsAdapter
+        }
+        bottomSheetSearchBehavior.isHideable = true
+        bottomSheetSearchBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+        bottomSheetFieldBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        return true
+    }
+
+    override fun onClusterClick(cluster: Cluster<MapMarker>): Boolean {
+        val builder = LatLngBounds.builder()
+        for (item in cluster.items) {
+            builder.include(item.position)
+        }
+        val bounds = builder.build()
+        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100))
+        return true
+    }
+
+    override fun onMapClick(point: LatLng?) {
+        if (bottomSheetFieldBehavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
+            bottomSheetFieldBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+        }
+    }
+
+    private fun addMarkers() {
+        if (mapReady && this::fieldsList.isInitialized) {
+            for ((key, field) in fieldsList) {
+                val mapMarker = MapMarker(field.latitude, field.longitude, field.address, key)
+                clusterManager.addItem(mapMarker)
             }
         }
     }
@@ -238,7 +290,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
                             R.drawable.ic_my_location_white_24dp,
                             null
                         )
-
                         val longitude = location.longitude
                         val latitude = location.latitude
                         val latLng = LatLng(latitude, longitude)
@@ -256,37 +307,30 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
         }
     }
 
-    override fun onClusterItemClick(marker: MapMarker): Boolean {
-        val cameraPosition =
-            CameraPosition.builder()
-                .target(marker.position)
-                .zoom(mMap.cameraPosition.zoom)
-                .build()
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
-        val field = fieldsList[marker.fieldID]
-        //TODO set field sports
-        if (field!!.sportsHall) {
-            bottomSheetField.findViewById<ImageView>(R.id.field_icon)
-                .setImageResource(R.drawable.ic_gym)
-        } else {
-            bottomSheetField.findViewById<ImageView>(R.id.field_icon)
-                .setImageResource(R.drawable.ic_football_field_green)
+    private fun setSportsInField(field: Field) {
+        val sb = StringBuilder()
+        for (i in 0 until field.disciplines.size) {
+            val sportID = field.disciplines[i]
+            val sportData = SportPrefs.getSportFromMemory(sportID.toLong())
+            sb.append(getSportText(sportData.nameEN))
+            if (i != field.disciplines.size - 1) {
+                sb.append(" \u2022 ")
+            }
         }
+        bottomSheetField.findViewById<TextView>(R.id.field_sports).text = sb.toString()
+    }
 
-        val addressTextView = bottomSheetField.findViewById<TextView>(R.id.address_text_view)
-        addressTextView.text = field.address
-        val gamesList = ArrayList<Game>()
-        val eventsAdapter = GamesInChosenFieldAdapter(gamesList)
-        setFieldGamesRecyclerView(marker.fieldID, gamesList, eventsAdapter)
-        bottomSheetField.findViewById<RecyclerView>(R.id.events_recycler).apply {
-            setHasFixedSize(false)
-            layoutManager = LinearLayoutManager(bottomSheetField.context)
-            adapter = eventsAdapter
+    private fun getSportText(sportName: String): String {
+        return when (sportName) {
+            "Basketball" -> bottomSheetField.context.resources.getString(R.string.basketball)
+            "Football" -> bottomSheetField.context.resources.getString(R.string.football)
+            "Volleyball" -> bottomSheetField.context.resources.getString(R.string.volleyball)
+            "Handball" -> bottomSheetField.context.getString(R.string.handball)
+            "Badminton" -> bottomSheetField.context.resources.getString(R.string.badminton)
+            "Tennis" -> bottomSheetField.context.resources.getString(R.string.tennis)
+            "Table tennis" -> bottomSheetField.context.resources.getString(R.string.table_tennis)
+            else -> "Unknown"
         }
-        bottomSheetSearchBehavior.isHideable = true
-        bottomSheetSearchBehavior.state = BottomSheetBehavior.STATE_HIDDEN
-        bottomSheetFieldBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-        return true
     }
 
     private fun setFieldGamesRecyclerView(
@@ -345,21 +389,5 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
                 activity!!.runOnUiThread { adapter.notifyDataSetChanged() }
             }
         })
-    }
-
-    override fun onClusterClick(cluster: Cluster<MapMarker>): Boolean {
-        val builder = LatLngBounds.builder()
-        for (item in cluster.items) {
-            builder.include(item.position)
-        }
-        val bounds = builder.build()
-        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100))
-        return true
-    }
-
-    override fun onMapClick(point: LatLng?) {
-        if (bottomSheetFieldBehavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
-            bottomSheetFieldBehavior.state = BottomSheetBehavior.STATE_HIDDEN
-        }
     }
 }

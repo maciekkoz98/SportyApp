@@ -64,4 +64,10 @@
     <string name="planned_events">Nadchodzące gry</string>
     <string name="menu_history">Historia gier</string>
     <string name="field_type_icon">Ikona typu boiska</string>
+    <string name="tennis">Tenis</string>
+    <string name="volleyball">Siatkówka</string>
+    <string name="badminton">Badminton</string>
+    <string name="table_tennis">Tenis stołowy</string>
+    <string name="handball">Piłka ręczna</string>
+    <string name="gym">Hala sportowa</string>
 </resources>

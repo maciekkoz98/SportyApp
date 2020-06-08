@@ -54,6 +54,11 @@ class GamesInChosenFieldAdapter(private val gamesList: ArrayList<Game>) :
         return when (sportName) {
             "Basketball" -> holder.itemView.context.resources.getString(R.string.basketball)
             "Football" -> holder.itemView.context.resources.getString(R.string.football)
+            "Volleyball" -> holder.itemView.context.resources.getString(R.string.volleyball)
+            "Handball" -> holder.itemView.context.getString(R.string.handball)
+            "Badminton" -> holder.itemView.context.resources.getString(R.string.badminton)
+            "Tennis" -> holder.itemView.context.resources.getString(R.string.tennis)
+            "Table tennis" -> holder.itemView.context.resources.getString(R.string.table_tennis)
             else -> "Unknown"
         }
     }
