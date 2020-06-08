@@ -26,9 +26,9 @@ import com.example.sportyapp.R
 import com.example.sportyapp.REQUEST_LOCATION
 import com.example.sportyapp.data.field.Field
 import com.example.sportyapp.data.game.Game
-import com.example.sportyapp.data.game.Sport
 import com.example.sportyapp.ui.home.utils.GamesInChosenFieldAdapter
 import com.example.sportyapp.utils.AuthenticationInterceptor
+import com.example.sportyapp.utils.SportPrefs
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -318,13 +318,14 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
                     val owner = jsonGame.getString("owner").toLong()
                     val isGamePublic = jsonGame.getString("isPublic")!!.toBoolean()
                     val fieldID = jsonGame.getString("facility").toLong()
-                    val sport = jsonGame.getString("sport").toLong()
+                    val sportID = jsonGame.getString("sport").toLong()
                     val jsonPlayers = jsonGame.getJSONArray("players")
                     val players = ArrayList<Int>()
                     for (j in 0 until jsonPlayers.length()) {
                         players.add(jsonPlayers.get(j) as Int)
                     }
                     val maxPlayers = jsonGame.getString("maxPlayers").toInt()
+                    val sportData = SportPrefs.getSportFromMemory(sportID)
                     val game =
                         Game(
                             id,
@@ -335,8 +336,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
                             players,
                             isGamePublic,
                             fieldID,
-                            Sport(1, "bas", "kosz", ArrayList()),
-                            sport,
+                            sportData,
                             maxPlayers
                         )
                     gamesList.add(game)
