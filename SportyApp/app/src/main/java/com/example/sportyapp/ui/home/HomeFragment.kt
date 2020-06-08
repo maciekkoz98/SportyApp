@@ -20,6 +20,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sportyapp.R
@@ -40,7 +41,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterManager
 import com.google.maps.android.clustering.ClusterManager.OnClusterItemClickListener
@@ -84,9 +84,9 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
             localize()
         }
         val addFAB: FloatingActionButton = root.findViewById(R.id.addFAB)
-        addFAB.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with ADD action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        addFAB.scaleType = ImageView.ScaleType.CENTER
+        addFAB.setOnClickListener {
+            view!!.findNavController().navigate(R.id.action_nav_home_to_nav_add_game)
         }
 
         val editText: TextView = root.findViewById(R.id.search_edit_text)
@@ -158,6 +158,14 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
         val checkCalendarButton = root.findViewById(R.id.check_cal_button) as Button
         checkCalendarButton.setOnClickListener {
             bottomSheetFieldBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        }
+        val addGameButton = root.findViewById(R.id.field_add_game_button) as Button
+        addGameButton.setOnClickListener {
+            bottomSheetFieldBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            bottomSheetSearchBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            clusterManager.clearItems()
+            //TODO pass the field id
+            view!!.findNavController().navigate(R.id.action_nav_home_to_nav_add_game)
         }
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
 
@@ -257,6 +265,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
 
     private fun addMarkers() {
         if (mapReady && this::fieldsList.isInitialized) {
+            mapReady = false
             for ((key, field) in fieldsList) {
                 val mapMarker = MapMarker(field.latitude, field.longitude, field.address, key)
                 clusterManager.addItem(mapMarker)

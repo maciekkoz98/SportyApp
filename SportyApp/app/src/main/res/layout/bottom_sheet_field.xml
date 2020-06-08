@@ -87,6 +87,7 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/field_add_game_button"
                     style="@style/bottomSheetButtonLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
