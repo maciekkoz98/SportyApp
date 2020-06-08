@@ -14,10 +14,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
@@ -123,12 +120,13 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
             }
         }
         bottomSheetSearchBehavior.addBottomSheetCallback(bottomSheetSearchCallback)
-        bottomSheetSearch.setOnTouchListener { _, event ->
+        bottomSheetSearch.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
                 val imm =
                     activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(editText.windowToken, 0)
             }
+            v.performClick()
             true
         }
 
@@ -267,11 +265,19 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
         val field = fieldsList[marker.fieldID]
         //TODO set field sports
+        if (field!!.sportsHall) {
+            bottomSheetField.findViewById<ImageView>(R.id.field_icon)
+                .setImageResource(R.drawable.ic_gym)
+        } else {
+            bottomSheetField.findViewById<ImageView>(R.id.field_icon)
+                .setImageResource(R.drawable.ic_football_field_green)
+        }
+
         val addressTextView = bottomSheetField.findViewById<TextView>(R.id.address_text_view)
-        addressTextView.text = field!!.address
+        addressTextView.text = field.address
         val gamesList = ArrayList<Game>()
         val eventsAdapter = GamesInChosenFieldAdapter(gamesList)
-        setRecyclerView(marker.fieldID, gamesList, eventsAdapter)
+        setFieldGamesRecyclerView(marker.fieldID, gamesList, eventsAdapter)
         bottomSheetField.findViewById<RecyclerView>(R.id.events_recycler).apply {
             setHasFixedSize(false)
             layoutManager = LinearLayoutManager(bottomSheetField.context)
@@ -283,7 +289,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
         return true
     }
 
-    private fun setRecyclerView(
+    private fun setFieldGamesRecyclerView(
         facilityID: Long,
         gamesList: ArrayList<Game>,
         adapter: GamesInChosenFieldAdapter

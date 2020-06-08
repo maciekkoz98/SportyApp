@@ -5,5 +5,6 @@ data class Field(
     val latitude: Double,
     val longitude: Double,
     val address: String,
+    val sportsHall: Boolean,
     val disciplines: ArrayList<Int>
 )

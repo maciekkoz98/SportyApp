@@ -63,4 +63,5 @@
     <string name="max_players_error">Maksymalna liczba graczy musi wynosić co najmniej 2.</string>
     <string name="planned_events">Nadchodzące gry</string>
     <string name="menu_history">Historia gier</string>
+    <string name="field_type_icon">Ikona typu boiska</string>
 </resources>

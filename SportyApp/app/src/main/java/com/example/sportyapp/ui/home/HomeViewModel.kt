@@ -47,12 +47,13 @@ class HomeViewModel : ViewModel() {
                     val latitude = jsonField.getString("latitude").toDouble()
                     val longitude = jsonField.getString("longitude").toDouble()
                     val address = jsonField.getString("address")
+                    val sportsHall = jsonField.getString("sportsHall")!!.toBoolean()
                     val jsonDisciplines = jsonField.getJSONArray("disciplines")
                     val disciplines = ArrayList<Int>()
                     for (j in 0 until jsonDisciplines.length()) {
                         disciplines.add(jsonDisciplines.get(j) as Int)
                     }
-                    val field = Field(id, latitude, longitude, address, disciplines)
+                    val field = Field(id, latitude, longitude, address, sportsHall, disciplines)
                     gottenFields[id] = field
                 }
                 fields.postValue(gottenFields)

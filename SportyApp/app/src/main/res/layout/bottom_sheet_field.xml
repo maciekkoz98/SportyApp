@@ -29,12 +29,12 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/field_indicator"
+                    android:id="@+id/field_icon"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:contentDescription="@string/basketball_ball"
-                    app:srcCompat="@drawable/ic_basketball_svg" />
+                    android:contentDescription="@string/field_type_icon"
+                    app:srcCompat="@drawable/ic_football_field_green" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -50,10 +50,11 @@
                         android:text="@string/field" />
 
                     <TextView
+                        android:id="@+id/field_sports"
                         style="@style/TextAppearance.AppCompat.Body2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/basketball" />
+                        android:text="" />
                 </LinearLayout>
             </LinearLayout>
 
