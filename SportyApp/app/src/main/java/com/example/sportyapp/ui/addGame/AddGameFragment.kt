@@ -136,17 +136,25 @@ class AddGameFragment : Fragment() {
 
         fieldAddress.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
-                for ((id, value) in fieldsList) {
-                    if (value.address == fieldAddress.text.toString()) {
-                        setSpinnerValues(fieldsList[id]!!)
-                    }
-                }
+
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                var checked = false
+
+                for ((id, value) in fieldsList) {
+                    if (value.address == fieldAddress.text.toString()) {
+                        setSpinnerValues(fieldsList[id]!!)
+                        checked = true
+                    }
+                }
+
+                if(!checked) {
+                    disciplineSpinner.adapter = null
+                }
             }
         })
         
