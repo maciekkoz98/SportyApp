@@ -70,14 +70,14 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val root = inflater.inflate(R.layout.fragment_home, container, false)
         homeViewModel =
             ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         homeViewModel.fields.observe(this, Observer {
             fieldsList = it
             addMarkers()
         })
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         localFAB = root.findViewById(R.id.localFAB)
         localFAB.setOnClickListener {
@@ -159,14 +159,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
         checkCalendarButton.setOnClickListener {
             bottomSheetFieldBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         }
-        val addGameButton = root.findViewById(R.id.field_add_game_button) as Button
-        addGameButton.setOnClickListener {
-            bottomSheetFieldBehavior.state = BottomSheetBehavior.STATE_HIDDEN
-            bottomSheetSearchBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-            clusterManager.clearItems()
-            //TODO pass the field id
-            view!!.findNavController().navigate(R.id.action_nav_home_to_nav_add_game)
-        }
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
 
         return root
@@ -240,6 +232,15 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
             setHasFixedSize(false)
             layoutManager = LinearLayoutManager(bottomSheetField.context)
             adapter = eventsAdapter
+        }
+        val addGameButton = bottomSheetField.findViewById(R.id.field_add_game_button) as Button
+        addGameButton.setOnClickListener {
+            bottomSheetFieldBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            bottomSheetSearchBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            clusterManager.clearItems()
+            val bundle = Bundle()
+            bundle.putLong("fieldID", field.id)
+            view!!.findNavController().navigate(R.id.action_nav_home_to_nav_add_game, bundle)
         }
         bottomSheetSearchBehavior.isHideable = true
         bottomSheetSearchBehavior.state = BottomSheetBehavior.STATE_HIDDEN

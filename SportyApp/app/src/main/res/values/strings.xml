@@ -13,9 +13,9 @@
     <string name="menu_add_game">Add a game</string>
     <string name="menu_history">Game history</string>
 
-    <string name="hint_name">name</string>
+    <string name="hint_name">Name</string>
     <string name="hint_duration">duration in minutes</string>
-    <string name="hint_time">date</string>
+    <string name="hint_time">Date</string>
     <string name="createGame_addPlayer">Add players</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -80,4 +80,7 @@
     <string name="table_tennis">Table tennis</string>
     <string name="handball">Handball</string>
     <string name="gym">Gym</string>
+    <string name="address_add_game">Address</string>
+    <string name="choose_a_field">Choose a field:</string>
+    <string name="field_not_found">Field not found</string>
 </resources>

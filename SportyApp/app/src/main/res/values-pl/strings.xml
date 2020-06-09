@@ -70,4 +70,7 @@
     <string name="table_tennis">Tenis stołowy</string>
     <string name="handball">Piłka ręczna</string>
     <string name="gym">Hala sportowa</string>
+    <string name="address_add_game">Adres</string>
+    <string name="choose_a_field">Wybierz boisko:</string>
+    <string name="field_not_found">Nie znaleziono boiska</string>
 </resources>

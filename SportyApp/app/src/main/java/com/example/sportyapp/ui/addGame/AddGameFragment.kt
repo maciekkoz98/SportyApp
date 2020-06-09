@@ -17,6 +17,8 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.sportyapp.R
+import com.example.sportyapp.data.field.Field
+import com.example.sportyapp.ui.home.HomeViewModel
 import com.example.sportyapp.utils.AuthenticationInterceptor
 import okhttp3.*
 import org.json.JSONObject
@@ -25,43 +27,53 @@ import java.util.*
 
 class AddGameFragment : Fragment() {
 
-    private lateinit var addGameViewModel: AddGameViewModel
+    //private lateinit var addGameViewModel: AddGameViewModel
     private lateinit var gameName: EditText
     private lateinit var maxPlayers: EditText
     private lateinit var gameDate: TextView
     private lateinit var gameStart: TextView
     private lateinit var gameDuration: TextView
+    private lateinit var fieldAddress: EditText
     private lateinit var isGamePublic: CheckBox
     private lateinit var calendar: GregorianCalendar
+    private lateinit var fieldsList: HashMap<Long, Field>
+    private var fieldID: Long = 0L
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        addGameViewModel =
-            ViewModelProviders.of(this).get(AddGameViewModel::class.java)
+//        addGameViewModel =
+//            ViewModelProviders.of(this).get(AddGameViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_add_game, container, false)
-
-        /*val textView: TextView = root.findViewById(R.id.text_send)
-        addGameViewModel.text.observe(this, Observer {
-            textView.text = it
-        })*/
+//        val textView: TextView = root.findViewById(R.id.text_send)
+//        addGameViewModel.text.observe(this, Observer {
+//            textView.text = it
+//        })
+        val homeViewModel =
+            ViewModelProviders.of(this).get(HomeViewModel::class.java)
+        homeViewModel.fields.observe(this, androidx.lifecycle.Observer {
+            fieldsList = it
+            setFieldAddress()
+        })
         return root
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        fieldID = arguments!!.getLong("fieldID")
 
         gameName = view.findViewById(R.id.editText_game_name)
+        fieldAddress = view.findViewById(R.id.set_field_address)
         maxPlayers = view.findViewById(R.id.max_players)
         gameDate = view.findViewById(R.id.editText_date_of_game)
         gameStart = view.findViewById(R.id.add_start)
         gameDuration = view.findViewById(R.id.add_duration)
         isGamePublic = view.findViewById(R.id.checkBox_is_public)
         //Wybór daty
-        gameDate.setOnClickListener{
+        gameDate.setOnClickListener {
             val c = Calendar.getInstance()
             val y = c.get(Calendar.YEAR)
             val m = c.get(Calendar.MONTH)
@@ -71,7 +83,7 @@ class AddGameFragment : Fragment() {
                 this.activity!!,
                 android.R.style.Theme_Material_Light_Dialog,
                 DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-                calendar = GregorianCalendar(year, monthOfYear, dayOfMonth)
+                    calendar = GregorianCalendar(year, monthOfYear, dayOfMonth)
                     gameDate.text =
                         dayOfMonth.toString() + "." + (monthOfYear + 1).toString() + "." + year.toString()
 
@@ -129,14 +141,25 @@ class AddGameFragment : Fragment() {
     private fun validate(): Boolean{
         var check = true
         val namePattern = Regex("[a-zA-Z0-9 ]+")
-        if(gameName.length()==0){
+        if (gameName.length() == 0) {
             gameName.error = getString(R.string.name_required_error)
             check = false
-        }else if(gameName.length()>30){
+        } else if (gameName.length() > 30) {
             gameName.error = getString(R.string.name_max_length_error)
             check = false
-        }else if(!namePattern.matches(gameName.text.toString())){
+        } else if (!namePattern.matches(gameName.text.toString())) {
             gameName.error = getString(R.string.name_content_error)
+            check = false
+        }
+
+        var guard = false
+        for ((_, value) in fieldsList) {
+            if (value.address == fieldAddress.text.toString()) {
+                guard = true
+            }
+        }
+        if (!guard) {
+            fieldAddress.error = getString(R.string.field_not_found)
             check = false
         }
 
@@ -147,7 +170,7 @@ class AddGameFragment : Fragment() {
             maxPlayers.error = R.string.max_players_error.toString()
             check = false
         }
-        if(gameDate.length()==0){
+        if (gameDate.length() == 0) {
             gameDate.error = getString(R.string.date_format_error)
             check = false
         }
@@ -171,7 +194,13 @@ class AddGameFragment : Fragment() {
         payload.put("name", gameName.text.toString())
         payload.put("date", calendar.timeInMillis)
         payload.put("duration", getDuration()) // na razie zastosowałam format H:mm
-        payload.put("facility", 1.toLong()) // na sztywno wpisane wartości
+        var fieldID = 0L
+        for ((_, value) in fieldsList) {
+            if (value.address == fieldAddress.text.toString()) {
+                fieldID = value.id
+            }
+        }
+        payload.put("facility", fieldID) // na sztywno wpisane wartości
         payload.put("sport", 1.toLong())
         payload.put("owner", 1.toLong())
         payload.put("maxPlayers", maxPlayers.text.toString().toInt())
@@ -179,12 +208,13 @@ class AddGameFragment : Fragment() {
         //payload.put("players", arrayOf(0, 1))
         //payload.put("id", 1)
 
-
-
-        val body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), payload.toString())
+        val body = RequestBody.create(
+            MediaType.parse("application/json; charset=utf-8"),
+            payload.toString()
+        )
         val request = Request.Builder().method("POST", body).url(url).build()
 
-        httpClient.newCall(request).enqueue(object: Callback {
+        httpClient.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 e.printStackTrace()
                 Log.d("test", e.stackTrace.toString())
@@ -198,11 +228,17 @@ class AddGameFragment : Fragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun getDuration() : Long {
+    private fun getDuration(): Long {
         val dateFormatter = SimpleDateFormat("HH:mm")
         val end = dateFormatter.parse(gameDuration.text.toString())
         val start = dateFormatter.parse(gameStart.text.toString())
 
         return end.time - start.time
+    }
+
+    private fun setFieldAddress() {
+        if (fieldID != 0L) {
+            fieldAddress.setText(fieldsList[fieldID]!!.address, TextView.BufferType.EDITABLE)
+        }
     }
 }

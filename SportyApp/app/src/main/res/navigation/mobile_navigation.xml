@@ -36,7 +36,12 @@
         android:id="@+id/nav_add_game"
         android:name="com.example.sportyapp.ui.addGame.AddGameFragment"
         android:label="@string/menu_add_game"
-        tools:layout="@layout/fragment_add_game" />
+        tools:layout="@layout/fragment_add_game">
+        <argument
+            android:name="fieldID"
+            app:argType="long"
+            android:defaultValue="0L" />
+    </fragment>
     <fragment
         android:id="@+id/nav_history"
         android:name="com.example.sportyapp.ui.gameHistory.GameHistoryFragment"

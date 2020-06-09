@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/add_game_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -36,54 +35,88 @@
     </LinearLayout>
 
     <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="37dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="5dp"
-        android:layout_weight="1"
-        android:autofillHints=""
-        android:ems="10"
-        android:gravity="start|center_vertical"
-        android:text="@string/pick_date"
-        android:textColor="@color/black"
-        android:textColorHighlight="@color/colorPrimary"
-        android:textColorHint="@color/black"
-        android:textColorLink="@color/colorPrimaryDark"
-        android:textSize="18sp" />
+        android:layout_height="100dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/editText_date_of_game"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:ems="10"
+            android:gravity="start|center_vertical"
+            android:text="@string/choose_a_field"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/set_field_address"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="1"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="@string/address_add_game"
+            android:inputType="text"
+            android:padding="10dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="5dp"
-        android:layout_weight="1"
-        android:autofillHints=""
-        android:ems="10"
-        android:gravity="start|center_vertical"
-        android:hint="@string/hint_time"
-        android:inputType="date"
-        android:padding="10dp"
-        android:selectAllOnFocus="false"
-        android:singleLine="true"
-        android:textAlignment="textStart"
-        android:textColor="@color/colorPrimaryDark"
-        android:textColorHighlight="@color/colorPrimary"
-        android:textColorHint="@android:color/tab_indicator_text"
-        android:textColorLink="@color/colorPrimaryDark"
-        android:textCursorDrawable="@color/colorPrimaryDark"
-        android:textSize="18sp" />
-</LinearLayout>
+        android:layout_height="100dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="1"
+            android:autofillHints=""
+            android:ems="10"
+            android:gravity="start|center_vertical"
+            android:text="@string/pick_date"
+            android:textColor="@color/black"
+            android:textColorHighlight="@color/colorPrimary"
+            android:textColorHint="@color/black"
+            android:textColorLink="@color/colorPrimaryDark"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/editText_date_of_game"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="1"
+            android:autofillHints=""
+            android:ems="10"
+            android:gravity="start|center_vertical"
+            android:hint="@string/hint_time"
+            android:inputType="date"
+            android:padding="10dp"
+            android:selectAllOnFocus="false"
+            android:singleLine="true"
+            android:textAlignment="textStart"
+            android:textColor="@color/colorPrimaryDark"
+            android:textColorHighlight="@color/colorPrimary"
+            android:textColorHint="@android:color/tab_indicator_text"
+            android:textColorLink="@color/colorPrimaryDark"
+            android:textCursorDrawable="@color/colorPrimaryDark"
+            android:textSize="18sp" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -172,7 +205,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:orientation="horizontal">
 
         <TextView
@@ -222,7 +255,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="50dp"
         android:orientation="horizontal">
 
         <TextView
@@ -243,6 +276,7 @@
             android:id="@+id/checkBox_is_public"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="1"
             android:textColor="@color/colorPrimaryDark"
             android:textColorHighlight="@color/colorPrimary"
