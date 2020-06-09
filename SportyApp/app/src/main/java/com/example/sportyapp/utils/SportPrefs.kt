@@ -34,6 +34,25 @@ class SportPrefs {
             return gson.fromJson(jsonSport, Sport::class.java)
         }
 
+        fun getSportByName(name: String) : Sport? {
+            val sportsPref: SharedPreferences = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
+
+            val allSports = HashMap<Long, Sport>()
+            val gson = Gson()
+            val allEntries = sportsPref.all
+
+
+            for (entry in allEntries.entries) {
+                val sport = gson.fromJson(entry.value.toString(), Sport::class.java)
+
+                if (sport.nameEN == name) {
+                    return sport
+                }
+            }
+
+            return null
+        }
+
         fun getAllSportsFromMemory() : HashMap<Long, Sport> {
             val sportsPref: SharedPreferences = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
 

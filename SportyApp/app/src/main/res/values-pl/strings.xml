@@ -73,4 +73,7 @@
     <string name="address_add_game">Adres</string>
     <string name="choose_a_field">Wybierz boisko:</string>
     <string name="field_not_found">Nie znaleziono boiska</string>
+    <string name="choose_discipline">Wybierz dyscyplinę:</string>
+    <string name="discipline">Dyscyplina</string>
+    <string name="discipline_error">Dyscyplina jest wymagana.</string>
 </resources>

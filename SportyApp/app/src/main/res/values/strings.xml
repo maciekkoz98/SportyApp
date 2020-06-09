@@ -83,4 +83,7 @@
     <string name="address_add_game">Address</string>
     <string name="choose_a_field">Choose a field:</string>
     <string name="field_not_found">Field not found</string>
+    <string name="choose_discipline">Choose discipline:</string>
+    <string name="discipline">Discipline</string>
+    <string name="discipline_error">Discipline is required.</string>
 </resources>

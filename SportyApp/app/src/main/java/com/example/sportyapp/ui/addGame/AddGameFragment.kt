@@ -5,14 +5,13 @@ import android.app.TimePickerDialog
 import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -20,10 +19,12 @@ import com.example.sportyapp.R
 import com.example.sportyapp.data.field.Field
 import com.example.sportyapp.ui.home.HomeViewModel
 import com.example.sportyapp.utils.AuthenticationInterceptor
+import com.example.sportyapp.utils.SportPrefs
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
 import java.util.*
+import kotlin.collections.ArrayList
 
 class AddGameFragment : Fragment() {
 
@@ -35,6 +36,7 @@ class AddGameFragment : Fragment() {
     private lateinit var gameDuration: TextView
     private lateinit var fieldAddress: EditText
     private lateinit var isGamePublic: CheckBox
+    private lateinit var disciplineSpinner: Spinner
     private lateinit var calendar: GregorianCalendar
     private lateinit var fieldsList: HashMap<Long, Field>
     private var fieldID: Long = 0L
@@ -64,6 +66,7 @@ class AddGameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fieldID = arguments!!.getLong("fieldID")
+        calendar = GregorianCalendar()
 
         gameName = view.findViewById(R.id.editText_game_name)
         fieldAddress = view.findViewById(R.id.set_field_address)
@@ -72,6 +75,8 @@ class AddGameFragment : Fragment() {
         gameStart = view.findViewById(R.id.add_start)
         gameDuration = view.findViewById(R.id.add_duration)
         isGamePublic = view.findViewById(R.id.checkBox_is_public)
+        disciplineSpinner = view.findViewById(R.id.set_discipline)
+
         //Wybór daty
         gameDate.setOnClickListener {
             val c = Calendar.getInstance()
@@ -83,7 +88,12 @@ class AddGameFragment : Fragment() {
                 this.activity!!,
                 android.R.style.Theme_Material_Light_Dialog,
                 DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-                    calendar = GregorianCalendar(year, monthOfYear, dayOfMonth)
+                    Log.d("time", gameDuration.text.toString())
+                    if(gameDuration.text.toString() == "" || gameDuration.text.toString() == "00:00") {
+                        calendar = GregorianCalendar(year, monthOfYear, dayOfMonth)
+                    } else {
+                        calendar.set(year, monthOfYear, dayOfMonth)
+                    }
                     gameDate.text =
                         dayOfMonth.toString() + "." + (monthOfYear + 1).toString() + "." + year.toString()
 
@@ -123,6 +133,23 @@ class AddGameFragment : Fragment() {
                 true
             ).show()
         }
+
+        fieldAddress.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+                for ((id, value) in fieldsList) {
+                    if (value.address == fieldAddress.text.toString()) {
+                        setSpinnerValues(fieldsList[id]!!)
+                    }
+                }
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+        })
+        
         //obsługa guzika
         val addGameBtn = view.findViewById<Button>(R.id.addGameButton)
         addGameBtn.setOnClickListener(addGameListener)
@@ -149,6 +176,11 @@ class AddGameFragment : Fragment() {
             check = false
         } else if (!namePattern.matches(gameName.text.toString())) {
             gameName.error = getString(R.string.name_content_error)
+            check = false
+        }
+
+        if (disciplineSpinner.selectedItem.toString().isEmpty()) {
+            fieldAddress.error = getString(R.string.field_not_found)
             check = false
         }
 
@@ -201,7 +233,11 @@ class AddGameFragment : Fragment() {
             }
         }
         payload.put("facility", fieldID) // na sztywno wpisane wartości
-        payload.put("sport", 1.toLong())
+
+        val disciplineName = disciplineSpinner.selectedItem.toString()
+        payload.put("sport", SportPrefs.getSportByName(disciplineName)!!.id)
+
+//        payload.put("sport", 1.toLong())
         payload.put("owner", 1.toLong())
         payload.put("maxPlayers", maxPlayers.text.toString().toInt())
         payload.put("isPublic", isGamePublic.isChecked)
@@ -240,5 +276,16 @@ class AddGameFragment : Fragment() {
         if (fieldID != 0L) {
             fieldAddress.setText(fieldsList[fieldID]!!.address, TextView.BufferType.EDITABLE)
         }
+    }
+
+    private fun setSpinnerValues(field: Field) {
+        val disciplines = ArrayList<String>()
+
+        field.disciplines.forEach { id ->
+            disciplines.add(SportPrefs.getSportFromMemory(id.toLong()).nameEN)
+        }
+
+        val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, disciplines.toList())
+        disciplineSpinner.adapter = spinnerAdapter
     }
 }
