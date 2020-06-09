@@ -87,28 +87,6 @@ class MyGamesFragment : Fragment() {
             list.add(item)
         }
 
-
-        /*
-        val item1 = MyGamesItem("16", "listopad", "Pierwsza gra na liście", "Koszykówka", "16:00", "20/24")
-        val item2 = MyGamesItem("21", "październik", "Lecimy tutej!", "Koszykówka", "16:00", "20/24")
-        val item3 = MyGamesItem("1", "grudzień", "Jan Paweł II", "Piłka nożna", "20:00", "4/8")
-        val item4 = MyGamesItem("16", "listopad", "Pierwsza gra na liście", "Koszykówka", "16:00", "20/24")
-        val item5 = MyGamesItem("21", "październik", "Lecimy tutej!", "Koszykówka", "16:00", "20/24")
-        val item6 = MyGamesItem("1", "grudzień", "Jan Paweł II", "Piłka nożna", "20:00", "4/8")
-        val item7 = MyGamesItem("16", "listopad", "Pierwsza gra na liście", "Koszykówka", "16:00", "20/24")
-        val item8 = MyGamesItem("21", "październik", "Lecimy tutej!", "Koszykówka", "16:00", "20/24")
-        val item9 = MyGamesItem("1", "grudzień", "Jan Paweł II", "Piłka nożna", "20:00", "4/8")
-        list.add(item1)
-        list.add(item2)
-        list.add(item3)
-        list.add(item4)
-        list.add(item5)
-        list.add(item6)
-        list.add(item7)
-        list.add(item8)
-        list.add(item9)
-        */
-
         return list
     }
 }
