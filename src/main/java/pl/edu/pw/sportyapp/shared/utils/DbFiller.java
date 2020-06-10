@@ -99,7 +99,7 @@ public class DbFiller {
         if (!sportRepository.existsById(6L)) {
             Sport sport = Sport.builder()
                     .id(sequenceGeneratorService.generateSequence(Sport.DBSEQUENCE_NAME))
-                    .namePL("Tenis ziemny")
+                    .namePL("Tenis")
                     .nameEN("Tennis")
                     .synonyms(Lists.newArrayList())
                     .build();
