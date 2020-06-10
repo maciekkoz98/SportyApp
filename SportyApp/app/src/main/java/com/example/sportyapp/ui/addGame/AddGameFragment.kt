@@ -34,7 +34,7 @@ class AddGameFragment : Fragment() {
     private lateinit var gameDate: TextView
     private lateinit var gameStart: TextView
     private lateinit var gameDuration: TextView
-    private lateinit var fieldAddress: EditText
+    private lateinit var fieldAddress: AutoCompleteTextView
     private lateinit var isGamePublic: CheckBox
     private lateinit var disciplineSpinner: Spinner
     private lateinit var calendar: GregorianCalendar
@@ -58,6 +58,7 @@ class AddGameFragment : Fragment() {
         homeViewModel.fields.observe(this, androidx.lifecycle.Observer {
             fieldsList = it
             setFieldAddress()
+            setAddressValues()
         })
         return root
     }
@@ -157,7 +158,7 @@ class AddGameFragment : Fragment() {
                 }
             }
         })
-        
+
         //obsługa guzika
         val addGameBtn = view.findViewById<Button>(R.id.addGameButton)
         addGameBtn.setOnClickListener(addGameListener)
@@ -284,6 +285,17 @@ class AddGameFragment : Fragment() {
         if (fieldID != 0L) {
             fieldAddress.setText(fieldsList[fieldID]!!.address, TextView.BufferType.EDITABLE)
         }
+    }
+
+    private fun setAddressValues() {
+        val addresses = ArrayList<String>()
+
+        fieldsList.forEach { (_, field) ->
+            addresses.add(field.address)
+        }
+
+        fieldAddress.threshold = 0
+        fieldAddress.setAdapter(ArrayAdapter(requireContext(), android.R.layout.select_dialog_item, addresses.toList()))
     }
 
     private fun setSpinnerValues(field: Field) {
