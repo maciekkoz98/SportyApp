@@ -1,6 +1,8 @@
 package pl.edu.pw.sportyapp.user.service;
 
 import com.google.common.collect.Lists;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.PermissionDeniedDataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -108,5 +110,9 @@ public class UserService {
             throw new EntityNotFoundException();
         }
         userRepository.deleteById(id);
+    }
+
+    public List<User> findByPredicate(BooleanExpression ... predicates) {
+        return Lists.newArrayList(userRepository.findAll(Expressions.allOf(predicates)));
     }
 }

@@ -1,5 +1,6 @@
 package pl.edu.pw.sportyapp.user.dao;
 
+import com.querydsl.core.annotations.QueryEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,6 +19,7 @@ import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.List;
 
+@QueryEntity
 @Document
 @Getter
 @Setter

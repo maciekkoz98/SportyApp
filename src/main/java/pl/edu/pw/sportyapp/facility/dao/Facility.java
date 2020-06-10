@@ -1,5 +1,6 @@
 package pl.edu.pw.sportyapp.facility.dao;
 
+import com.querydsl.core.annotations.QueryEntity;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
@@ -10,6 +11,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
+@QueryEntity
 @Document
 @Getter
 @Setter
