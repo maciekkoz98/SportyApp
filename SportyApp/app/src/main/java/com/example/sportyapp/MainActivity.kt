@@ -106,7 +106,6 @@ class MainActivity : AppCompatActivity() {
                     val sport = Sport(id, nameEn, namePl, synonyms)
                     sports[id] = sport
                 }
-
                 SportPrefs.putAllSportsToMemory(sports)
             }
         })

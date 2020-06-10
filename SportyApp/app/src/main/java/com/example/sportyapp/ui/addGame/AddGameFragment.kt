@@ -1,7 +1,9 @@
 package com.example.sportyapp.ui.addGame
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
@@ -9,8 +11,10 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
@@ -244,7 +248,8 @@ class AddGameFragment : Fragment() {
         payload.put("facility", fieldID) // na sztywno wpisane wartości
 
         val disciplineName = disciplineSpinner.selectedItem.toString()
-        payload.put("sport", SportPrefs.getSportByName(disciplineName)!!.id)
+        Log.d("sport_id", SportPrefs.getSportByName(disciplineName)!!.id.toString())
+        payload.put("sport", SportPrefs.getSportByName(disciplineName)!!.id.toString())
 
 //        payload.put("sport", 1.toLong())
         payload.put("owner", 1.toLong())
@@ -287,6 +292,7 @@ class AddGameFragment : Fragment() {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun setAddressValues() {
         val addresses = ArrayList<String>()
 
@@ -296,6 +302,17 @@ class AddGameFragment : Fragment() {
 
         fieldAddress.threshold = 0
         fieldAddress.setAdapter(ArrayAdapter(requireContext(), android.R.layout.select_dialog_item, addresses.toList()))
+
+        fieldAddress.setOnTouchListener { _, _ ->
+            fieldAddress.showDropDown()
+            false
+        }
+        fieldAddress.onItemClickListener =
+            AdapterView.OnItemClickListener { _, p1, _, _ ->
+                val inputManager : InputMethodManager = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputManager.hideSoftInputFromWindow(p1!!.applicationWindowToken, 0)
+            }
+
     }
 
     private fun setSpinnerValues(field: Field) {

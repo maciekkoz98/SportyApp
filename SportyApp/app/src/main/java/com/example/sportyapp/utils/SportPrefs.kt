@@ -2,6 +2,7 @@ package com.example.sportyapp.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import com.example.sportyapp.data.game.Sport
 import com.google.gson.Gson
 
@@ -37,7 +38,6 @@ class SportPrefs {
         fun getSportByName(name: String) : Sport? {
             val sportsPref: SharedPreferences = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
 
-            val allSports = HashMap<Long, Sport>()
             val gson = Gson()
             val allEntries = sportsPref.all
 
