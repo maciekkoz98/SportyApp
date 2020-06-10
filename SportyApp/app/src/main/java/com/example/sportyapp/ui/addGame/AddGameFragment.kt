@@ -32,7 +32,6 @@ import kotlin.collections.ArrayList
 
 class AddGameFragment : Fragment() {
 
-    //private lateinit var addGameViewModel: AddGameViewModel
     private lateinit var gameName: EditText
     private lateinit var maxPlayers: EditText
     private lateinit var gameDate: TextView
@@ -50,13 +49,7 @@ class AddGameFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        addGameViewModel =
-//            ViewModelProviders.of(this).get(AddGameViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_add_game, container, false)
-//        val textView: TextView = root.findViewById(R.id.text_send)
-//        addGameViewModel.text.observe(this, Observer {
-//            textView.text = it
-//        })
         val homeViewModel =
             ViewModelProviders.of(this).get(HomeViewModel::class.java)
         homeViewModel.fields.observe(this, androidx.lifecycle.Observer {
@@ -245,19 +238,17 @@ class AddGameFragment : Fragment() {
                 fieldID = value.id
             }
         }
-        payload.put("facility", fieldID) // na sztywno wpisane wartości
-
+        payload.put("facility", fieldID)
         val disciplineName = disciplineSpinner.selectedItem.toString()
-        Log.d("sport_id", SportPrefs.getSportByName(disciplineName)!!.id.toString())
-        payload.put("sport", SportPrefs.getSportByName(disciplineName)!!.id.toString())
-
-//        payload.put("sport", 1.toLong())
+        payload.put(
+            "sport",
+            SportPrefs.getSportByName(disciplineName, Locale.getDefault().language)!!.id
+        )
         payload.put("owner", 1.toLong())
         payload.put("maxPlayers", maxPlayers.text.toString().toInt())
         payload.put("isPublic", isGamePublic.isChecked)
         //payload.put("players", arrayOf(0, 1))
         //payload.put("id", 1)
-
         val body = RequestBody.create(
             MediaType.parse("application/json; charset=utf-8"),
             payload.toString()
@@ -319,10 +310,27 @@ class AddGameFragment : Fragment() {
         val disciplines = ArrayList<String>()
 
         field.disciplines.forEach { id ->
-            disciplines.add(SportPrefs.getSportFromMemory(id.toLong()).nameEN)
+            disciplines.add(getSportText(SportPrefs.getSportFromMemory(id.toLong()).nameEN))
         }
 
-        val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, disciplines.toList())
+        val spinnerAdapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            disciplines.toList()
+        )
         disciplineSpinner.adapter = spinnerAdapter
+    }
+
+    private fun getSportText(sportName: String): String {
+        return when (sportName) {
+            "Basketball" -> disciplineSpinner.context.resources.getString(R.string.basketball)
+            "Football" -> disciplineSpinner.context.resources.getString(R.string.football)
+            "Volleyball" -> disciplineSpinner.context.resources.getString(R.string.volleyball)
+            "Handball" -> disciplineSpinner.context.getString(R.string.handball)
+            "Badminton" -> disciplineSpinner.context.resources.getString(R.string.badminton)
+            "Tennis" -> disciplineSpinner.context.resources.getString(R.string.tennis)
+            "Table tennis" -> disciplineSpinner.context.resources.getString(R.string.table_tennis)
+            else -> "Unknown"
+        }
     }
 }

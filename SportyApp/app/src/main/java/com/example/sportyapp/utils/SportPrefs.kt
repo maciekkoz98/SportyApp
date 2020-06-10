@@ -6,13 +6,11 @@ import android.util.Log
 import com.example.sportyapp.data.game.Sport
 import com.google.gson.Gson
 
-
 class SportPrefs {
     companion object {
         private const val PRIVATE_MODE = Context.MODE_PRIVATE
         private const val PREF_NAME = "sports"
         lateinit var context: Context
-
 
         fun putAllSportsToMemory(sports: HashMap<Long, Sport>) {
             val sportsPref: SharedPreferences = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
@@ -27,26 +25,34 @@ class SportPrefs {
             }
         }
 
-        fun getSportFromMemory(id: Long) : Sport {
-            val sportsPref: SharedPreferences = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
+        fun getSportFromMemory(id: Long): Sport {
+            val sportsPref: SharedPreferences =
+                context.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
             val gson = Gson()
 
             val jsonSport = sportsPref.getString(id.toString(), "")
             return gson.fromJson(jsonSport, Sport::class.java)
         }
 
-        fun getSportByName(name: String) : Sport? {
-            val sportsPref: SharedPreferences = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
-
+        fun getSportByName(name: String, locale: String): Sport? {
+            val sportsPref: SharedPreferences =
+                context.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
             val gson = Gson()
             val allEntries = sportsPref.all
 
-
             for (entry in allEntries.entries) {
                 val sport = gson.fromJson(entry.value.toString(), Sport::class.java)
-
-                if (sport.nameEN == name) {
-                    return sport
+                when (locale) {
+                    "pl" -> {
+                        if (sport.namePL == name) {
+                            return sport
+                        }
+                    }
+                    else -> {
+                        if (sport.nameEN == name) {
+                            return sport
+                        }
+                    }
                 }
             }
 

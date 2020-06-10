@@ -32,7 +32,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
                 .antMatchers("/game/**").hasAnyRole(AppUserRole.ADMIN.name(), AppUserRole.USER.name())
-//                .antMatchers("/game/**").hasRole(AppUserRole.ADMIN.name())
+                .antMatchers("/search/**").hasAnyRole(AppUserRole.ADMIN.name(), AppUserRole.USER.name())
                 .antMatchers("/sport/**").hasAnyRole(AppUserRole.ADMIN.name(), AppUserRole.USER.name())
                 .antMatchers("/facility/**").hasAnyRole(AppUserRole.ADMIN.name(), AppUserRole.USER.name())
                 .antMatchers(HttpMethod.POST, "/user").permitAll()

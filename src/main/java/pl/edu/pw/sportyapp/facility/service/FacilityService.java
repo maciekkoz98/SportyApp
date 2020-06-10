@@ -13,6 +13,7 @@ import pl.edu.pw.sportyapp.shared.sequence.SequenceGeneratorService;
 import pl.edu.pw.sportyapp.user.dao.User;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FacilityService {
@@ -68,5 +69,31 @@ public class FacilityService {
             throw new EntityNotFoundException();
         }
         facilityRepository.deleteById(id);
+    }
+
+    public List<Facility> findByProximity(double lat, double lon, long distance) {
+        return facilityRepository.findAll()
+                .stream()
+                .filter(facility -> {
+                    long facilityDistance = (long) (108*(Math.pow((facility.latitude - lat), 2) + Math.pow((facility.longitude - lon), 2)));
+                    return distance < facilityDistance;
+                })
+                .sorted((f1, f2) -> {
+                    double f1Dist = Math.pow((f1.latitude - lat), 2) + Math.pow((f1.longitude - lon), 2);
+                    double f2Dist = Math.pow((f2.latitude - lat), 2) + Math.pow((f2.longitude - lon), 2);
+                    return Double.compare(f1Dist, f2Dist);
+                })
+                .collect(Collectors.toList());
+    }
+
+    public List<Facility> findByProximity(double lat, double lon) {
+        return facilityRepository.findAll()
+                .stream()
+                .sorted((f1, f2) -> {
+                    double f1Dist = Math.pow((f1.latitude - lat), 2) + Math.pow((f1.longitude - lon), 2);
+                    double f2Dist = Math.pow((f2.latitude - lat), 2) + Math.pow((f2.longitude - lon), 2);
+                    return Double.compare(f1Dist, f2Dist);
+                })
+                .collect(Collectors.toList());
     }
 }
