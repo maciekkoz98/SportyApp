@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottom_sheet_search"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     style="@style/CustomBottomSheet"
     android:background="#FFFFFF"
     app:behavior_hideable="false"
@@ -19,7 +19,6 @@
             android:id="@+id/linear_layout_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="69dp"
             android:orientation="horizontal"
             android:padding="16dp">
 
@@ -42,16 +41,15 @@
                 android:hint="@string/search_prompt"
                 android:importantForAutofill="no"
                 android:inputType="textAutoCorrect"
-                android:focusable="true" />
-
+                android:focusable="true"
+                android:imeOptions="actionSearch" />
         </LinearLayout>
 
-        <TextView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/search_recycler"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="halo"
-            android:layout_marginTop="700dp" />
-
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

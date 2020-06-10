@@ -6,13 +6,13 @@ import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.location.Location
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.text.method.KeyListener
 import android.text.method.MovementMethod
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.core.content.ContextCompat
@@ -47,6 +47,8 @@ import com.google.maps.android.clustering.ClusterManager.OnClusterItemClickListe
 import okhttp3.*
 import org.json.JSONArray
 import java.io.IOException
+import java.util.*
+import kotlin.collections.ArrayList
 
 class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener,
     ClusterManager.OnClusterClickListener<MapMarker>, OnClusterItemClickListener<MapMarker> {
@@ -94,6 +96,27 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
         editText.keyListener = null
         editTextMovementMethod = editText.movementMethod
         editText.movementMethod = null
+        editText.setOnEditorActionListener(object : TextView.OnEditorActionListener {
+            override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    performSearch(editText.text.toString())
+                    return true
+                }
+                return false
+            }
+        })
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if (s!!.length > 2) {
+                    performSearch(editText.text.toString())
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+        })
 
         bottomSheetSearch = root.findViewById(R.id.bottom_sheet_search)
         bottomSheetSearchBehavior = BottomSheetBehavior.from(bottomSheetSearch)
@@ -400,4 +423,67 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
             }
         })
     }
+
+    private fun performSearch(input: String) {
+        val gamesList = ArrayList<Game>()
+        val eventsAdapter = GamesInChosenFieldAdapter(gamesList)
+        bottomSheetSearch.findViewById<RecyclerView>(R.id.search_recycler).apply {
+            setHasFixedSize(false)
+            layoutManager = LinearLayoutManager(bottomSheetField.context)
+            adapter = eventsAdapter
+        }
+        val client = OkHttpClient().newBuilder()
+            .addInterceptor(AuthenticationInterceptor())
+            .build()
+        val request = Request.Builder()
+            .url("http://10.0.2.2:8080/search/game?nameStartsWith=$input")
+            .build()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.e("blad", "polaczenia z bazom")
+                Log.e("blad", e.message!!)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val jsonResponse = response.body()?.string()
+                val json = JSONArray(jsonResponse!!)
+                for (i in 0 until json.length()) {
+                    val jsonGame = json.getJSONObject(i)
+                    val id = jsonGame.getString("id").toLong()
+                    val name = jsonGame.getString("name")
+                    val duration = jsonGame.getString("duration").toLong()
+                    val date = jsonGame.getString("date").toLong()
+                    val owner = jsonGame.getString("owner").toLong()
+                    val isGamePublic = jsonGame.getString("isPublic")!!.toBoolean()
+                    val fieldID = jsonGame.getString("facility").toLong()
+                    val sportID = jsonGame.getString("sport").toLong()
+                    val jsonPlayers = jsonGame.getJSONArray("players")
+                    val players = ArrayList<Int>()
+                    for (j in 0 until jsonPlayers.length()) {
+                        players.add(jsonPlayers.get(j) as Int)
+                    }
+                    val maxPlayers = jsonGame.getString("maxPlayers").toInt()
+                    val sportData = SportPrefs.getSportFromMemory(sportID)
+                    val game =
+                        Game(
+                            id,
+                            name,
+                            duration,
+                            date,
+                            owner,
+                            players,
+                            isGamePublic,
+                            fieldID,
+                            sportData,
+                            maxPlayers
+                        )
+                    gamesList.add(game)
+                }
+                gamesList.sort()
+                activity!!.runOnUiThread { eventsAdapter.notifyDataSetChanged() }
+            }
+        })
+    }
 }
+
+
