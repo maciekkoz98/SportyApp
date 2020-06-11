@@ -1,0 +1,1740 @@
+{
+	"info": {
+		"_postman_id": "3b44811a-83f4-43c6-999f-bda3ba718829",
+		"name": "SportyApp_Fill_DB",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Adding users",
+			"item": [
+				{
+					"name": "Create user Bob",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "36ce0746-1090-45c7-b061-dc998f0ac07b",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\" : \"bob\",\n\t\"fullname\" : \"Banana Bob\",\n\t\"passwordHash\" : \"bob\",\n\t\"email\" : \"bob@bob.pl\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user Rob",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "162184f6-cb92-436e-8209-538d3922e37c",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\" : \"rob\",\n\t\"fullname\" : \"Rabarbar Robert\",\n\t\"passwordHash\" : \"rob\",\n\t\"email\" : \"rob@bob.pl\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user Tom",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "17b3aa0f-a8c1-432d-a2f6-96387b092daf",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\" : \"tom\",\n\t\"fullname\" : \"Tomato Tom\",\n\t\"passwordHash\" : \"tom\",\n\t\"email\" : \"tom@bob.pl\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user Dave",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ded52b29-f506-4882-9a9a-6cf749e387e6",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\" : \"Dave\",\n\t\"fullname\" : \"Drunk Dave\",\n\t\"passwordHash\" : \"dave\",\n\t\"email\" : \"dave@dave.pl\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user Martin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "81cdadc9-29f8-4afb-b4df-bd50162d9335",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\" : \"Martin\",\n\t\"fullname\" : \"Mini Martin\",\n\t\"passwordHash\" : \"martin\",\n\t\"email\" : \"martin@martin.pl\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user Adam",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ded52b29-f506-4882-9a9a-6cf749e387e6",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\" : \"Adam\",\n\t\"fullname\" : \"Amazing Adam\",\n\t\"passwordHash\" : \"adam\",\n\t\"email\" : \"adam@adam.pl\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user Rocky",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "67a3c0c1-1b08-41da-aa9f-b5bc4b27b9d8",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\" : \"Rocky\",\n\t\"fullname\" : \"Rocking Rocky\",\n\t\"passwordHash\" : \"rocky\",\n\t\"email\" : \"rocky@rocky.pl\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user Adrienne",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3ccdb977-0b24-4a23-a889-848020777de3",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\" : \"Adrienne\",\n\t\"fullname\" : \"Autistic Adrienne\",\n\t\"passwordHash\" : \"adrienne\",\n\t\"email\" : \"adrienne@adrienne.pl\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Adding facilities",
+			"item": [
+				{
+					"name": "Create SWFiS PW",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0ea66ae0-979f-408e-adb8-e811074fb517",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"address\" : \"Ludwika Waryńskiego 12A, 00-631 Warszawa\",\n\t\"latitude\" : 52.216706,\n\t\"longitude\" : 21.016168,\n\t\"isSportsHall\" : true,\n\t\"disciplines\" : [\n\t\t1\t\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/facility",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"facility"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Arena Ursynow",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1f62b2e5-2042-4a85-b5c2-680248cd625b",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"address\" : \"Rotmistrza Witolda Pileckiego 122, 02-781 Warszawa\",\n\t\"latitude\" : 52.14323005,\n\t\"longitude\" : 21.03932683,\n\t\"isSportsHall\" : true,\n\t\"disciplines\" : [\n\t\t1,2,3,4\t\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/facility",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"facility"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Legia",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "bbf1c3a7-488a-4348-b8cf-c8391a82fa2f",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"address\" : \"Łazienkowska 3, 00-449 Warszawa\",\n\t\"latitude\" : 52.2204245,\n\t\"longitude\" : 21.04072876,\n\t\"isSportsHall\" : false,\n\t\"disciplines\" : [\n\t\t2\t\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/facility",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"facility"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Boisko JP2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2bdf1306-e7fd-404e-999a-842d308df0cd",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"address\" : \"Melodyjna 2, 02-784 Warszawa\",\n\t\"latitude\" : 52.1578307,\n\t\"longitude\" : 21.0277986,\n\t\"isSportsHall\" : false,\n\t\"disciplines\" : [\n\t\t2\t\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/facility",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"facility"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Korty Pyry",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4d99731f-f0fd-4709-b445-018c9ede5650",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"address\" : \"Puławska 531, 02-844 Warszawa\",\n\t\"latitude\" : 52.1253599,\n\t\"longitude\" : 21.01950435,\n\t\"isSportsHall\" : true,\n\t\"disciplines\" : [\n\t\t6\t\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/facility",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"facility"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Korty OSiR Mokotow",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6a46edc3-6673-403e-ab82-4f0c6a1fd139",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"address\" : \"Niegocińska 2A, 02-698 Warszawa\",\n\t\"latitude\" : 52.17350225,\n\t\"longitude\" : 21.00844116,\n\t\"isSportsHall\" : true,\n\t\"disciplines\" : [\n\t\t1,2,3,4,5,6\t\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/facility",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"facility"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Stegny",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3674853-b60b-4470-a4ca-c510d136a89a",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"address\" : \"Inspektowa 1, 02-711 Warszawa\",\n\t\"latitude\" : 52.186911,\n\t\"longitude\" : 21.0427915,\n\t\"isSportsHall\" : true,\n\t\"disciplines\" : [\n\t\t1,2,3,4,5,6,7\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/facility",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"facility"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Kultury",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b45d2188-6f13-495e-9a65-11ae7c3c4f86",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"address\" : \"plac Defilad 1, 00-901 Warszawa\",\n\t\"latitude\" : 52.2322993,\n\t\"longitude\" : 21.005865,\n\t\"isSportsHall\" : false,\n\t\"disciplines\" : [\n\t\t1\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/facility",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"facility"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Adding games",
+			"item": [
+				{
+					"name": "Create JP2 FB",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d33b3e72-e551-4072-96f3-a758e78f7d24",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Pilkarska zabawa\",\n\t\"date\": 1596276000000,\n\t\"duration\": 3600000,\n\t\"isPublic\": \"true\",\n\t\"facility\": 4,\n\t\"sport\": 2,\n\t\"maxPlayers\": 25\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/game",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"game"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create JP2 FB 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "08d60842-78db-4fa8-b8b4-57e007ba5fa6",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "bob",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "bob",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Piła\",\n\t\"date\": 1598276000000,\n\t\"duration\": 3600000,\n\t\"isPublic\": \"true\",\n\t\"facility\": 4,\n\t\"sport\": 2,\n\t\"maxPlayers\": 25\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/game",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"game"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create FB 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b4424c4b-f926-4ad8-8e1e-da7c31d19edf",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Fajna gierka\",\n\t\"date\": 1596276000000,\n\t\"duration\": 7200000,\n\t\"isPublic\": \"true\",\n\t\"facility\": 3,\n\t\"sport\": 2,\n\t\"maxPlayers\": 25\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/game",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"game"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create FB 3",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ef79dece-5192-4aa0-9ba2-36ac908cbe55",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Meczyk\",\n\t\"date\": 1596376000000,\n\t\"duration\": 7200000,\n\t\"isPublic\": \"true\",\n\t\"facility\": 3,\n\t\"sport\": 2,\n\t\"maxPlayers\": 25\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/game",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"game"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create FB 4",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9854b3b2-fda7-4148-8668-26ccd0efd7f6",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Piłeczka\",\n\t\"date\": 1596976000000,\n\t\"duration\": 7200000,\n\t\"isPublic\": \"true\",\n\t\"facility\": 3,\n\t\"sport\": 2,\n\t\"maxPlayers\": 25\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/game",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"game"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create FB 5",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8e6ce060-ba3c-4fb1-86fb-03eb57e3c451",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Finał ligi\",\n\t\"date\": 1597276000000,\n\t\"duration\": 7200000,\n\t\"isPublic\": \"true\",\n\t\"facility\": 3,\n\t\"sport\": 2,\n\t\"maxPlayers\": 25\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/game",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"game"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Tenis Game",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "87fe17ef-657a-4a73-9d08-577c05024e82",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Tenis zapraszam\",\n\t\"date\": 1596276000000,\n\t\"duration\": 7200000,\n\t\"isPublic\": \"true\",\n\t\"facility\": 5,\n\t\"sport\": 6,\n\t\"maxPlayers\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/game",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"game"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create BasketGame",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d5d4e774-a092-4d54-b465-64a6c93f2648",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Koszykówka Ursn\",\n\t\"date\": 1596376000000,\n\t\"duration\": 7200000,\n\t\"isPublic\": \"true\",\n\t\"facility\": 2,\n\t\"sport\": 1,\n\t\"maxPlayers\": 12\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/game",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"game"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create BasketGame2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "04ede7a0-d0c2-4bee-96b2-90726d6e4902",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Turniej Kosza\",\n\t\"date\": 1596776000000,\n\t\"duration\": 7200000,\n\t\"isPublic\": \"true\",\n\t\"facility\": 2,\n\t\"sport\": 1,\n\t\"maxPlayers\": 12\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/game",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"game"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create SiataGame",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "217ff43a-70d0-4d93-8b79-88908e5a1aad",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Siatkowka Ursn\",\n\t\"date\": 1596336000000,\n\t\"duration\": 3600000,\n\t\"isPublic\": \"true\",\n\t\"facility\": 2,\n\t\"sport\": 3,\n\t\"maxPlayers\": 14\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/game",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"game"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create PingPong",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6cb28848-b19f-4a74-82e7-c11d7eafec9c",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Ping Pong Super\",\n\t\"date\": 1596336000000,\n\t\"duration\": 3600000,\n\t\"isPublic\": \"true\",\n\t\"facility\": 7,\n\t\"sport\": 7,\n\t\"maxPlayers\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/game",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"game"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Badminton",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "afef9176-e921-4720-94f2-663293e33c13",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Fajny badminton\",\n\t\"date\": 1596336000000,\n\t\"duration\": 3600000,\n\t\"isPublic\": \"true\",\n\t\"facility\": 7,\n\t\"sport\": 5,\n\t\"maxPlayers\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/game",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"game"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Basket2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "340b9560-9e07-4227-beb8-5d64a96a8986",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Kulturalny kosz\",\n\t\"date\": 1596336000000,\n\t\"duration\": 3600000,\n\t\"isPublic\": \"true\",\n\t\"facility\": 8,\n\t\"sport\": 1,\n\t\"maxPlayers\": 12\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/game",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"game"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Tenis Game Old",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "24585c1a-1cd4-40df-aff5-f7e00c56ee75",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Ale gierka...\",\n\t\"date\": 1590276000000,\n\t\"duration\": 7200000,\n\t\"isPublic\": \"true\",\n\t\"facility\": 5,\n\t\"sport\": 6,\n\t\"maxPlayers\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/game",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"game"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Basket2 Old",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1edeff58-5396-4243-9790-94eb499cb3ef",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Dawno dawno temu\",\n\t\"date\": 1590336000000,\n\t\"duration\": 3600000,\n\t\"isPublic\": \"true\",\n\t\"facility\": 8,\n\t\"sport\": 1,\n\t\"maxPlayers\": 12\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/game",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"game"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create SiataGame2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "65a5c07f-a8a0-4032-a35e-8cb10df05988",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Siata Ursnw2\",\n\t\"date\": 1596389000000,\n\t\"duration\": 3600000,\n\t\"isPublic\": \"true\",\n\t\"facility\": 2,\n\t\"sport\": 3,\n\t\"maxPlayers\": 14\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/game",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"game"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
