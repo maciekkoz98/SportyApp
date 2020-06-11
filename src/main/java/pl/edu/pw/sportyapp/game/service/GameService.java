@@ -44,7 +44,7 @@ public class GameService {
         newGame.setId(sequenceGenerator.generateSequence(Game.DBSEQUENCE_NAME));
         newGame.setOwner(currentUser.getId());
         newGame.setPlayers(new ArrayList<>(Arrays.asList(currentUser.getId())));
-        if (!sportService.checkIfSportExists(newGame.id)) {
+        if (!sportService.checkIfSportExists(newGame.sport)) {
             newGame.setSport(0);
         }
         if (newGame.getPlayers().size() > newGame.getMaxPlayers()) {
