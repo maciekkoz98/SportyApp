@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
@@ -15,6 +16,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.sportyapp.R
 import com.example.sportyapp.data.game.Game
 import com.example.sportyapp.ui.gameHistory.utils.GameHistoryAdapter
+import com.example.sportyapp.ui.myGames.utils.MyGamesAdapter
+import com.example.sportyapp.utils.SportPrefs
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class GameHistoryFragment : Fragment() {
@@ -44,13 +49,6 @@ class GameHistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         spinner = view.findViewById(R.id.history_spinner)
-        val items = arrayOf("No filter", "Basketball", "Football", "Volleyball")
-        val adapter = ArrayAdapter(
-            this.activity!!,
-            android.R.layout.simple_spinner_dropdown_item,
-            items
-        )
-        spinner.adapter = adapter
         recycler = view.findViewById(R.id.last_games_recycler_view)
         recycler.adapter = GameHistoryAdapter(passedGames)
         val layoutManager = LinearLayoutManager(activity!!)
@@ -62,5 +60,47 @@ class GameHistoryFragment : Fragment() {
                 layoutManager.orientation
             )
         )
+        setSpinnerValues()
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                val filter = spinner.selectedItem.toString()
+
+                if (filter != getString(R.string.no_filter)) {
+                    val filteredGames = passedGames.filter {game ->
+                        game.sport.namePL == filter || game.sport.nameEN == filter }
+                    recycler.adapter = GameHistoryAdapter(filteredGames)
+                } else {
+                    recycler.adapter = GameHistoryAdapter(passedGames)
+                }
+            }
+
+        }
+    }
+
+    private fun setSpinnerValues() {
+        val sports = ArrayList<String>()
+
+        sports.add(getString(R.string.no_filter))
+        SportPrefs.getAllSportsFromMemory().forEach { (_, sport) ->
+            when (Locale.getDefault().language) {
+                "pl" -> {
+                    sports.add(sport.namePL)
+                }
+                else -> {
+                    sports.add(sport.nameEN)
+                }
+            }
+        }
+
+        val spinnerAdapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            sports.toList()
+        )
+
+        spinner.adapter = spinnerAdapter
     }
 }
