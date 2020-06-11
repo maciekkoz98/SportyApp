@@ -893,6 +893,62 @@
 					"response": []
 				},
 				{
+					"name": "Create JP2 FB 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "08d60842-78db-4fa8-b8b4-57e007ba5fa6",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "bob",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "bob",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Piła\",\n\t\"date\": 1598276000000,\n\t\"duration\": 3600000,\n\t\"isPublic\": \"true\",\n\t\"facility\": 4,\n\t\"sport\": 2,\n\t\"maxPlayers\": 25\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/game",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"game"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Create FB 2",
 					"event": [
 						{
@@ -929,6 +985,174 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"name\": \"Fajna gierka\",\n\t\"date\": 1596276000000,\n\t\"duration\": 7200000,\n\t\"isPublic\": \"true\",\n\t\"facility\": 3,\n\t\"sport\": 2,\n\t\"maxPlayers\": 25\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/game",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"game"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create FB 3",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ef79dece-5192-4aa0-9ba2-36ac908cbe55",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Meczyk\",\n\t\"date\": 1596376000000,\n\t\"duration\": 7200000,\n\t\"isPublic\": \"true\",\n\t\"facility\": 3,\n\t\"sport\": 2,\n\t\"maxPlayers\": 25\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/game",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"game"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create FB 4",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9854b3b2-fda7-4148-8668-26ccd0efd7f6",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Piłeczka\",\n\t\"date\": 1596976000000,\n\t\"duration\": 7200000,\n\t\"isPublic\": \"true\",\n\t\"facility\": 3,\n\t\"sport\": 2,\n\t\"maxPlayers\": 25\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/game",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"game"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create FB 5",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8e6ce060-ba3c-4fb1-86fb-03eb57e3c451",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Finał ligi\",\n\t\"date\": 1597276000000,\n\t\"duration\": 7200000,\n\t\"isPublic\": \"true\",\n\t\"facility\": 3,\n\t\"sport\": 2,\n\t\"maxPlayers\": 25\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1041,6 +1265,62 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"name\": \"Koszykówka Ursn\",\n\t\"date\": 1596376000000,\n\t\"duration\": 7200000,\n\t\"isPublic\": \"true\",\n\t\"facility\": 2,\n\t\"sport\": 1,\n\t\"maxPlayers\": 12\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/game",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"game"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create BasketGame2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "04ede7a0-d0c2-4bee-96b2-90726d6e4902",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Turniej Kosza\",\n\t\"date\": 1596776000000,\n\t\"duration\": 7200000,\n\t\"isPublic\": \"true\",\n\t\"facility\": 2,\n\t\"sport\": 1,\n\t\"maxPlayers\": 12\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1265,6 +1545,174 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"name\": \"Kulturalny kosz\",\n\t\"date\": 1596336000000,\n\t\"duration\": 3600000,\n\t\"isPublic\": \"true\",\n\t\"facility\": 8,\n\t\"sport\": 1,\n\t\"maxPlayers\": 12\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/game",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"game"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Tenis Game Old",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "24585c1a-1cd4-40df-aff5-f7e00c56ee75",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Ale gierka...\",\n\t\"date\": 1590276000000,\n\t\"duration\": 7200000,\n\t\"isPublic\": \"true\",\n\t\"facility\": 5,\n\t\"sport\": 6,\n\t\"maxPlayers\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/game",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"game"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Basket2 Old",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1edeff58-5396-4243-9790-94eb499cb3ef",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Dawno dawno temu\",\n\t\"date\": 1590336000000,\n\t\"duration\": 3600000,\n\t\"isPublic\": \"true\",\n\t\"facility\": 8,\n\t\"sport\": 1,\n\t\"maxPlayers\": 12\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/game",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"game"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create SiataGame2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "65a5c07f-a8a0-4032-a35e-8cb10df05988",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Siata Ursnw2\",\n\t\"date\": 1596389000000,\n\t\"duration\": 3600000,\n\t\"isPublic\": \"true\",\n\t\"facility\": 2,\n\t\"sport\": 3,\n\t\"maxPlayers\": 14\n}",
 							"options": {
 								"raw": {
 									"language": "json"
