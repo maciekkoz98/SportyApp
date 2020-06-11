@@ -3,15 +3,11 @@ package com.example.sportyapp.ui.myGames.utils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sportyapp.R
-import com.example.sportyapp.ui.home.utils.GamesInChosenFieldHolder
 import kotlinx.android.synthetic.main.fragment_mygames_list_element.view.*
-import kotlinx.android.synthetic.main.game_view.view.*
 
 class MyGamesAdapter(private val myGamesList: List<MyGamesItem>) : RecyclerView.Adapter<MyGamesAdapter.MyGamesListViewHolder>() {
 
@@ -39,12 +35,28 @@ class MyGamesAdapter(private val myGamesList: List<MyGamesItem>) : RecyclerView.
         holder.gameDate.text = currentItem.day
         holder.gameMonth.text = currentItem.month
         holder.gameName.text = currentItem.name
-        holder.gameSport.text = currentItem.sport
+        holder.gameSport.text = getSportName(currentItem.sport, holder)
         holder.gameHour.text = currentItem.hour
         holder.gamePlayers.text = currentItem.people
     }
 
     override fun getItemCount() = myGamesList.size
+
+    private fun getSportName(
+        sportName: String,
+        holder: MyGamesListViewHolder
+    ): String {
+        return when (sportName) {
+            "Basketball" -> holder.itemView.context.resources.getString(R.string.basketball)
+            "Football" -> holder.itemView.context.resources.getString(R.string.football)
+            "Volleyball" -> holder.itemView.context.resources.getString(R.string.volleyball)
+            "Handball" -> holder.itemView.context.getString(R.string.handball)
+            "Badminton" -> holder.itemView.context.resources.getString(R.string.badminton)
+            "Tennis" -> holder.itemView.context.resources.getString(R.string.tennis)
+            "Table tennis" -> holder.itemView.context.resources.getString(R.string.table_tennis)
+            else -> "Unknown"
+        }
+    }
 
     private fun setSportIcon(holder: MyGamesListViewHolder, sportName: String) {
         when (sportName) {

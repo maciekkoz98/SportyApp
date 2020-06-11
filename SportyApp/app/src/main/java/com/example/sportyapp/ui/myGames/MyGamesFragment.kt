@@ -2,7 +2,6 @@ package com.example.sportyapp.ui.myGames
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -97,15 +96,7 @@ class MyGamesFragment : Fragment() {
                     Calendar.MINUTE
                 ).toString()
                 val people = game.players.size.toString() + "/" + game.maxPlayers.toString()
-
-                var item = MyGamesItem(day, month, game.name, game.sport.nameEN, hour, people)
-
-                when (Locale.getDefault().language) {
-                    "pl" -> {
-                        item = MyGamesItem(day, month, game.name, game.sport.namePL, hour, people)
-                    }
-                }
-
+                val item = MyGamesItem(day, month, game.name, game.sport.nameEN, hour, people)
                 list.add(item)
             }
         }
