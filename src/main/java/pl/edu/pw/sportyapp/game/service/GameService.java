@@ -25,8 +25,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static java.util.Arrays.asList;
-
 @Service
 public class GameService {
 
@@ -47,8 +45,8 @@ public class GameService {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         newGame.setId(sequenceGenerator.generateSequence(Game.DBSEQUENCE_NAME));
         newGame.setOwner(currentUser.getId());
-        newGame.setPlayers(new ArrayList<>(asList(currentUser.getId())));
-        if (!sportService.checkIfSportExists(newGame.id)) {
+        newGame.setPlayers(new ArrayList<>(Arrays.asList(currentUser.getId())));
+        if (!sportService.checkIfSportExists(newGame.sport)) {
             newGame.setSport(0);
         }
         if (newGame.getPlayers().size() > newGame.getMaxPlayers()) {
@@ -161,7 +159,7 @@ public class GameService {
         return games;
     }
 
-    public List<Game> findByPredicate(BooleanExpression ... predicates) {
+    public List<Game> findByPredicate(BooleanExpression... predicates) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<Game> games;
 
@@ -177,7 +175,7 @@ public class GameService {
         return games;
     }
 
-    public List<Game> findByPredicate(boolean active, BooleanExpression ... predicates) {
+    public List<Game> findByPredicate(boolean active, BooleanExpression... predicates) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Timestamp time = new Timestamp(System.currentTimeMillis());
         List<Game> games;
@@ -191,7 +189,7 @@ public class GameService {
             games = Lists.newArrayList(gameRepository.findAll(Expressions.allOf((BooleanExpression[]) predicatesWithOwner.toArray())));
         }
 
-        if(active) {
+        if (active) {
             games.removeIf(game -> (game.getDate() + game.getDuration()) < time.getTime());
         } else {
             games.removeIf(game -> (game.getDate() + game.getDuration()) > time.getTime());
