@@ -11,14 +11,15 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import com.example.sportyapp.R
 import com.example.sportyapp.data.field.Field
 import com.example.sportyapp.ui.home.HomeViewModel
@@ -43,6 +44,16 @@ class AddGameFragment : Fragment() {
     private lateinit var calendar: GregorianCalendar
     private lateinit var fieldsList: HashMap<Long, Field>
     private var fieldID: Long = 0L
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                view!!.findNavController().navigate(R.id.action_nav_add_game_to_nav_home)
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -165,7 +176,7 @@ class AddGameFragment : Fragment() {
     private val addGameListener = View.OnClickListener {
         if(validate()) {
             addGame()
-            activity!!.onBackPressed()
+            view!!.findNavController().navigate(R.id.action_nav_add_game_to_nav_home)
         }
     }
 

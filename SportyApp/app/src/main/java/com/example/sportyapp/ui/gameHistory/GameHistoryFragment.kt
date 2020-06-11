@@ -7,16 +7,17 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sportyapp.R
 import com.example.sportyapp.data.game.Game
 import com.example.sportyapp.ui.gameHistory.utils.GameHistoryAdapter
-import com.example.sportyapp.ui.myGames.utils.MyGamesAdapter
 import com.example.sportyapp.utils.SportPrefs
 import java.util.*
 import kotlin.collections.ArrayList
@@ -28,6 +29,16 @@ class GameHistoryFragment : Fragment() {
     private lateinit var spinner: Spinner
     private lateinit var recycler: RecyclerView
     private lateinit var passedGames: ArrayList<Game>
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                view!!.findNavController().navigate(R.id.action_nav_history_to_nav_home)
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

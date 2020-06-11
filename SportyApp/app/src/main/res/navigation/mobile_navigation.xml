@@ -19,12 +19,20 @@
         android:id="@+id/nav_my_games"
         android:name="com.example.sportyapp.ui.myGames.MyGamesFragment"
         android:label="@string/menu_my_games"
-        tools:layout="@layout/fragment_my_games" />
+        tools:layout="@layout/fragment_my_games">
+        <action
+            android:id="@+id/action_nav_my_games_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_person"
         android:name="com.example.sportyapp.ui.personInfo.PersonInfoFragment"
-        tools:layout="@layout/fragment_person_info" />
+        tools:layout="@layout/fragment_person_info">
+        <action
+            android:id="@+id/action_nav_person_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_fields"
@@ -41,10 +49,17 @@
             android:name="fieldID"
             app:argType="long"
             android:defaultValue="0L" />
+        <action
+            android:id="@+id/action_nav_add_game_to_nav_home"
+            app:destination="@id/nav_home" />
     </fragment>
     <fragment
         android:id="@+id/nav_history"
         android:name="com.example.sportyapp.ui.gameHistory.GameHistoryFragment"
         android:label="@string/menu_history"
-        tools:layout="@layout/fragment_last_games" />
+        tools:layout="@layout/fragment_last_games">
+        <action
+            android:id="@+id/action_nav_history_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
 </navigation>
