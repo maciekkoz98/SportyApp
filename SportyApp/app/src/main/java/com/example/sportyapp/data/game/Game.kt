@@ -10,7 +10,6 @@ data class Game(
     val isPublic: Boolean,
     val fieldID: Long,
     val sport: Sport,
-    //val sportID: Long,
     val maxPlayers: Int
 ) : Comparable<Game> {
     override fun compareTo(other: Game): Int {

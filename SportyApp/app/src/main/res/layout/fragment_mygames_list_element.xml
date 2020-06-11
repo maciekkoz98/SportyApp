@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="120dp">
+<?xml version="1.0" encoding="utf-8"?><!--<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="120dp">-->
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/my_games_element_layout">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:id="@+id/my_games_element_layout">
 
         <TextView
             android:id="@+id/list_elem_date"
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"
-            android:text="listopad"
+            android:text="listopada"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/list_elem_date" />
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="80dp"
             android:layout_marginTop="10dp"
-            android:text="name"
+            android:text="@string/event_name_title"
             android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/list_elem_date"
             app:layout_constraintTop_toTopOf="parent" />
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="15dp"
-            android:text="basketball"
+            android:text="@string/basketball"
             android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/list_elem_icon"
             app:layout_constraintTop_toBottomOf="@+id/list_elem_name" />
@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="80dp"
             android:layout_marginTop="15dp"
-            android:text="16:00"
+            android:text="@string/event_view_start_time"
             android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/list_elem_date"
             app:layout_constraintTop_toBottomOf="@+id/list_elem_sport" />
@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="15dp"
-            android:text="6/20"
+            android:text="@string/event_view_participants"
             android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/imageView12"
             app:layout_constraintTop_toBottomOf="@+id/list_elem_sport" />
@@ -86,7 +86,8 @@
             android:layout_marginTop="15dp"
             app:layout_constraintStart_toEndOf="@+id/list_elem_date"
             app:layout_constraintTop_toBottomOf="@+id/list_elem_name"
-            app:srcCompat="@drawable/ic_basketball_svg" />
+            app:srcCompat="@drawable/ic_basketball_svg"
+            android:contentDescription="@string/sport_discipline_icon" />
 
         <ImageView
             android:id="@+id/imageView12"
@@ -96,6 +97,6 @@
             android:layout_marginTop="15dp"
             app:layout_constraintStart_toEndOf="@+id/list_elem_hour"
             app:layout_constraintTop_toBottomOf="@+id/list_elem_sport"
-            app:srcCompat="@drawable/ic_user_foreground" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>
+            app:srcCompat="@drawable/ic_user_foreground"
+            android:contentDescription="@string/players_taking_part_icon" />
+    </androidx.constraintlayout.widget.ConstraintLayout><!--</androidx.cardview.widget.CardView>-->
