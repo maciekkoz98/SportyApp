@@ -86,4 +86,5 @@
     <string name="choose_discipline">Choose discipline:</string>
     <string name="discipline">Discipline</string>
     <string name="discipline_error">Discipline is required.</string>
+    <string name="no_filter">No filter</string>
 </resources>

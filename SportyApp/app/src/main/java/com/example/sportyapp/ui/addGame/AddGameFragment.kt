@@ -202,10 +202,10 @@ class AddGameFragment : Fragment() {
         }
 
         if (maxPlayers.length() == 0) {
-            maxPlayers.error = R.string.max_players_empty_error.toString()
+            maxPlayers.error = getString(R.string.max_players_empty_error)
             check = false
         } else if (maxPlayers.text.toString().toInt() < 2) {
-            maxPlayers.error = R.string.max_players_error.toString()
+            maxPlayers.error = getString(R.string.max_players_error)
             check = false
         }
         if (gameDate.length() == 0) {

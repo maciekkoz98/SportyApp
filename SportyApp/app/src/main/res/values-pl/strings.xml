@@ -76,4 +76,5 @@
     <string name="choose_discipline">Wybierz dyscyplinę:</string>
     <string name="discipline">Dyscyplina</string>
     <string name="discipline_error">Dyscyplina jest wymagana.</string>
+    <string name="no_filter">Brak filtra</string>
 </resources>

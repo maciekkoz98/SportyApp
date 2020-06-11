@@ -2,9 +2,11 @@ package com.example.sportyapp.ui.myGames
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.annotation.RequiresApi
@@ -18,6 +20,7 @@ import com.example.sportyapp.R
 import com.example.sportyapp.data.game.Game
 import com.example.sportyapp.ui.myGames.utils.MyGamesAdapter
 import com.example.sportyapp.ui.myGames.utils.MyGamesItem
+import com.example.sportyapp.utils.SportPrefs
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -48,17 +51,27 @@ class MyGamesFragment : Fragment() {
             gamesList = it
 
             spinner = view.findViewById(R.id.myGames_spinner)
-            val items = arrayOf("No filter","Basketball", "Football", "Volleyball")
-            val adapter = ArrayAdapter<String>(this.activity!!, android.R.layout.simple_spinner_dropdown_item, items)
-            spinner.adapter=adapter
-
             recycler = view.findViewById(R.id.my_games_list_recycler_view)
-            val dummyList = generateList()
+            var dummyList = generateList(null)
             recycler.adapter = MyGamesAdapter(dummyList)
             val layoutManager = LinearLayoutManager(activity!!)
             recycler.layoutManager =layoutManager
             recycler.setHasFixedSize(true)
             recycler.addItemDecoration(DividerItemDecoration(recycler.context, layoutManager.orientation))
+            setSpinnerValues()
+
+            spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                    dummyList = generateList(null)
+                    recycler.adapter = MyGamesAdapter(dummyList)
+                }
+
+                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    dummyList = generateList(spinner.selectedItem.toString())
+                    recycler.adapter = MyGamesAdapter(dummyList)
+                }
+
+            }
 
         })
     }
@@ -71,7 +84,7 @@ class MyGamesFragment : Fragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun generateList(): List<MyGamesItem>{
+    private fun generateList(filterSport: String?): List<MyGamesItem>{
         val list = ArrayList<MyGamesItem>()
 
         gamesList.forEach { (_, game) ->
@@ -85,12 +98,47 @@ class MyGamesFragment : Fragment() {
                 ).toString()
                 val people = game.players.size.toString() + "/" + game.maxPlayers.toString()
 
+                var item = MyGamesItem(day, month, game.name, game.sport.nameEN, hour, people)
 
-                val item = MyGamesItem(day, month, game.name, game.sport.nameEN, hour, people)
+                when (Locale.getDefault().language) {
+                    "pl" -> {
+                        item = MyGamesItem(day, month, game.name, game.sport.namePL, hour, people)
+                    }
+                }
+
                 list.add(item)
             }
         }
 
+        if (filterSport != null && filterSport != getString(R.string.no_filter)) {
+            return list.filter { gameItem ->
+                gameItem.sport == filterSport
+            }
+        }
         return list
+    }
+
+    private fun setSpinnerValues() {
+        val sports = ArrayList<String>()
+
+        sports.add(getString(R.string.no_filter))
+        SportPrefs.getAllSportsFromMemory().forEach { (_, sport) ->
+            when (Locale.getDefault().language) {
+                "pl" -> {
+                    sports.add(sport.namePL)
+                }
+                else -> {
+                    sports.add(sport.nameEN)
+                }
+            }
+        }
+
+        val spinnerAdapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            sports.toList()
+        )
+
+        spinner.adapter = spinnerAdapter
     }
 }
