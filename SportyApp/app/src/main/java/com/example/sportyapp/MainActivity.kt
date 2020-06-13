@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
             .addInterceptor(AuthenticationInterceptor())
             .build()
         val request = Request.Builder()
-            .url("http://10.0.2.2:8080/sport")
+            .url("https://10.0.2.2:8443/sport")
             .build()
 
         client.newCall(request).enqueue(object : Callback {

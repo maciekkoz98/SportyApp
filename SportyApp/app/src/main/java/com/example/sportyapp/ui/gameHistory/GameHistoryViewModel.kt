@@ -22,7 +22,7 @@ class GameHistoryViewModel : ViewModel() {
             .addInterceptor(AuthenticationInterceptor())
             .build()
         val request = Request.Builder()
-            .url("http://10.0.2.2:8080/game/history")
+            .url("https://10.0.2.2:8443/game/history")
             .build()
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
