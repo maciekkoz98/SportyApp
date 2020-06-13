@@ -24,10 +24,10 @@ Endpoint info is available under address: `https://localhost:8080/swagger-ui.htm
 # Description
 This is an app created to help users ogranise group sports. Its allows for searching games on map, and joining them, as well as organising your own games.
 # Creators
-Backend:
+### Backend:
 * [Mateusz Kossakowski] (https://github.com/matikoss)
 * [Rafał Szulejko] (https://github.com/rafalszulejko)
-Frontend:
+### Frontend:
 * [Katarzyna Wolska] (https://github.com/KatarzynaWolska)
 * [Maciej Kozłowski] (https://github.com/maciekkoz98)
 * [Rafał Pachnia] (https://github.com/wanero13)
