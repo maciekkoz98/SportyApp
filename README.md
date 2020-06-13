@@ -5,11 +5,13 @@ To run the app you need to have Android Studio and a Android device (it can an e
 2. Plug the phone or turn on the emulator  
 3. Wait until Android Studio discovers the device  
 4. Press play
-# How to run serwer application:
+# How to run server:
 Docker application or Docker desktop is required.
-To run server fo to folder with docker-compose file and run command `docker-compose up --build`. The server will be available under address `https://localhost:8080`. Endpoint info is available under address: `https://localhost:8080/swagger-ui.html`. To access it insert `admin` as both password and login.
+To run server fo to folder with docker-compose file and run command `docker-compose up --build`.
+The server will be available under address `https://localhost:8080`.
+Endpoint info is available under address: `https://localhost:8080/swagger-ui.html`. To access it insert `admin` as both password and login.
 # Technologies
-## Application
+## Frontend
 - Android Studio
 - Kotlin
 - Android
