@@ -28,6 +28,6 @@ This is an app created to help users ogranise group sports. Its allows for searc
 * [Mateusz Kossakowski] (https://github.com/matikoss)
 * [Rafał Szulejko] (https://github.com/rafalszulejko)
 ### Frontend:
-* [Katarzyna Wolska] (https://github.com/KatarzynaWolska)
-* [Maciej Kozłowski] (https://github.com/maciekkoz98)
-* [Rafał Pachnia] (https://github.com/wanero13)
+* [Katarzyna Wolska](https://github.com/KatarzynaWolska)
+* [Maciej Kozłowski](https://github.com/maciekkoz98)
+* [Rafał Pachnia](https://github.com/wanero13)
