@@ -13,6 +13,7 @@ services:
       dockerfile: Dockerfile
     container_name: "sportyapp-api"
     ports:
+    - 8443:8443
     - 8080:8080
     depends_on:
       - mongodb-api
