@@ -11,11 +11,11 @@ To run server fo to folder with docker-compose file and run command `docker-comp
 The server will be available under address `https://localhost:8080`.
 Endpoint info is available under address: `https://localhost:8080/swagger-ui.html`. To access it insert `admin` as both password and login.
 # Technologies
-## Frontend
+### Frontend
 - Android Studio
 - Kotlin
 - Android
-## Backend
+### Backend
 - Java
 - Spring
 - Docker
