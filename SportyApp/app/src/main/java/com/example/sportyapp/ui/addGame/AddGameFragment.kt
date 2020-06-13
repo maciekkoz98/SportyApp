@@ -234,7 +234,7 @@ class AddGameFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun addGame() {
-        val url = "http://10.0.2.2:8080/game"
+        val url = "https://10.0.2.2:8443/game"
         val httpClient = OkHttpClient().newBuilder()
             .addInterceptor(AuthenticationInterceptor())
             .build()

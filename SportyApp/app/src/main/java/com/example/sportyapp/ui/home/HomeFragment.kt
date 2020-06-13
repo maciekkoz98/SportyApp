@@ -375,7 +375,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
             .addInterceptor(AuthenticationInterceptor())
             .build()
         val request = Request.Builder()
-            .url("http://10.0.2.2:8080/game/facility/$facilityID")
+            .url("https://10.0.2.2:8443/game/facility/$facilityID")
             .build()
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
