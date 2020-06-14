@@ -10,6 +10,14 @@
         android:name="com.example.sportyapp.ui.home.HomeFragment"
         android:label="@string/menu_map"
         tools:layout="@layout/fragment_home">
+        <argument
+            android:name="fieldID"
+            android:defaultValue="0L"
+            app:argType="long" />
+        <argument
+            android:name="zoomLevel"
+            android:defaultValue="0F"
+            app:argType="float" />
         <action
             android:id="@+id/action_nav_home_to_nav_add_game"
             app:destination="@id/nav_add_game" />

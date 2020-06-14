@@ -44,6 +44,7 @@ class AddGameFragment : Fragment() {
     private lateinit var calendar: GregorianCalendar
     private lateinit var fieldsList: HashMap<Long, Field>
     private var fieldID: Long = 0L
+    private var zoomLevel: Float = 0F
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +76,7 @@ class AddGameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fieldID = arguments!!.getLong("fieldID")
+        zoomLevel = arguments!!.getFloat("zoomLevel")
         calendar = GregorianCalendar()
 
         gameName = view.findViewById(R.id.editText_game_name)
@@ -176,7 +178,10 @@ class AddGameFragment : Fragment() {
     private val addGameListener = View.OnClickListener {
         if(validate()) {
             addGame()
-            view!!.findNavController().navigate(R.id.action_nav_add_game_to_nav_home)
+            val bundle = Bundle()
+            bundle.putLong("fieldID", fieldID)
+            bundle.putFloat("zoomLevel", zoomLevel)
+            view!!.findNavController().navigate(R.id.action_nav_add_game_to_nav_home, bundle)
         }
     }
 

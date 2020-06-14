@@ -66,6 +66,8 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
     private lateinit var editTextKeyListener: KeyListener
     private lateinit var editTextMovementMethod: MovementMethod
     private lateinit var fieldsList: HashMap<Long, Field>
+    private var currentFieldID: Long = 0L
+    private var zoomLevel: Float = 0F
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -79,6 +81,8 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
             fieldsList = it
             addMarkers()
         })
+        currentFieldID = arguments!!.getLong("fieldID")
+        zoomLevel = arguments!!.getFloat("zoomLevel")
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         localFAB = root.findViewById(R.id.localFAB)
@@ -190,8 +194,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mapReady = true
-        val warsaw = LatLng(52.2297, 21.0122)
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(warsaw, 13F))
         clusterManager = ClusterManager<MapMarker>(activity, mMap)
         clusterManager.setOnClusterItemClickListener(this)
         clusterManager.setOnClusterClickListener(this)
@@ -263,6 +265,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
             clusterManager.clearItems()
             val bundle = Bundle()
             bundle.putLong("fieldID", field.id)
+            bundle.putFloat("zoomLevel", mMap.cameraPosition.zoom)
             view!!.findNavController().navigate(R.id.action_nav_home_to_nav_add_game, bundle)
         }
         bottomSheetSearchBehavior.isHideable = true
@@ -290,6 +293,14 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
     private fun addMarkers() {
         if (mapReady && this::fieldsList.isInitialized) {
             mapReady = false
+            if (currentFieldID != 0L) {
+                val field = fieldsList[currentFieldID]
+                val fieldLatLng = LatLng(field!!.latitude, field.longitude)
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(fieldLatLng, zoomLevel))
+            } else {
+                val warsaw = LatLng(52.2297, 21.0122)
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(warsaw, 13F))
+            }
             for ((key, field) in fieldsList) {
                 val mapMarker = MapMarker(field.latitude, field.longitude, field.address, key)
                 clusterManager.addItem(mapMarker)
